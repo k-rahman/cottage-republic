@@ -10,4 +10,7 @@
     <string name="birth_date">Birth date</string>
     <string name="register">Register</string>
     <string name="address">Address</string>
+    <string name="cabin_renter">Cabin renter</string>
+    <string name="cabin_owner">Cabin owner</string>
+    <string name="next">Next</string>
 </resources>

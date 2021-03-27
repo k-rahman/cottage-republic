@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_register"
+    app:startDestination="@id/fragment_register_main">
+
+    <fragment
+        android:id="@+id/fragment_register_main"
+        android:name="fi.oamk.cottagerepublic.RegisterFragmentMain"
+        android:label="fragment_register_main"
+        tools:layout="@layout/fragment_register_main" >
+        <action
+            android:id="@+id/action_fragment_register_main_to_registerFragmentName"
+            app:destination="@id/registerFragmentName" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragmentName"
+        android:name="fi.oamk.cottagerepublic.RegisterFragmentName"
+        android:label="fragment_register_name"
+        tools:layout="@layout/fragment_register_name" >
+        <action
+            android:id="@+id/action_registerFragmentName_to_registerFragmentRequiredInfo"
+            app:destination="@id/registerFragmentRequiredInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragmentRequiredInfo"
+        android:name="fi.oamk.cottagerepublic.RegisterFragmentRequiredInfo"
+        android:label="fragment_register_required_info"
+        tools:layout="@layout/fragment_register_required_info" >
+        <action
+            android:id="@+id/action_registerFragmentRequiredInfo_to_registerFragmentExtraInfo"
+            app:destination="@id/registerFragmentExtraInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragmentExtraInfo"
+        android:name="fi.oamk.cottagerepublic.RegisterFragmentExtraInfo"
+        android:label="fragment_register_extrainfo"
+        tools:layout="@layout/fragment_register_extrainfo" >
+        <action
+            android:id="@+id/action_registerFragmentExtraInfo_to_mainScreen"
+            app:destination="@id/mainScreen" />
+    </fragment>
+    <activity
+        android:id="@+id/mainScreen"
+        android:name="fi.oamk.cottagerepublic.MainScreen"
+        android:label="main_screen"
+        tools:layout="@layout/main_screen" />
+</navigation>

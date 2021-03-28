@@ -15,4 +15,5 @@ class RegisterScreen : AppCompatActivity() {
         binding = RegisterScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
 }

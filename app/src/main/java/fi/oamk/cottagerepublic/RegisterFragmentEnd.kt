@@ -10,18 +10,20 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
 
-class RegisterFragmentMain : Fragment() {
+class RegisterFragmentEnd : Fragment() {
+
     lateinit var navController: NavController
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_register_main, container, false)
+        return inflater.inflate(R.layout.fragment_register_end, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        view.findViewById<Button>(R.id.navigate_button_main).setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_fragment_register_main_to_registerFragmentName, null))
+        view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_registerFragmentEnd_to_mainScreen, null))
     }
+
 }

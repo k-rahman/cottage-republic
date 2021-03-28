@@ -3,47 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_register"
-    app:startDestination="@id/fragment_register_main">
+    app:startDestination="@id/registerFragmentEmail">
 
     <fragment
-        android:id="@+id/fragment_register_main"
-        android:name="fi.oamk.cottagerepublic.RegisterFragmentMain"
-        android:label="fragment_register_main"
-        tools:layout="@layout/fragment_register_main" >
-        <action
-            android:id="@+id/action_fragment_register_main_to_registerFragmentName"
-            app:destination="@id/registerFragmentName" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerFragmentName"
-        android:name="fi.oamk.cottagerepublic.RegisterFragmentName"
+        android:id="@+id/registerFragmentEmail"
+        android:name="fi.oamk.cottagerepublic.RegisterFragmentEmail"
         android:label="fragment_register_name"
-        tools:layout="@layout/fragment_register_name" >
+        tools:layout="@layout/fragment_register_email" >
         <action
-            android:id="@+id/action_registerFragmentName_to_registerFragmentRequiredInfo"
-            app:destination="@id/registerFragmentRequiredInfo" />
+            android:id="@+id/action_registerFragmentName_to_registerFragmentPassword"
+            app:destination="@id/registerFragmentPassword" />
+        <action
+            android:id="@+id/action_registerFragmentName_to_LogIn"
+            app:destination="@id/LogIn" />
     </fragment>
     <fragment
-        android:id="@+id/registerFragmentRequiredInfo"
-        android:name="fi.oamk.cottagerepublic.RegisterFragmentRequiredInfo"
+        android:id="@+id/registerFragmentPassword"
+        android:name="fi.oamk.cottagerepublic.RegisterFragmentPassword"
         android:label="fragment_register_required_info"
-        tools:layout="@layout/fragment_register_required_info" >
+        tools:layout="@layout/fragment_register_password" >
         <action
-            android:id="@+id/action_registerFragmentRequiredInfo_to_registerFragmentExtraInfo"
-            app:destination="@id/registerFragmentExtraInfo" />
+            android:id="@+id/action_registerFragmentPassword_to_registerFragmentEnd"
+            app:destination="@id/registerFragmentEnd" />
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue="default@emai.fi" />
     </fragment>
-    <fragment
-        android:id="@+id/registerFragmentExtraInfo"
-        android:name="fi.oamk.cottagerepublic.RegisterFragmentExtraInfo"
-        android:label="fragment_register_extrainfo"
-        tools:layout="@layout/fragment_register_extrainfo" >
-        <action
-            android:id="@+id/action_registerFragmentExtraInfo_to_mainScreen"
-            app:destination="@id/mainScreen" />
-    </fragment>
+    <fragment android:id="@+id/LogIn" />
     <activity
         android:id="@+id/mainScreen"
         android:name="fi.oamk.cottagerepublic.MainScreen"
         android:label="main_screen"
         tools:layout="@layout/main_screen" />
+    <fragment
+        android:id="@+id/registerFragmentEnd"
+        android:name="fi.oamk.cottagerepublic.RegisterFragmentEnd"
+        android:label="fragment_register_end"
+        tools:layout="@layout/fragment_register_end" >
+        <action
+            android:id="@+id/action_registerFragmentEnd_to_mainScreen"
+            app:destination="@id/mainScreen" />
+        <argument android:name="email" />
+        <argument android:name="password" />
+    </fragment>
 </navigation>

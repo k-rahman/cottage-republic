@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-<!--        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="list_header_text">
@@ -14,5 +14,13 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="BottomNavigation">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="itemBackground">@color/bottom_navigation</item>
+        <item name="itemIconTint">@color/colorWhite</item>
+        <item name="labelVisibilityMode">unlabeled</item>
+        <item name="itemIconSize">30dp</item>
     </style>
 </resources>

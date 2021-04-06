@@ -10,6 +10,10 @@
     <string name="account_menu_item_title">Account</string>
     <string name="faq_menu_item_title">FAQ</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- login screen strings -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcometext_login_screen">Welcome</string>
+    <string name="cottagerepublic_splash_screen_image_description">CottageRepublic splash screen image</string>
+    <string name="register_button_text"><u>Or register a new account</u></string>
+
 </resources>

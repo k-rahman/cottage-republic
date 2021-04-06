@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable name="cottage"
+              type="fi.oamk.cottagerepublic.Cottage"/>
+    <variable name="cottageListener"
+              type="fi.oamk.cottagerepublic.CottageListener"/>
+</data>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:elevation="100dp"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            android:onClick="@{() -> cottageListener.onClick(cottage)}"
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <ImageView
+                    android:id="@+id/cottage_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:srcCompat="@tools:sample/avatars[9]"
+                    app:image="@{cottage}"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/cottage_image"/>
+            <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cottage_rating"
+                    style="?attr/ratingBarStyleSmall"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_image"
+                    app:layout_constraintEnd_toEndOf="@+id/cottage_image"
+                    app:layout_constraintStart_toStartOf="@+id/cottage_image" app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginStart="16dp" android:layout_marginTop="8dp"/>
+            <TextView
+                    android:id="@+id/cottage_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_rating"
+                    app:layout_constraintEnd_toEndOf="@+id/cottage_rating"
+                    app:layout_constraintStart_toStartOf="@+id/cottage_rating"
+                    android:textAlignment="viewStart"
+                    tools:text="@tools:sample/first_names"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto"
+                    app:cottageLabel="@{cottage}"
+                    app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="16dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

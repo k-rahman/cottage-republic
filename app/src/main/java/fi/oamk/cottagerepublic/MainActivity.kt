@@ -2,28 +2,24 @@ package fi.oamk.cottagerepublic
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import fi.oamk.cottagerepublic.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_account)
-    }
 
-    fun userSettings(view: View) {
-        Toast.makeText(this, "Go to User Settings", Toast.LENGTH_SHORT).show()
-    }
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-    fun myCottages(view: View) {
-        Toast.makeText(this, "Go to My Cottages", Toast.LENGTH_SHORT).show()
-    }
+        // due to this bug https://issuetracker.google.com/issues/142847973, https://issuetracker.google.com/issues/143145612,
+        // we have to get navController from navHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
-    fun myReservation(view: View) {
-        Toast.makeText(this, "Go to My Reservation", Toast.LENGTH_SHORT).show()
-    }
-
-    fun logout(view: View) {
-        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+        binding.bottomNavView.setupWithNavController(navController)
     }
 }

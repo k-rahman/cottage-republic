@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentLoginScreenBinding
 
@@ -35,6 +36,13 @@ class LoginScreenFragment : Fragment() {
         viewModel.username.observe(viewLifecycleOwner, {
             Log.v("test: ", it)
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.navigate.observe(viewLifecycleOwner,{
+        // navigate to next screen
+        // findNavController().navigate()
+        // viewModel.doneNavigate()
+
         })
 
         binding.loginViewModel = viewModel

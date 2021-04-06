@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 class RegisterFragmentEmail : Fragment(),View.OnClickListener {
     lateinit var navController: NavController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

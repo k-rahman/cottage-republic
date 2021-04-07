@@ -3,58 +3,83 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
 >
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <data>
+        <variable
+                name="homeViewModel"
+                type="fi.oamk.cottagerepublic.ui.home.HomeViewModel"
+        />
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MainActivity"
-            android:orientation="vertical">
-
-        <!-- https://developer.android.com/training/appbar/setting-up -->
-        <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linearLayoutCompat"
+    >
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/colorPrimary"
-                android:padding="10dp"
-                android:layout_marginBottom="16dp">
-
-            <TextView
+        >
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsingToolbar_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="40dp"
-                    android:text="@string/main_screen_title"
-                    android:textColor="@color/colorWhite"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="Screen Title"
-            />
+                    android:layout_height="120dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                    app:title="@string/main_screen_title"
+                    app:expandedTitleGravity="center"
+                    app:titleEnabled="false"
+            >
+                <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                />
+                <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/main_screen_title"
+                        android:textColor="@color/colorWhite"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Screen Title"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/search_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/search_borders"
+                        android:layout_margin="6dp"
+                        android:padding="8dp"
+                        android:hint="@string/search_hint"
+                        android:gravity="center_horizontal"
+                        android:textSize="15sp"
+                        android:drawableStart="@drawable/ic_baseline_search_24"
+                        android:onClick="@{() -> homeViewModel.onSearchClicked()}"
+                />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:padding="10dp"
-                    android:background="@drawable/search_borders"
-                    android:hint="@string/search_placeholder"
-                    android:textSize="15sp"
-                    android:drawableStart="@drawable/ic_baseline_search_24"
-            />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:orientation="vertical">
+                android:layout_height="match_parent"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+            >
                 <TextView
                         android:id="@+id/popular_destination_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/popular_destinations"
-                        style="@style/list_header_text"/>
+                        style="@style/list_header_text"
+                />
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/popular_destinations_list"
                         android:layout_width="match_parent"
@@ -63,8 +88,8 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@android:layout/simple_gallery_item"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp">
-                </androidx.recyclerview.widget.RecyclerView>
+                        android:layout_marginBottom="16dp"
+                />
                 <View
                         android:id="@+id/divider"
                         android:layout_width="match_parent"
@@ -87,78 +112,9 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@android:layout/simple_gallery_item"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"/>
-            </LinearLayout>
-        </ScrollView>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <!-- SECOND LAYOUT -->
-<!--    <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            tools:context=".MainActivity"-->
-<!--            android:orientation="vertical"-->
-<!--    >-->
-
-<!--        <com.google.android.material.appbar.AppBarLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:elevation="100dp"-->
-<!--                app:expanded="true"-->
-<!--        >-->
-
-<!--            <com.google.android.material.appbar.MaterialToolbar-->
-<!--                    android:id="@+id/topAppBar"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="?attr/actionBarSize"-->
-<!--                    app:menu="@menu/top_app_bar"-->
-<!--                    app:title="@string/main_screen_title"-->
-<!--                    app:titleTextColor="@color/colorWhite"-->
-<!--                    style="@style/Widget.MaterialComponents.Toolbar.Primary"-->
-<!--            />-->
-
-<!--        </com.google.android.material.appbar.AppBarLayout>-->
-
-<!--        <TextView-->
-<!--                android:id="@+id/popular_destination_label"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/popular_destinations"-->
-<!--                style="@style/list_header_text"/>-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/popular_destinations_list"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                tools:listitem="@android:layout/simple_gallery_item"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginBottom="16dp">-->
-<!--        </androidx.recyclerview.widget.RecyclerView>-->
-<!--        <View-->
-<!--                android:id="@+id/divider"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginBottom="16dp"-->
-<!--        />-->
-<!--        <TextView-->
-<!--                android:id="@+id/popular_cottage_label"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/popular_cottages"-->
-<!--                style="@style/list_header_text"-->
-<!--        />-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/popular_cottages_list"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                tools:listitem="@android:layout/simple_gallery_item"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginBottom="16dp"-->
-<!--        />-->
-<!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
+                        android:layout_marginBottom="16dp"
+                />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

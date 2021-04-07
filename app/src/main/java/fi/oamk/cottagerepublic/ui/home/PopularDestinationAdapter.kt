@@ -8,11 +8,12 @@ To display your data in a RecyclerView, you need the following parts:
     with the RecyclerView.
  */
 
-package fi.oamk.cottagerepublic
+package fi.oamk.cottagerepublic.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.ListItemPopularDestinationBinding
 
 // Data

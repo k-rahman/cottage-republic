@@ -18,7 +18,8 @@ class LoginScreenViewModel : ViewModel() {
 
     }
 
-    fun onLoginClick(username: String , password: String)
+//    fun onLoginClick(username: String , password: String)
+fun onLoginClick()
     {
         //Call login function from repository
         //if response successful

@@ -3,12 +3,14 @@ package fi.oamk.cottagerepublic.ui.search
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -40,7 +42,7 @@ class SearchFragment : Fragment() {
         // toolbar configurations
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
 
         // ViewModelProvider returns an existing ViewModel if one exists,
         // or it creates a new one if it does not already exist.

@@ -1,10 +1,10 @@
-package fi.oamk.cottagerepublic.home
+package fi.oamk.cottagerepublic.util
 
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class MarginItemDecoration(private val spaceHeight: Int) :
+class HorizontalItemDecoration(private val spaceHeight: Int) :
     RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
@@ -18,11 +18,6 @@ class MarginItemDecoration(private val spaceHeight: Int) :
             }
 
             right = spaceHeight
-
-            // last item
-            if (parent.getChildAdapterPosition(view) == parent.layoutManager?.itemCount?.minus(1)) {
-                right = spaceHeight
-            }
         }
     }
 }

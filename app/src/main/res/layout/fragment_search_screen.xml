@@ -5,8 +5,8 @@
 >
     <data>
         <variable
-                name="homeViewModel"
-                type="fi.oamk.cottagerepublic.ui.home.HomeViewModel"
+                name="searchViewModel"
+                type="fi.oamk.cottagerepublic.ui.search.SearchViewModel"
         />
     </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -33,20 +33,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
+                        app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
                 />
                 <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:text="@string/main_screen_title"
+                        android:text="@string/search_screen_title"
                         android:textColor="@color/colorWhite"
                         android:textAlignment="center"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         tools:text="Screen Title"
                 />
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/search_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -54,12 +55,12 @@
                         android:background="@drawable/search_borders"
                         android:layout_margin="6dp"
                         android:padding="8dp"
-                        android:hint="@string/search_hint"
-                        android:gravity="center_horizontal"
+                        android:hint="@string/search_placeholder"
                         android:textSize="15sp"
                         android:drawableStart="@drawable/ic_baseline_search_24"
-                        android:onClick="@{() -> homeViewModel.onSearchClicked()}"
-                />
+                        android:text="@={searchViewModel.searchQuery}"
+                >
+                </androidx.appcompat.widget.AppCompatEditText>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -67,52 +68,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        >
+                android:layout_marginTop="5dp">
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
             >
-                <TextView
-                        android:id="@+id/popular_destination_label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/popular_destinations"
-                        style="@style/list_header_text"
-                />
                 <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/popular_destinations_list"
+                        android:id="@+id/search_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@android:layout/simple_gallery_item"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                />
-                <View
-                        android:id="@+id/divider"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                />
-                <TextView
-                        android:id="@+id/popular_cottage_label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/popular_cottages"
-                        style="@style/list_header_text"
-                />
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/popular_cottages_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@android:layout/simple_gallery_item"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
                 />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.core.widget.NestedScrollView>

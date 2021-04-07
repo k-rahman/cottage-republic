@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "664064067599",
+    "project_id": "cottage-republic",
+    "storage_bucket": "cottage-republic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664064067599:android:e8ef53da3162d1e8f67b7a",
+        "android_client_info": {
+          "package_name": "fi.oamk.cottagerepublic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664064067599-9stpqjuikomvu2lfafrr1g5hhbo56stv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVrMabLr5mr_ObgFsILqaSJhQJuUm8czI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664064067599-9stpqjuikomvu2lfafrr1g5hhbo56stv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

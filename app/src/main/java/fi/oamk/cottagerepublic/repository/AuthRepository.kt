@@ -29,7 +29,7 @@ class AuthRepository(private val application: Application) {
 
 
     fun register(username: String?, password: String?) {
-        Log.v("Test1", "register repository active")
+        Log.v("Test1", "Registering..")
         Log.v("Password and username = ", username + " " + password)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             firebaseAuth.createUserWithEmailAndPassword(username, password)
@@ -57,19 +57,22 @@ class AuthRepository(private val application: Application) {
 
     }
 
-    fun login(email: String?, password: String?) {
+    fun login(username: String?, password: String?) {
+        Log.v("test1","Login in..")
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            firebaseAuth.signInWithEmailAndPassword(email, password)
+            firebaseAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(application.mainExecutor,
                         { task ->
                             if (task.isSuccessful) {
                                 userLiveData.postValue(firebaseAuth.currentUser)
+                                Log.v("test2", "login Success")
                             } else {
                                 Toast.makeText(
                                         application.applicationContext,
                                         "Login Failure: " + task.exception!!.message,
                                         Toast.LENGTH_SHORT
                                 ).show()
+                                Log.v("test2", "Login fail")
                             }
                         })
         }
@@ -78,6 +81,15 @@ class AuthRepository(private val application: Application) {
     fun logOut() {
         firebaseAuth.signOut()
         loggedOutLiveData.postValue(true)
+        Log.v("test2", "Logged out")
+    }
+
+    fun fillInBoxes (){
+        Toast.makeText(
+            application.applicationContext,
+            "please fill in all boxes",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun getUserLiveData(): MutableLiveData<FirebaseUser> {

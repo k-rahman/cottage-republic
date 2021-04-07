@@ -21,15 +21,28 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
 
 
     fun onLoginClick(username: String?, password: String?) {
-        authRepository?.login(username, password)
+        if(username?.length != 0 && password?.length != 0) {
+            authRepository.fillInBoxes()
+        }
+        else
+        {
+            authRepository?.login(username, password)
+            _navigate.value = true
+        }
 
-        _navigate.value = true
+        Log.v("Test", "login has been clicked")
 
     }
 
     fun onRegisterClick(username: String?, password: String?) {
-        authRepository?.register(username, password)
+        if(username?.length != 0 && password?.length != 0) {
+            authRepository.fillInBoxes()
+        }
+        else {
+            authRepository?.register(username, password)
+        }
         Log.v("Test", "Registration has been clicked")
+
     }
 
 

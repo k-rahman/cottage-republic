@@ -8,47 +8,47 @@ To display your data in a RecyclerView, you need the following parts:
     with the RecyclerView.
  */
 
-package fi.oamk.cottagerepublic
+package fi.oamk.cottagerepublic.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import fi.oamk.cottagerepublic.databinding.ListItemPopularDestinationBinding
+import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.databinding.ListItemPopularCottagesBinding
+import fi.oamk.cottagerepublic.util.CottageDiffCallBack
 
-// Data
-data class Destination(
-    val image: Int = R.drawable.ic_launcher_background,
-    val destinationName: String = "testLabel"
-)
-
-class PopularDestinationAdapter(val clickListener: DestinationListener) : RecyclerView.Adapter<PopularDestinationAdapter.ViewHolder>() {
-
-    val data = listOf<Destination>(Destination(), Destination(), Destination())
-
-    // used by RecyleView to get the number of items it will render
-    override fun getItemCount(): Int = data.size
+class PopularCottagesAdapter(private val clickListener: CottageListener) :
+    ListAdapter<Cottage, PopularCottagesAdapter.ViewHolder>(CottageDiffCallBack()) {
 
     // used by RecycleView to get the ViewHolder (Wrapper around list item)
+    // The parent parameter, which is the view group that holds the view holder, is always the RecyclerView
+    // The viewType parameter is used when there are multiple views in the same RecyclerView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-    // used by RecycleView to get access each list item and bind it with its data
+    // the onBindViewHolder()function is called by RecyclerView to display the data for one list item at the specified position
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item, clickListener)
     }
 
     // wrapper around the list item (the card view in this case)
     // ViewHolder is an private inner class of PopularDestinationAdapter class
-    class ViewHolder private constructor(val binding: ListItemPopularDestinationBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: ListItemPopularCottagesBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         // binding data in ViewHolder is a better practice
-        fun bind(item: Destination, clickListener: DestinationListener) {
+        fun bind(item: Cottage, clickListener: CottageListener) {
 //            binding.cardImage.setImageResource(item.image)
-//            binding.cardLabel.text = item.destinationName
-            binding.destination = item
-            binding.destinationListener = clickListener
+//            binding.cardLabel.text = item.label
+            binding.cottage = item
+            binding.cottageListener = clickListener
+
+            // it's always a good idea to call executePendingBindings() when you use binding adapters in a RecyclerView,
+            // because it can slightly speed up sizing the views.
             binding.executePendingBindings()
         }
 
@@ -59,14 +59,14 @@ class PopularDestinationAdapter(val clickListener: DestinationListener) : Recycl
             fun from(parent: ViewGroup): ViewHolder {
                 // Inflation should happen in the ViewHolder
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ListItemPopularDestinationBinding.inflate(layoutInflater, parent, false)
+                val binding = ListItemPopularCottagesBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 }
 
-// handles click on recycleView item
-class DestinationListener(val clickListener: (destinationName: String) -> Unit) {
-    fun onClick(destination: Destination) = clickListener(destination.destinationName)
+
+class CottageListener(val clickListener: (cottage: Cottage) -> Unit) {
+    fun onClick(cottage: Cottage) = clickListener(cottage)
 }

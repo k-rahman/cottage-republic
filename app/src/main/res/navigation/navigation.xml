@@ -9,17 +9,43 @@
 
     <fragment
             android:id="@+id/homeScreenFragment"
-            android:name="fi.oamk.cottagerepublic.home.HomeScreenFragment"
-            android:label="Home"
+            android:name="fi.oamk.cottagerepublic.ui.home.HomeScreenFragment"
             tools:layout="@layout/fragment_home_screen"
+
     />
     <!-- placeholder -->
-    <fragment android:id="@+id/accountScreenFragment"
-              android:name="fi.oamk.cottagerepublic.BlankFragment"
-              android:label="fragment_account"
-              tools:layout="@layout/fragment_account"/>
     <fragment
         android:id="@+id/loginScreenFragment"
         android:name="fi.oamk.cottagerepublic.auth.LoginScreenFragment"
         android:label="LoginScreenFragment" />
+
+        <action
+                android:id="@+id/action_homeScreenFragment_to_searchFragment"
+                app:destination="@id/searchFragment"
+        />
+        <action
+                android:id="@+id/action_homeScreenFragment_to_cottageDetailFragment"
+                app:destination="@id/cottageDetailFragment"
+        />
+
+
+    <fragment
+            android:id="@+id/searchFragment"
+            android:name="fi.oamk.cottagerepublic.ui.search.SearchFragment"
+            tools:layout="@layout/fragment_search_screen"
+    >
+        <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
+                app:destination="@id/cottageDetailFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/cottageDetailFragment"
+              android:name="fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailFragment"
+              tools:layout="@layout/fragment_cottage_detail"
+    >
+        <argument
+                android:name="selectedCottage"
+                app:argType="fi.oamk.cottagerepublic.data.Cottage"
+        />
+    </fragment>
+
 </navigation>

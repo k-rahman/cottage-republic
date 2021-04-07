@@ -5,13 +5,12 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseUser
-import fi.oamk.cottagerepublic.repository.RepositoryModel
+import fi.oamk.cottagerepublic.repository.AuthRepository
 
 
 class LoginScreenViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: RepositoryModel
+    private val authRepository: AuthRepository
     val userLiveData: MutableLiveData<FirebaseUser>
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
@@ -22,14 +21,14 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
 
 
     fun onLoginClick(username: String?, password: String?) {
-        repository?.login(username, password)
+        authRepository?.login(username, password)
 
         _navigate.value = true
 
     }
 
     fun onRegisterClick(username: String?, password: String?) {
-        repository?.register(username, password)
+        authRepository?.register(username, password)
         Log.v("Test", "Registration has been clicked")
     }
 
@@ -41,8 +40,8 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     init {
-        repository = RepositoryModel(application)
-        userLiveData = repository.getUserLiveData()
+        authRepository = AuthRepository(application)
+        userLiveData = authRepository.getUserLiveData()
     }
 
 }

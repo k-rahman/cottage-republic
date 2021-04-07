@@ -5,22 +5,22 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
-import fi.oamk.cottagerepublic.repository.RepositoryModel
+import fi.oamk.cottagerepublic.repository.AuthRepository
 
 class LoginRegisterViewModel(application: Application) : AndroidViewModel(application) {
-    private val authAppRepository: RepositoryModel
+    private val authAppAuthRepository: AuthRepository
     val userLiveData: MutableLiveData<FirebaseUser>
 
     fun login(email: String?, password: String?) {
-        authAppRepository.login(email, password)
+        authAppAuthRepository.login(email, password)
     }
 
     fun register(email: String?, password: String?) {
-        authAppRepository.register(email, password)
+        authAppAuthRepository.register(email, password)
     }
 
     init {
-        authAppRepository = RepositoryModel(application)
-        userLiveData = authAppRepository.getUserLiveData()
+        authAppAuthRepository = AuthRepository(application)
+        userLiveData = authAppAuthRepository.getUserLiveData()
     }
 }

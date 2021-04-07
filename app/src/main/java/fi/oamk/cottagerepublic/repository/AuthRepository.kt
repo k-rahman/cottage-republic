@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 
-class RepositoryModel(private val application: Application) {
+class AuthRepository(private val application: Application) {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val userLiveData: MutableLiveData<FirebaseUser>
     private val loggedOutLiveData: MutableLiveData<Boolean>
@@ -28,10 +28,11 @@ class RepositoryModel(private val application: Application) {
     }
 
 
-    fun register(email: String?, password: String?) {
-        Log.v("Test2", "register repository active")
+    fun register(username: String?, password: String?) {
+        Log.v("Test1", "register repository active")
+        Log.v("Password and username = ", username + " " + password)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
+            firebaseAuth.createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener(application.mainExecutor,
                         { task ->
                             if (task.isSuccessful) {

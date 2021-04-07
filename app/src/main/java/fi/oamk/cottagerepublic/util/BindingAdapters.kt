@@ -3,9 +3,7 @@ package fi.oamk.cottagerepublic.ui.home
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.appcompat.widget.SearchView
 import androidx.databinding.BindingAdapter
-import fi.oamk.cottagerepublic.Destination
 import fi.oamk.cottagerepublic.data.Cottage
 
 @BindingAdapter("image")

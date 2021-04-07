@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="cottageSearch"
+                  type="fi.oamk.cottagerepublic.data.Cottage"/>
+        <variable name="searchListListener"
+                  type="fi.oamk.cottagerepublic.ui.search.SearchListListener"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="100dp"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            android:onClick="@{() -> searchListListener.onClick(cottageSearch)}"
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        >
+            <ImageView
+                    android:id="@+id/cottage_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    app:image="@{cottageSearch}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/cottage_image"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic[11]"
+            />
+            <RatingBar
+                    android:id="@+id/cottage_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?attr/ratingBarStyleSmall"
+                    android:isIndicator="true"
+                    app:rating="@{cottageSearch}"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_image" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginStart="24dp" android:layout_marginTop="8dp"/>
+            <TextView
+                    android:id="@+id/cottage_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto"
+                    app:cottageLabel="@{cottageSearch}"
+                    app:layout_constraintStart_toStartOf="@+id/cottage_rating"
+                    tools:text="cottage label"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_rating"
+                    app:layout_constraintEnd_toEndOf="@+id/cottage_rating"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintHorizontal_bias="0.0"/>
+            <TextView
+                    android:id="@+id/cottage_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="location"
+                    app:location="@{cottageSearch}"
+                    app:layout_constraintEnd_toEndOf="@+id/cottage_label"
+                    app:layout_constraintStart_toStartOf="@+id/cottage_label"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_label" android:layout_marginTop="8dp"
+                    app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp" android:fontFamily="@font/roboto" android:textStyle="bold"/>
+            <TextView
+                    android:id="@+id/cottage_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="price/night"
+                    app:price="@{cottageSearch}"
+                    android:textAlignment="viewEnd"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="1.0"
+                    android:layout_marginEnd="24dp" app:layout_constraintStart_toEndOf="@+id/cottage_rating"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_image"
+                    app:layout_constraintVertical_bias="1.0" android:fontFamily="@font/roboto"
+                    android:textStyle="bold"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

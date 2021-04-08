@@ -42,8 +42,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     // Enables data binding.
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
 }
 
@@ -81,6 +81,9 @@ dependencies {
 
     // Glide (Display a photo from a web URL)
     implementation "com.github.bumptech.glide:glide:$version_glide"
+
+    // Mapbox
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.1'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'

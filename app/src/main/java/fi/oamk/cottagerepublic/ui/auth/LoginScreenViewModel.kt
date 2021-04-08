@@ -1,17 +1,15 @@
-package fi.oamk.cottagerepublic.auth
+package fi.oamk.cottagerepublic.ui.auth
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.FirebaseUser
 import fi.oamk.cottagerepublic.repository.AuthRepository
 
 
 class LoginScreenViewModel(application: Application) : AndroidViewModel(application) {
-    private val authRepository: AuthRepository
-    val userLiveData: MutableLiveData<FirebaseUser>
+    private val authRepository: AuthRepository = AuthRepository(application)
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     private var _navigate = MutableLiveData<Boolean>()
@@ -21,12 +19,12 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
 
 
     fun onLoginClick(username: String?, password: String?) {
-        if(username?.length != 0 && password?.length != 0) {
+        if(username?.length == 0 && password?.length == 0) {
             authRepository.fillInBoxes()
         }
         else
         {
-            authRepository?.login(username, password)
+            authRepository.login(username, password)
             _navigate.value = true
         }
 
@@ -34,27 +32,29 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
 
     }
 
+   /*
     fun onRegisterClick(username: String?, password: String?) {
-        if(username?.length != 0 && password?.length != 0) {
+        if(username?.length == 0 && password?.length == 0) {
             authRepository.fillInBoxes()
         }
         else {
             authRepository?.register(username, password)
         }
         Log.v("Test", "Registration has been clicked")
-
     }
+*/
+    private val _navigateToRegister = MutableLiveData<Boolean>()
+    val navigateToRegister:LiveData<Boolean>
+    get() =  _navigateToRegister
+    // the register button functions
+        fun onRegisterClick(){
+           _navigateToRegister.value = true
+       }
+        fun onRegisterNavigated() {
+           _navigateToRegister.value = false
 
-
-
-    fun doneNavigate()
-    {
+       }
+        fun doneNavigate() {
         _navigate.value = false
-    }
-
-    init {
-        authRepository = AuthRepository(application)
-        userLiveData = authRepository.getUserLiveData()
-    }
-
+        }
 }

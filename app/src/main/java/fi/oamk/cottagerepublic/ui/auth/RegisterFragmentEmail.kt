@@ -1,4 +1,4 @@
-package fi.oamk.cottagerepublic
+package fi.oamk.cottagerepublic.ui.auth
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,8 +11,7 @@ import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
-import com.google.android.material.textfield.TextInputEditText
+import fi.oamk.cottagerepublic.R
 
 
 class RegisterFragmentEmail : Fragment(),View.OnClickListener {
@@ -36,7 +35,7 @@ class RegisterFragmentEmail : Fragment(),View.OnClickListener {
             R.id.navigate_button_email ->{
                 if (!TextUtils.isEmpty(email)){
                     val bundle = bundleOf("email" to email)
-                    navController.navigate(R.id.action_registerFragmentName_to_registerFragmentPassword,bundle)
+                    navController.navigate(R.id.action_registerFragmentEmail_to_registerFragmentPassword,bundle)
                 }
             }
         }

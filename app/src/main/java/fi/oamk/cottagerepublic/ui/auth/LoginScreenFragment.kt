@@ -1,13 +1,11 @@
-package fi.oamk.cottagerepublic.auth
+package fi.oamk.cottagerepublic.ui.auth
 
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,7 +20,7 @@ class LoginScreenFragment : Fragment() {
 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         Log.v("test: ", "i'm created")
 
@@ -35,7 +33,7 @@ class LoginScreenFragment : Fragment() {
 
         viewModel.username.observe(viewLifecycleOwner, {
             Log.v("test: ", it)
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
 
         viewModel.navigate.observe(viewLifecycleOwner,{
@@ -43,6 +41,15 @@ class LoginScreenFragment : Fragment() {
         // findNavController().navigate()
         // viewModel.doneNavigate()
 
+        })
+        //Gets the action from navchart and is used to naviagte
+        viewModel.navigateToRegister.observe(viewLifecycleOwner,{
+            if(it){
+                findNavController().navigate(
+                        LoginScreenFragmentDirections.actionLoginScreenFragmentToRegisterFragmentEmail()
+                )
+                viewModel.onRegisterNavigated()
+            }
         })
 
         binding.loginViewModel = viewModel

@@ -1,4 +1,4 @@
-package fi.oamk.cottagerepublic
+package fi.oamk.cottagerepublic.ui.auth
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.textfield.TextInputEditText
+import fi.oamk.cottagerepublic.R
 
 
 class RegisterFragmentPassword : Fragment() , View.OnClickListener {

@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
         >
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/cottage_image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -36,17 +36,20 @@
                     android:contentDescription="@string/cottage_image"
                     tools:srcCompat="@tools:sample/backgrounds/scenic[11]"
             />
-            <RatingBar
+            <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/cottage_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?attr/ratingBarStyleSmall"
                     android:isIndicator="true"
                     app:rating="@{cottageSearch}"
-                    app:layout_constraintTop_toBottomOf="@+id/cottage_image" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginStart="24dp" android:layout_marginTop="8dp"/>
-            <TextView
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"/>
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/cottage_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +63,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/cottage_rating"
                     android:layout_marginTop="8dp"
                     app:layout_constraintHorizontal_bias="0.0"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/cottage_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,7 +74,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/cottage_label" android:layout_marginTop="8dp"
                     app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginBottom="16dp" android:fontFamily="@font/roboto" android:textStyle="bold"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/cottage_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,7 +86,7 @@
                     android:layout_marginEnd="24dp" app:layout_constraintStart_toEndOf="@+id/cottage_rating"
                     app:layout_constraintTop_toBottomOf="@+id/cottage_image"
                     app:layout_constraintVertical_bias="1.0" android:fontFamily="@font/roboto"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" android:textColor="@color/colorAccent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -34,4 +34,5 @@
     <string name="ask_the_host">Ask the host</string>
     <string name="do_you_have_any_questions">Do you have any questions?</string>
     <string name="book">Book</string>
+    <string name="select_date">Select dates</string>
 </resources>

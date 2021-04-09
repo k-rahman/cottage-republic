@@ -41,5 +41,11 @@
                 app:argType="fi.oamk.cottagerepublic.data.Cottage"
         />
     </fragment>
+    <fragment android:id="@+id/calendarFragment"
+              android:name="fi.oamk.cottagerepublic.ui.cottageDetail.CalendarFragment"
+              android:label="CalendarFragment"/>
+    <fragment android:id="@+id/bookingDetailFragment"
+              android:name="fi.oamk.cottagerepublic.ui.bookingDetail.BookingDetailFragment"
+              android:label="BookingDetailFragment"/>
 
 </navigation>

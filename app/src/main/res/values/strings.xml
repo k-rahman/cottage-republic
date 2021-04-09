@@ -17,4 +17,20 @@
     <string name="cottagerepublic_splash_screen_image_description">CottageRepublic splash screen image</string>
     <string name="register_button_text"><u>Or register a new account</u></string>
 
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="place_and_postcode">Place and postcode</string>
+    <string name="birth_date">Birth date</string>
+    <string name="register">Register</string>
+    <string name="address">Address</string>
+    <string name="cabin_renter">Cabin renter</string>
+    <string name="cabin_owner">Cabin owner</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="name">Name</string>
+    <string name="login">Login</string>
 </resources>

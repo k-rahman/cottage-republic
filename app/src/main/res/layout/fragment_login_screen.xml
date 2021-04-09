@@ -6,7 +6,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="fi.oamk.cottagerepublic.auth.LoginScreenViewModel" />
+            type="fi.oamk.cottagerepublic.ui.auth.LoginScreenViewModel" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                 android:layout_marginEnd="101dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="Name"
+                android:hint="@string/name"
                 android:textColorHint="#DDDDDD"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#FFFFFF"
@@ -87,7 +87,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/WelcomeTextField"
                 android:text="@={loginViewModel.username}"
-                />
+                android:autofillHints="emailAddress" />
 
             <EditText
                 android:id="@+id/password_login_input"
@@ -97,7 +97,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="101dp"
                 android:ems="10"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:textColorHint="#DDDDDD"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#FFFFFF"
@@ -106,7 +106,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username_login_input"
                 android:text="@={loginViewModel.password}"
-                />
+                android:autofillHints="password" />
 
             <Button
                 android:id="@+id/loginButton"
@@ -116,7 +116,7 @@
                 android:layout_marginStart="93dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="94dp"
-                android:text="Login"
+                android:text="@string/login"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +141,7 @@
                 app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password_login_input"
-                android:onClick="@{() -> loginViewModel.onRegisterClick(loginViewModel.username, loginViewModel.password)}"
+                android:onClick="@{() -> loginViewModel.onRegisterClick()}"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,4 @@
-package fi.oamk.cottagerepublic.auth
+package fi.oamk.cottagerepublic.ui.auth
 
 
 import android.app.Application

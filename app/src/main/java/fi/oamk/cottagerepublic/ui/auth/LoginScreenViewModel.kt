@@ -19,7 +19,7 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
 
 
     fun onLoginClick(username: String?, password: String?) {
-        if(username?.length == 0 && password?.length == 0) {
+        if(username.isNullOrBlank() || password.isNullOrBlank()) {
             authRepository.fillInBoxes()
         }
         else
@@ -34,7 +34,7 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
 
    /*
     fun onRegisterClick(username: String?, password: String?) {
-        if(username?.length == 0 && password?.length == 0) {
+        if(username.isNullOrBlank() || password.isNullOrBlank()) {
             authRepository.fillInBoxes()
         }
         else {

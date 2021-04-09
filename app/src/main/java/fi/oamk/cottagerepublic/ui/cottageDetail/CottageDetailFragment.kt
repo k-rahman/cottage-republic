@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -62,6 +63,22 @@ class CottageDetailFragment : Fragment() {
             }
         })
 
+
+
+        viewModel.showCalendar.observe(viewLifecycleOwner, {
+            if (it) {
+                val fra = CalendarFragment()
+
+                requireActivity().supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add(R.id.nav_host_fragment, fra)
+                }
+//                calendar.visibility = View.VISIBLE
+                viewModel.calendarShowed()
+            }
+        })
+
+
         return binding.root
     }
 
@@ -71,10 +88,10 @@ class CottageDetailFragment : Fragment() {
             mapboxMap.setStyle(Style.MAPBOX_STREETS) {
                 // Map is set up and the style has loaded. Now you can add data or make other map adjustments
                 mapboxMap.moveCamera(CameraUpdateFactory.zoomTo(5.0))
-//                val uiSettings = mapboxMap.uiSettings
+                val uiSettings = mapboxMap.uiSettings
 ////                uiSettings.setAllGesturesEnabled(false)
 ////                uiSettings.isCompassEnabled = false
-//                uiSettings.isAttributionEnabled = false
+                uiSettings.isAttributionEnabled = false
 ////                uiSettings.isLogoEnabled = false
             }
         }

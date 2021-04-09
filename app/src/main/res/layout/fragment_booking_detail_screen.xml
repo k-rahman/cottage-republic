@@ -90,15 +90,6 @@
                 />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.google.android.material.card.MaterialCardView>
-        <!--        <View-->
-        <!--                android:id="@+id/divider1"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="1dp"-->
-        <!--                android:background="?android:attr/listDivider"-->
-        <!--                app:layout_constraintStart_toStartOf="parent"-->
-        <!--                app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                app:layout_constraintTop_toBottomOf="@+id/card_view"-->
-        <!--                android:layout_marginTop="32dp"/>-->
 
         <ScrollView
                 android:layout_width="0dp"
@@ -226,7 +217,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/taxes"
                         android:layout_marginTop="32dp"
                 />
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:text="@string/total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/textView12"
@@ -236,7 +227,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/textView13"
                         app:layout_constraintHorizontal_chainStyle="spread_inside" android:layout_marginTop="32dp"
                         android:textSize="18sp" android:textColor="@color/colorBlack"/>
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:text="284€"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/textView13"
@@ -244,7 +235,7 @@
                         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@+id/textView12"
                         app:layout_constraintHorizontal_bias="0.5" app:layout_constraintTop_toBottomOf="@+id/divider3"
                         android:layout_marginTop="32dp" android:textSize="18sp" android:textColor="@color/colorBlack"/>
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                         android:text="@android:string/cancel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content" android:id="@+id/button2"
@@ -254,9 +245,10 @@
                         app:layout_constraintHorizontal_chainStyle="packed" android:layout_marginEnd="8dp"
                         android:fontFamily="@font/roboto" android:textAllCaps="false"
                         android:background="@drawable/shape_rounded_accent_color" android:textColor="@color/colorWhite"
-                        android:textSize="18sp" android:layout_marginTop="32dp"
+                        android:textSize="18sp"
+                        android:layout_marginTop="32dp"
                         app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="32dp"/>
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                         android:text="@string/continue_"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content" android:id="@+id/button"

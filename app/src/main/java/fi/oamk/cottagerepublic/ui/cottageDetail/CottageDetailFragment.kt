@@ -79,4 +79,11 @@ class CottageDetailFragment : Fragment() {
             }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // show bottom navigation
+        requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+    }
 }

@@ -34,7 +34,7 @@
 
     <fragment android:id="@+id/cottageDetailFragment"
               android:name="fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailFragment"
-              tools:layout="@layout/fragment_cottage_detail"
+              tools:layout="@layout/fragment_cottage_detail_screen"
     >
         <argument
                 android:name="selectedCottage"

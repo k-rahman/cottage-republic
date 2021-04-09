@@ -16,7 +16,10 @@ fun TextView.setDestinationName(item: Destination) {
 }
 
 @BindingAdapter("image")
-fun ImageView.setCottageImage(item: Cottage) = setImageResource(item.image)
+fun ImageView.setCottageImage(item: Cottage) {
+    if (item.images.isNotEmpty())
+        setImageResource(Integer.valueOf(item.images[0]))
+}
 
 @BindingAdapter("cottageLabel")
 fun TextView.setCottageName(item: Cottage) {
@@ -36,4 +39,9 @@ fun TextView.setCottageLocation(item: Cottage) {
 @BindingAdapter("price")
 fun TextView.setCottagePrice(item: Cottage) {
     text = "${item.price} €/night"
+}
+
+@BindingAdapter("imageUrl")
+fun ImageView.setSliderImage(item: String) {
+    setImageResource(Integer.valueOf(item))
 }

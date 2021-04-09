@@ -34,9 +34,11 @@ class CottageDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cottage_detail_screen, container, false)
 
+        // Scoping a ViewModel to the Navigation Graph
+        val backStackEntry = findNavController().getBackStackEntry(R.id.cottageDetailFragment)
         viewModelFactory =
             CottageDetailViewModelFactory(CottageDetailFragmentArgs.fromBundle(requireArguments()).selectedCottage)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CottageDetailViewModel::class.java)
+        viewModel = ViewModelProvider(backStackEntry, viewModelFactory).get(CottageDetailViewModel::class.java)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -44,7 +46,7 @@ class CottageDetailFragment : Fragment() {
         // toolbar configuration
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
-        binding.toolbar.setNavigationIcon(R.drawable.icon_close_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_close_white_24)
 
         // hide bottom navigation
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
@@ -63,21 +65,26 @@ class CottageDetailFragment : Fragment() {
             }
         })
 
-
-
+        val calendarFragment = CalendarFragment()
         viewModel.showCalendar.observe(viewLifecycleOwner, {
             if (it) {
-                val fra = CalendarFragment()
-
-                requireActivity().supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    add(R.id.nav_host_fragment, fra)
+                this.parentFragmentManager.commit {
+                    add(R.id.nav_host_fragment, calendarFragment)
                 }
-//                calendar.visibility = View.VISIBLE
-                viewModel.calendarShowed()
+
+                // disable all actions in the background fragment, so it is not clickable
+                binding.calendarButton.isEnabled = false
+                binding.toolbar.navigationIcon = null
+            } else {
+                this.parentFragmentManager.commit {
+                    remove(calendarFragment)
+                }
+
+                // disable all actions in the background fragment, so it is not clickable
+                binding.calendarButton.isEnabled = true
+                binding.toolbar.setNavigationIcon(R.drawable.icon_close_white_24)
             }
         })
-
 
         return binding.root
     }

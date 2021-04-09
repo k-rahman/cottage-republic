@@ -24,7 +24,7 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
         _showCalendar.value = true
     }
 
-    fun calendarShowed() {
+    fun calendarHide() {
         _showCalendar.value = false
     }
 }

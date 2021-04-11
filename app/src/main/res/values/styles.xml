@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="list_header_text">
+    <style name="ListHeaderText">
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:textSize">20sp</item>
@@ -23,4 +23,19 @@
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="itemIconSize">30dp</item>
     </style>
+
+<!--    cottage details screen title expanded-->
+    <style name="TextAppearance.App.CollapsingToolbar.Expanded"
+           parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/colorTransparent</item>
+    </style>
+
+<!--    cottage details screen title collapsed-->
+    <style name="TextAppearance.App.CollapsingToolbar.Collapsed"
+           parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

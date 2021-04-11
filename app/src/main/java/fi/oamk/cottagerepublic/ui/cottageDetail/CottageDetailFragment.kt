@@ -12,10 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.mapbox.mapboxsdk.Mapbox
-import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
-import com.mapbox.mapboxsdk.maps.Style
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCottageDetailScreenBinding
+import fi.oamk.cottagerepublic.ui.calendar.CalendarFragment
+import fi.oamk.cottagerepublic.util.MapUtils
 
 
 class CottageDetailFragment : Fragment() {
@@ -51,8 +51,13 @@ class CottageDetailFragment : Fragment() {
         // hide bottom navigation
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
 
-        // get the map
-        initializeMap(savedInstanceState)
+        // initialize the map
+        val locationsList = arrayListOf<HashMap<String, Double>>()
+        val singleLocation = hashMapOf<String, Double>()
+        singleLocation.put("long", 25.46816)
+        singleLocation.put("lat", 65.01236)
+        locationsList.add(singleLocation)
+        MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, false)
 
         cottageImageAdapter = CottageImageAdapter(CottageImageListener {
 //            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
@@ -86,28 +91,58 @@ class CottageDetailFragment : Fragment() {
             }
         })
 
+        viewModel.navigateToMap.observe(viewLifecycleOwner, {
+            if (it) {
+                findNavController().navigate(R.id.action_cottageDetailFragment_to_mapFragment)
+                viewModel.onMapNavigated()
+            }
+        })
+
+
         return binding.root
     }
 
-    private fun initializeMap(savedInstanceState: Bundle?) {
-        binding.cottageMap.onCreate(savedInstanceState)
-        binding.cottageMap.getMapAsync { mapboxMap ->
-            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
-                // Map is set up and the style has loaded. Now you can add data or make other map adjustments
-                mapboxMap.moveCamera(CameraUpdateFactory.zoomTo(5.0))
-                val uiSettings = mapboxMap.uiSettings
-////                uiSettings.setAllGesturesEnabled(false)
-////                uiSettings.isCompassEnabled = false
-                uiSettings.isAttributionEnabled = false
-////                uiSettings.isLogoEnabled = false
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        binding.cottageMap.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.cottageMap.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.cottageMap.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.cottageMap.onPause()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        binding.cottageMap.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.cottageMap.onDestroy()
+
+        // show bottom navigation
+        requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.cottageMap.onDestroy()
 
-        // show bottom navigation
-        requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        binding.cottageMap.onSaveInstanceState(outState)
     }
 }

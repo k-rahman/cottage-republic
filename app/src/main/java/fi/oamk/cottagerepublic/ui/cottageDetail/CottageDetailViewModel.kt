@@ -16,6 +16,10 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     val showCalendar: LiveData<Boolean>
         get() = _showCalendar
 
+    private var _navigateToMap = MutableLiveData<Boolean>()
+    val navigateToMap: LiveData<Boolean>
+        get() = _navigateToMap
+
     init {
         _selectedCottage.value = cottage
     }
@@ -26,5 +30,13 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
 
     fun calendarHide() {
         _showCalendar.value = false
+    }
+
+    fun onMapClicked() {
+        _navigateToMap.value = true
+    }
+
+    fun onMapNavigated() {
+        _navigateToMap.value = false
     }
 }

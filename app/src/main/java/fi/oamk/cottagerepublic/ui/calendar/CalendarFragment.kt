@@ -1,4 +1,4 @@
-package fi.oamk.cottagerepublic.ui.cottageDetail
+package fi.oamk.cottagerepublic.ui.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.savvi.rangedatepicker.CalendarPickerView
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCalendarBinding
+import fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +35,7 @@ class CalendarFragment : Fragment() {
         end.add(Calendar.DAY_OF_YEAR, 365)
 
         val arrayList = arrayListOf<Date>()
-        var dateformat = SimpleDateFormat("dd-MM-yyyy")
+        val dateformat = SimpleDateFormat("dd-MM-yyyy")
 
         val d1 = "22-4-2021"
         val d2 = "23-4-2021"
@@ -47,11 +48,11 @@ class CalendarFragment : Fragment() {
         val newdate3 = dateformat.parse(d1)
         val newdate4 = dateformat.parse(d4)
         val newdate5 = dateformat.parse(d5)
-        arrayList.add(newdate)
-        arrayList.add(newdate2)
-        arrayList.add(newdate3)
-        arrayList.add(newdate4)
-        arrayList.add(newdate5)
+        arrayList.add(newdate!!)
+        arrayList.add(newdate2!!)
+        arrayList.add(newdate3!!)
+        arrayList.add(newdate4!!)
+        arrayList.add(newdate5!!)
 
         // sort the reserved date list (just in case)
         arrayList.sort()

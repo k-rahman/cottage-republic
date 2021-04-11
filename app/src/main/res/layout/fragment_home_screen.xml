@@ -78,7 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/popular_destinations"
-                        style="@style/list_header_text"
+                        style="@style/ListHeaderText"
                 />
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/popular_destinations_list"
@@ -102,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/popular_cottages"
-                        style="@style/list_header_text"
+                        style="@style/ListHeaderText"
                 />
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/popular_cottages_list"

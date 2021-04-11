@@ -40,6 +40,7 @@
                 android:name="selectedCottage"
                 app:argType="fi.oamk.cottagerepublic.data.Cottage"
         />
+        <action android:id="@+id/action_cottageDetailFragment_to_mapFragment" app:destination="@id/mapFragment"/>
     </fragment>
     <fragment android:id="@+id/bookingDetailFragment"
               android:name="fi.oamk.cottagerepublic.ui.bookingDetail.BookingDetailFragment"
@@ -47,12 +48,17 @@
               tools:layout="@layout/fragment_booking_detail_screen"
     />
     <fragment android:id="@+id/calendarFragment"
-              android:name="fi.oamk.cottagerepublic.ui.cottageDetail.CalendarFragment"
+              android:name="fi.oamk.cottagerepublic.ui.calendar.CalendarFragment"
               android:label="CalendarFragment"
               tools:layout="@layout/fragment_calendar"
     >
         <action android:id="@+id/action_calendarFragment_to_bookingDetailFragment"
                 app:destination="@id/bookingDetailFragment"/>
     </fragment>
+    <fragment
+            android:id="@+id/mapFragment"
+            android:name="fi.oamk.cottagerepublic.ui.map.MapFragment"
+            tools:layout="@layout/fragment_map"
+    />
 
 </navigation>

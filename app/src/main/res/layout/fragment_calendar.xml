@@ -16,7 +16,7 @@
         <com.google.android.material.card.MaterialCardView
                 android:id="@+id/calendar_wrapper"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="600dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -75,7 +75,7 @@
                 <View
                         android:id="@+id/divider1"
                         android:layout_width="match_parent"
-                        android:layout_height="4dp"
+                        android:layout_height="3dp"
                         android:background="@color/colorBlack"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,7 @@
                 <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
-                        android:layout_height="4dp"
+                        android:layout_height="3dp"
                         android:background="@color/colorBlack"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

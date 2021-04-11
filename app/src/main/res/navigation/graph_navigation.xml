@@ -43,6 +43,16 @@
     </fragment>
     <fragment android:id="@+id/bookingDetailFragment"
               android:name="fi.oamk.cottagerepublic.ui.bookingDetail.BookingDetailFragment"
-              android:label="BookingDetailFragment"/>
+              android:label="BookingDetailFragment"
+              tools:layout="@layout/fragment_booking_detail_screen"
+    />
+    <fragment android:id="@+id/calendarFragment"
+              android:name="fi.oamk.cottagerepublic.ui.cottageDetail.CalendarFragment"
+              android:label="CalendarFragment"
+              tools:layout="@layout/fragment_calendar"
+    >
+        <action android:id="@+id/action_calendarFragment_to_bookingDetailFragment"
+                app:destination="@id/bookingDetailFragment"/>
+    </fragment>
 
 </navigation>

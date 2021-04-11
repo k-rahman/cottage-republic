@@ -6,7 +6,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
 
-    <!-- calendar colors -->
+<!--     calendar colors -->
     <color name="calendar_fragment_background">#C0000000</color>
     <color name="colorTransparent">#00000000</color>
     <color name="dividerColor">#e0e0e0</color>
@@ -14,12 +14,12 @@
 
     <color name="calendar_selected_day_bg">#6fc085</color>
     <color name="calendar_selected_range_bg">#c1e3c9</color>
-    <color name="dateTimeRangePickerStateToday">#ffcf40</color>
+    <color name="dateTimeRangePickerStateToday">#16853d</color>
 
-    //this is for HighLighted dates
+<!--    this is for HighLighted dates-->
 <!--    <color name="calendar_unavailable_bg">#F44336</color>-->
 <!--    <color name="calendar_range_middle_unavailable_bg">#F44336</color>-->
 
-    // this is for Deactivated dates
+<!--     this is for Deactivated dates-->
     <color name="calendar_range_middle_deactivated_bg">#c35367</color>
 </resources>

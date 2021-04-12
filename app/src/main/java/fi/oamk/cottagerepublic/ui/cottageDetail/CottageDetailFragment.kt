@@ -1,5 +1,6 @@
 package fi.oamk.cottagerepublic.ui.cottageDetail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCottageDetailScreenBinding
 import fi.oamk.cottagerepublic.ui.calendar.CalendarFragment
 import fi.oamk.cottagerepublic.util.MapUtils
+import fi.oamk.cottagerepublic.util.VerticalItemDecoration
 
 
 class CottageDetailFragment : Fragment() {
@@ -23,6 +25,7 @@ class CottageDetailFragment : Fragment() {
     private lateinit var viewModelFactory: CottageDetailViewModelFactory
     private lateinit var viewModel: CottageDetailViewModel
     private lateinit var cottageImageAdapter: CottageImageAdapter
+    private lateinit var amenitiesAdapter: AmenityAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,22 +54,36 @@ class CottageDetailFragment : Fragment() {
         // hide bottom navigation
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
 
-        // initialize the map
-        val locationsList = arrayListOf<HashMap<String, Double>>()
-        val singleLocation = hashMapOf<String, Double>()
-        singleLocation.put("long", 25.46816)
-        singleLocation.put("lat", 65.01236)
-        locationsList.add(singleLocation)
-        MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, false)
+        setCottageDetailAdapters()
+        setObservers(savedInstanceState)
 
+        return binding.root
+    }
+
+    private fun setCottageDetailAdapters() {
         cottageImageAdapter = CottageImageAdapter(CottageImageListener {
 //            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
         })
         binding.cottageImageSlider.adapter = cottageImageAdapter
 
+        amenitiesAdapter = AmenityAdapter()
+        binding.amenitiesList.adapter = amenitiesAdapter
+        binding.amenitiesList.addItemDecoration(VerticalItemDecoration(32))
+    }
+
+    private fun setObservers(savedInstanceState: Bundle?) {
+
+        val coordinatesList = arrayListOf<HashMap<String, Double>>()
         viewModel.selectedCottage.observe(viewLifecycleOwner, {
             it.let {
                 cottageImageAdapter.submitList(it.images)
+                amenitiesAdapter.submitList(it.amenities)
+
+                if (!it.coordinates.isNullOrEmpty()) {
+                    // initialize the map
+                    coordinatesList.add(it.coordinates)
+                    MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, coordinatesList, false)
+                }
             }
         })
 
@@ -80,6 +97,7 @@ class CottageDetailFragment : Fragment() {
                 // disable all actions in the background fragment, so it is not clickable
                 binding.calendarButton.isEnabled = false
                 binding.toolbar.navigationIcon = null
+
             } else {
                 this.parentFragmentManager.commit {
                     remove(calendarFragment)
@@ -93,56 +111,70 @@ class CottageDetailFragment : Fragment() {
 
         viewModel.navigateToMap.observe(viewLifecycleOwner, {
             if (it) {
-                findNavController().navigate(R.id.action_cottageDetailFragment_to_mapFragment)
+                findNavController().navigate(
+                    CottageDetailFragmentDirections.actionCottageDetailFragmentToMapFragment(
+                        viewModel.selectedCottage.value!!
+                    )
+                )
                 viewModel.onMapNavigated()
             }
         })
 
+        viewModel.launchEmail.observe(viewLifecycleOwner, {
+            if (it) {
+                val email = Intent(Intent.ACTION_SEND)
+                email.putExtra(Intent.EXTRA_EMAIL, arrayOf("hostname@cottage-republic.com"))
+                email.putExtra(Intent.EXTRA_SUBJECT, "Cottage for rent")
+                email.putExtra(Intent.EXTRA_TEXT, "I have a question")
 
-        return binding.root
+                //need this to prompts email client only
+                email.type = "text/plain"
+                startActivity(email)
+            }
+        })
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.cottageMap.onResume()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.cottageMap.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        binding.cottageMap.onStop()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.cottageMap.onPause()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        binding.cottageMap.onLowMemory()
-    }
-
+    //    override fun onResume() {
+//        super.onResume()
+//        binding.cottageMap.onResume()
+//    }
+//
+//    override fun onStart() {
+//        super.onStart()
+//        binding.cottageMap.onStart()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        binding.cottageMap.onStop()
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        binding.cottageMap.onPause()
+//    }
+//
+//    override fun onLowMemory() {
+//        super.onLowMemory()
+//        binding.cottageMap.onLowMemory()
+//    }
+//
     override fun onDestroy() {
         super.onDestroy()
-        binding.cottageMap.onDestroy()
+//        binding.cottageMap.onDestroy()
 
         // show bottom navigation
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.cottageMap.onDestroy()
-
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        binding.cottageMap.onSaveInstanceState(outState)
-    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        binding.cottageMap.onDestroy()
+//
+//    }
+//
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        binding.cottageMap.onSaveInstanceState(outState)
+//    }
 }

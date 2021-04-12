@@ -76,7 +76,7 @@
                         tools:text="@tools:sample/lorem"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold"
-                        android:text="@{viewModel.selectedCottage.cottageLabel}"
+                        app:cottageLabel="@{viewModel.selectedCottage}"
                 />
                 <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/cottage_rating"
@@ -88,7 +88,7 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/cottage_location"
                         app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        android:rating="@{viewModel.selectedCottage.rating}"
+                        app:rating="@{viewModel.selectedCottage}"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                         app:layout_constraintStart_toEndOf="@+id/cottage_rating"
                         app:layout_constraintHorizontal_bias="0.5"
                         tools:text="@tools:sample/cities"
-                        android:text="@{viewModel.selectedCottage.location}"
+                        app:location="@{viewModel.selectedCottage}"
                         android:layout_marginTop="8dp"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
@@ -113,7 +113,7 @@
                         android:textSize="18sp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintHorizontal_bias="1.0"
-                        app:selectedCottagePrice="@{viewModel.selectedCottage.price}"
+                        app:price="@{viewModel.selectedCottage}"
                         android:textColor="@color/colorAccent"
                 />
                 <View
@@ -145,7 +145,7 @@
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/guest_number"
-                        app:selectedCottageGuests="@{viewModel.selectedCottage.guests}"
+                        app:guestsNumber="@{viewModel.selectedCottage}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
@@ -227,7 +227,7 @@
                         android:id="@+id/cottage_description_body"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.selectedCottage.description}"
+                        app:description="@{viewModel.selectedCottage}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cottage_description_header"

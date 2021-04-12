@@ -21,6 +21,7 @@ import fi.oamk.cottagerepublic.util.VerticalItemDecoration
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchScreenBinding
     private lateinit var viewModel: SearchViewModel
+    private lateinit var viewModelFactory: SearchViewModelFactory
     private lateinit var searchAdapter: SearchAdapter
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -45,7 +46,8 @@ class SearchFragment : Fragment() {
 
         // ViewModelProvider returns an existing ViewModel if one exists,
         // or it creates a new one if it does not already exist.
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        viewModelFactory = SearchViewModelFactory(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
         binding.searchViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -57,14 +59,16 @@ class SearchFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.cottagesList.observe(viewLifecycleOwner, {
-            if (searchAdapter.fullList.isEmpty())
-                searchAdapter.fullList = it.toList()
 
             it?.let {
                 searchAdapter.submitList(it.toList()) // pass a copy of the list to be diffed
+                searchAdapter.fullList = it.toList()
             }
 
-            checkForPassedArgs()
+            if (!viewModel.checkForPassedArgs()) {
+                binding.searchView.requestFocus()
+                viewModel.showKeyboard()
+            }
         })
 
         viewModel.searchQuery.observe(viewLifecycleOwner, {
@@ -93,23 +97,11 @@ class SearchFragment : Fragment() {
 
     private fun setSearchAdapter() {
         searchAdapter = SearchAdapter(SearchListListener { cottage ->
-//            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
             // handle popular cottage click
             viewModel.onSearchItemClicked(cottage)
         })
 
         binding.searchList.adapter = searchAdapter
         binding.searchList.addItemDecoration(VerticalItemDecoration(32))
-    }
-
-    private fun checkForPassedArgs() {
-        val destinationNameQuery = SearchFragmentArgs.fromBundle(requireArguments()).destinationName
-        if (!destinationNameQuery.isNullOrEmpty()) {
-            viewModel.searchQuery.value = destinationNameQuery
-            searchAdapter.filter.filter(destinationNameQuery)
-        } else {
-            binding.searchView.requestFocus()
-            viewModel.showKeyboard()
-        }
     }
 }

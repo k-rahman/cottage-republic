@@ -1,5 +1,6 @@
 package fi.oamk.cottagerepublic.ui.search
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +9,9 @@ import com.google.firebase.ktx.Firebase
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(fragment: Fragment) : ViewModel() {
     private val dataSource = CottageRepository.getInstance(Firebase.database.getReference("cottages"))
+    private var destination = SearchFragmentArgs.fromBundle(fragment.requireArguments()).destination
 
     private var _cottagesList = dataSource.getAllCottages()
     val cottagesList: LiveData<MutableList<Cottage>>
@@ -26,21 +28,6 @@ class SearchViewModel : ViewModel() {
     val isSearchBarFocused: LiveData<Boolean>
         get() = _isSearchBarFocused
 
-    fun searchByLocation(query: String?) {
-        val filteredList = _cottagesList.value?.filter {
-            it.location.equals(query.toString(), ignoreCase = true)
-        }!!
-
-
-        for (cottage in filteredList)
-            _cottagesList.value?.add(cottage)
-//        if (query.isNullOrEmpty())
-//            _cottagesList = dataSource.getAllCottages()
-//
-//        else
-//            _cottagesList = dataSource.searchByLocation(query)
-    }
-
     fun onSearchItemClicked(cottage: Cottage) {
         _navigateToCottageDetail.value = cottage
     }
@@ -51,11 +38,22 @@ class SearchViewModel : ViewModel() {
     }
 
     fun showKeyboard() {
-       _isSearchBarFocused.value = true
+        _isSearchBarFocused.value = true
+        searchQuery.value = ""
     }
 
     fun closeKeyboard() {
         _isSearchBarFocused.value = false
+    }
+
+    fun checkForPassedArgs(): Boolean {
+        if (destination != null) {
+            searchQuery.value = "${destination!!.location["city"]}, ${destination!!.location["country"]}"
+            destination = null
+            return true
+        }
+
+        return false
     }
 
     override fun onCleared() {

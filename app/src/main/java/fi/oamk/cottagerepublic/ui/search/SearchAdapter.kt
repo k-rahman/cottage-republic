@@ -10,7 +10,6 @@ To display your data in a RecyclerView, you need the following parts:
 
 package fi.oamk.cottagerepublic.ui.search
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -57,20 +56,30 @@ class SearchAdapter(private val clickListener: SearchListListener) :
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence): FilterResults {
-                val listToFilter = fullList
+                val query = charSequence.toString().toLowerCase().trim()
                 val filteredList = mutableListOf<Cottage>()
+                val results = FilterResults()
 
-                if (charSequence.isEmpty())
-                    filteredList.addAll(fullList)
-                else {
-                    val query = charSequence.toString().toLowerCase().trim()
-
-                    for (cottage in listToFilter)
-                        if (cottage.location.toLowerCase().contains(query))
-                            filteredList.add(cottage)
+                // if query string is empty return the whole list
+                if (charSequence.isEmpty()) {
+                    results.values = fullList
+                    return results
                 }
 
-                val results = FilterResults()
+                for (cottage in fullList) {
+                    if (cottage.location["city"].isNullOrEmpty() || cottage.location["country"].isNullOrEmpty())
+                        continue
+
+                    val location =
+                        "${cottage.location["city"]!!.toLowerCase()}, ${cottage.location["country"]!!.toLowerCase()}"
+
+                    if (cottage.location["city"]!!.toLowerCase().startsWith(query) ||
+                        cottage.location["country"]!!.toLowerCase().startsWith(query) ||
+                        location.startsWith(query)
+                    )
+                        filteredList.add(cottage)
+                }
+
                 results.values = filteredList
                 return results
             }

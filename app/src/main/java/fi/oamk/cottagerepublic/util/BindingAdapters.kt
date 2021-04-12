@@ -6,14 +6,15 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.data.Destination
 
 @BindingAdapter("image")
-fun ImageView.setDestinationImage(item: Destination) = setImageResource(item.image)
+fun ImageView.setDestinationImage(item: Destination) = setImageResource(item.image.toInt())
 
 
 @BindingAdapter("destinationName")
 fun TextView.setDestinationName(item: Destination) {
-    text = item.destinationName
+    text = item.name
 }
 
 @BindingAdapter("image")
@@ -70,7 +71,6 @@ fun ImageView.setAmenityIcon(item: String) {
         "pets" -> setImageResource(R.drawable.icon_pets_32)
     }
 }
-
 
 
 // calendar bindings

@@ -26,7 +26,10 @@ class AccountScreenFragment : Fragment() {
             container,
             false
         )
-
+        // Open User Settings
+        binding.userSettingsLayout.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountSettingScreenFragment)
+        }
         // Open My Cottages
         binding.cottagesLayout.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountCottageScreenFragment)
@@ -34,6 +37,13 @@ class AccountScreenFragment : Fragment() {
         // Open My Reservations
         binding.reservationLayout.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountReservationsScreenFragment)
+        }
+        // Logout of system
+        binding.logoutLayout.setOnClickListener { view : View ->
+
+            // Sign user out of firebase here
+
+            view.findNavController().navigate(R.id.action_accountScreenFragment_to_homeScreenFragment)
         }
 
         return binding.root

@@ -52,6 +52,15 @@
                 app:destination="@id/accountCottageScreenFragment"/>
         <action android:id="@+id/action_accountScreenFragment_to_accountReservationsScreenFragment"
                 app:destination="@id/accountReservationsScreenFragment"/>
+        <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
+                app:destination="@id/homeScreenFragment"/>
+        <action android:id="@+id/action_accountScreenFragment_to_accountSettingScreenFragment"
+                app:destination="@id/accountSettingScreenFragment"/>
+    </fragment>
+    <fragment
+            android:id="@+id/accountSettingScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountSettingsScreenFragment"
+            tools:layout="@layout/fragment_account_settings_screen">
     </fragment>
 
     <fragment

@@ -54,14 +54,15 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun setHomeAdapters() {
-        popularDestinationsAdapter = PopularDestinationAdapter(DestinationListener { destinationName ->
+        popularDestinationsAdapter = PopularDestinationAdapter(DestinationListener {
+            viewModel.onPopularDestinationClicked(it)
 //            Toast.makeText(context, destinationName, Toast.LENGTH_LONG).show()
         })
 
-        popularCottagesAdapter = PopularCottagesAdapter(CottageListener { cottage ->
+        popularCottagesAdapter = PopularCottagesAdapter(CottageListener {
 //            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
             // handle popular cottage click
-            viewModel.onPopularCottageClicked(cottage)
+            viewModel.onPopularCottageClicked(it)
         })
 
         with(binding) {
@@ -82,13 +83,28 @@ class HomeScreenFragment : Fragment() {
             }
         })
 
+        viewModel.popularDestinations.observe(viewLifecycleOwner, {
+            it?.let {
+                popularDestinationsAdapter.submitList(it.toList())
+            }
+        })
+
         // When popular cottage is clicked navigate to cottage detail fragment
-        viewModel.navigateToCottageDetail.observe(viewLifecycleOwner, { cottage ->
-            cottage?.let {
+        viewModel.navigateToCottageDetail.observe(viewLifecycleOwner, {
+            it?.let {
                 findNavController().navigate(
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToCottageDetailFragment(cottage)
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToCottageDetailFragment(it)
                 )
                 viewModel.onCottageDetailNavigated()
+            }
+        })
+
+        viewModel.navigateToSearchDestination.observe(viewLifecycleOwner, {
+            it?.let {
+                findNavController().navigate(
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(it)
+                )
+                viewModel.onSearchDestinationNavigated()
             }
         })
 
@@ -96,7 +112,7 @@ class HomeScreenFragment : Fragment() {
         viewModel.navigateToSearch.observe(viewLifecycleOwner, {
             if (it) {
                 findNavController().navigate(
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment()
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null)
                 )
                 viewModel.onSearchNavigated()
             }

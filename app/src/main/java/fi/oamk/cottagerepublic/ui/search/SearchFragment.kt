@@ -52,9 +52,6 @@ class SearchFragment : Fragment() {
         setObservers()
         setSearchAdapter()
 
-        binding.searchView.requestFocus()
-        viewModel.showKeyboard()
-
         return binding.root
     }
 
@@ -63,10 +60,11 @@ class SearchFragment : Fragment() {
             if (searchAdapter.fullList.isEmpty())
                 searchAdapter.fullList = it.toList()
 
-
             it?.let {
                 searchAdapter.submitList(it.toList()) // pass a copy of the list to be diffed
             }
+
+            checkForPassedArgs()
         })
 
         viewModel.searchQuery.observe(viewLifecycleOwner, {
@@ -102,5 +100,16 @@ class SearchFragment : Fragment() {
 
         binding.searchList.adapter = searchAdapter
         binding.searchList.addItemDecoration(VerticalItemDecoration(32))
+    }
+
+    private fun checkForPassedArgs() {
+        val destinationNameQuery = SearchFragmentArgs.fromBundle(requireArguments()).destinationName
+        if (!destinationNameQuery.isNullOrEmpty()) {
+            viewModel.searchQuery.value = destinationNameQuery
+            searchAdapter.filter.filter(destinationNameQuery)
+        } else {
+            binding.searchView.requestFocus()
+            viewModel.showKeyboard()
+        }
     }
 }

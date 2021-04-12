@@ -48,6 +48,15 @@
             android:name="fi.oamk.cottagerepublic.ui.account.AccountScreenFragment"
             tools:layout="@layout/fragment_account_screen">
 
+        <action android:id="@+id/action_accountScreenFragment_to_accountCottageScreenFragment"
+                app:destination="@id/accountCottageScreenFragment"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/accountCottageScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
+            tools:layout="@layout/fragment_account_cottage_screen">
+
     </fragment>
 
 </navigation>

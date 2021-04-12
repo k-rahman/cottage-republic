@@ -60,6 +60,6 @@ class PopularDestinationAdapter(private val clickListener: DestinationListener) 
 }
 
 // handles click on recycleView item
-class DestinationListener(val clickListener: (destinationName: String) -> Unit) {
-    fun onClick(destination: Destination) = clickListener(destination.name)
+class DestinationListener(val clickListener: (destination: Destination) -> Unit) {
+    fun onClick(destination: Destination) = clickListener(destination)
 }

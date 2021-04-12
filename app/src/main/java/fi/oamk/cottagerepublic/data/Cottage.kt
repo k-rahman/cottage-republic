@@ -16,7 +16,7 @@ data class Cottage (
     ),
     var rating: Float = 0.0F,
     var price: Int = 0,
-    var location: String = "",
+    var location: HashMap<String, String> = hashMapOf(),
     var guests: Int = 0,
     var amenities: MutableList<String> = mutableListOf(),
     var description: String = "Cottage for rent",

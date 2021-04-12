@@ -8,55 +8,43 @@ import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.data.Destination
 
+// destination bindings
 @BindingAdapter("image")
 fun ImageView.setDestinationImage(item: Destination) = setImageResource(item.image.toInt())
-
-
-@BindingAdapter("destinationName")
+@BindingAdapter("location")
 fun TextView.setDestinationName(item: Destination) {
-    text = item.name
+    text = "${item.location["city"]}, ${item.location["country"]}"
 }
 
+// cottage bindings
 @BindingAdapter("image")
 fun ImageView.setCottageImage(item: Cottage) {
     if (item.images.isNotEmpty())
         setImageResource(Integer.valueOf(item.images[0]))
 }
-
 @BindingAdapter("cottageLabel")
 fun TextView.setCottageName(item: Cottage) {
     text = item.cottageLabel
 }
-
 @BindingAdapter("rating")
 fun RatingBar.setCottageRating(item: Cottage) {
     rating = item.rating
 }
-
 @BindingAdapter("location")
 fun TextView.setCottageLocation(item: Cottage) {
-    text = item.location
+    text = "${item.location["city"]}, ${item.location["country"]}"
 }
-
 @BindingAdapter("price")
 fun TextView.setCottagePrice(item: Cottage) {
     text = "${item.price} €/night"
 }
-
-
-// cottage details binding
 @BindingAdapter("imageUrl")
 fun ImageView.setSliderImage(item: String) {
     setImageResource(Integer.valueOf(item))
 }
-
-@BindingAdapter("selectedCottagePrice")
-fun TextView.setPrice(item: Int) {
-    text = "$item €/ night"
-}
-@BindingAdapter("selectedCottageGuests")
-fun TextView.setGuests(item: Int) {
-    text = item.toString()
+@BindingAdapter("guestsNumber")
+fun TextView.setGuests(item: Cottage) {
+    text = item.guests.toString()
 }
 @BindingAdapter("amenityText")
 fun TextView.setAmenityText(item: String) {
@@ -71,7 +59,10 @@ fun ImageView.setAmenityIcon(item: String) {
         "pets" -> setImageResource(R.drawable.icon_pets_32)
     }
 }
-
+@BindingAdapter("description")
+fun TextView.setDescription(item: Cottage) {
+    text = item.description
+}
 
 // calendar bindings
 @BindingAdapter("numberOfNights")

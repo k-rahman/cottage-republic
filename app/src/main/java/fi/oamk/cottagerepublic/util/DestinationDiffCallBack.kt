@@ -5,7 +5,7 @@ import fi.oamk.cottagerepublic.data.Destination
 
 class DestinationDiffCallBack : DiffUtil.ItemCallback<Destination>() {
     override fun areItemsTheSame(oldItem: Destination, newItem: Destination): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.location["city"] == newItem.location["city"]
     }
 
     override fun areContentsTheSame(oldItem: Destination, newItem: Destination): Boolean {

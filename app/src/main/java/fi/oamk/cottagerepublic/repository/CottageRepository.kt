@@ -71,29 +71,36 @@ class CottageRepository(private val databaseReference: DatabaseReference) {
             with(newCottage) {
                 if (values["cottageId"] != null)
                     cottageId = values["cottageId"].toString().toLong()
+
                 if (values["cottageLabel"] != null)
                     cottageLabel = values["cottageLabel"].toString()
+
                 if (values["rating"] != null)
                     rating = values["rating"].toString().toFloat()
+
                 if (values["location"] != null)
-                    location = values["location"].toString()
+                    for (spot in values["location"] as HashMap<String, String>)
+                        location[spot.key] = spot.value
+
                 if (values["price"] != null)
                     price = values["price"].toString().toInt()
+
                 if (values["guests"] != null)
                     guests = values["guests"].toString().toInt()
+
                 if (values["amenities"] != null) {
                     amenities.clear()
-                    for (amenity in values["amenities"] as ArrayList<String>) {
+                    for (amenity in values["amenities"] as ArrayList<String>)
                         amenities.add(amenity)
-                    }
                 }
-                if (values["description"] != null) {
+
+                if (values["description"] != null)
                     description = values["description"].toString()
-                }
+
                 if (values["coordinates"] !=null)
-                   for (coordination in values["coordinates"] as HashMap<String, Double>) {
-                       coordinates[coordination.key]= coordination.value
-                   }
+                   for (coordinate in values["coordinates"] as HashMap<String, Double>)
+                       coordinates[coordinate.key]= coordinate.value
+
             }
             list.add(newCottage)
         }

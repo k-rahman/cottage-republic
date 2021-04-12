@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import fi.oamk.cottagerepublic.data.Destination
 
+@Suppress("UNCHECKED_CAST")
 class DestinationRepository(private val databaseReference: DatabaseReference) {
 
     // Singleton
@@ -47,8 +48,10 @@ class DestinationRepository(private val databaseReference: DatabaseReference) {
             val values = snapShot.value as HashMap<*, *>
             val newDestination = Destination()
             with(newDestination) {
-                if (values["name"] != null)
-                    name = values["name"].toString()
+                if (values["location"] != null)
+                    for (spot in values["location"] as HashMap<String, String>)
+                        location[spot.key] = spot.value
+
                 if (values["image"] != null)
                     image = values["image"].toString()
             }

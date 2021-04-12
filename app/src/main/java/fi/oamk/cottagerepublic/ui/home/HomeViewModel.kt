@@ -38,8 +38,8 @@ class HomeViewModel : ViewModel() {
         get() = _navigateToSearch
 
     // When this variable value change, it will trigger navigation to Cottage Detail Screen
-    private val _navigateToSearchDestination = MutableLiveData<String>()
-    val navigateToSearchDestination: LiveData<String>
+    private val _navigateToSearchDestination = MutableLiveData<Destination>()
+    val navigateToSearchDestination: LiveData<Destination>
         get() = _navigateToSearchDestination
 
     // popular cottage item clickHandler
@@ -47,8 +47,8 @@ class HomeViewModel : ViewModel() {
         _navigateToCottageDetail.value = cottage
     }
 
-    fun onPopularDestinationClicked(destinationName: String) {
-        _navigateToSearchDestination.value = destinationName
+    fun onPopularDestinationClicked(destination: Destination) {
+        _navigateToSearchDestination.value = destination
     }
 
     fun onSearchDestinationNavigated() {

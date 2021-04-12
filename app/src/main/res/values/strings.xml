@@ -11,4 +11,14 @@
     <string name="home_menu_item_title">Home</string>
     <string name="account_menu_item_title">Account</string>
     <string name="faq_menu_item_title">FAQ</string>
+    <string name="my_account">My Account</string>
+    <string name="john_doe">John Doe</string>
+    <string name="john_doe_com">john@doe.com</string>
+    <string name="user_settings">User Settings</string>
+    <string name="my_cottages">My Cottages</string>
+    <string name="my_reservation">My Reservation</string>
+    <string name="my_reservations">My Reservations</string>
+    <string name="logout">Logout</string>
+    <string name="user_image">User Image</string>
+    <string name="test_cottage_name">Kemi Cottage 1</string>
 </resources>

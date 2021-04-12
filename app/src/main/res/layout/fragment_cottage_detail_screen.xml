@@ -76,7 +76,7 @@
                         tools:text="@tools:sample/lorem"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold"
-                        android:text="Cottage in middle of nowWhere"
+                        android:text="@{viewModel.selectedCottage.cottageLabel}"
                 />
                 <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/cottage_rating"
@@ -88,6 +88,7 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/cottage_location"
                         app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        android:rating="@{viewModel.selectedCottage.rating}"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -98,7 +99,7 @@
                         app:layout_constraintStart_toEndOf="@+id/cottage_rating"
                         app:layout_constraintHorizontal_bias="0.5"
                         tools:text="@tools:sample/cities"
-                        android:text="Nowhere, Finland"
+                        android:text="@{viewModel.selectedCottage.location}"
                         android:layout_marginTop="8dp"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
@@ -112,7 +113,7 @@
                         android:textSize="18sp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintHorizontal_bias="1.0"
-                        android:text="50€ / night"
+                        app:selectedCottagePrice="@{viewModel.selectedCottage.price}"
                         android:textColor="@color/colorAccent"
                 />
                 <View
@@ -144,7 +145,7 @@
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/guest_number"
-                        android:text="2"
+                        app:selectedCottageGuests="@{viewModel.selectedCottage.guests}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
@@ -157,7 +158,8 @@
                 />
                 <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" app:srcCompat="@drawable/icon_guest_32"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/icon_guest_32"
                         android:id="@+id/imageView"
                         app:layout_constraintTop_toTopOf="@+id/guest_number"
                         app:layout_constraintBottom_toBottomOf="@+id/guest_number"
@@ -187,90 +189,15 @@
                         android:text="@string/amenities"
                         android:textStyle="bold"
                 />
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/hottub_text"
-                        android:text="@string/hot_tub"
-                        android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/amenitiesList"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/hottub_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/amenities_header"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/roboto"/>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/hottub_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_hottub_32"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/hottub_text"
-                        app:layout_constraintTop_toTopOf="@+id/hottub_text"
-                        app:layout_constraintBottom_toBottomOf="@+id/hottub_text"
-                />
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/kitchen_text"
-                        android:text="@string/kitchen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/kitchen_icon"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintTop_toBottomOf="@+id/hottub_text"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/roboto"/>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/kitchen_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_kitchen_32"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/kitchen_text"
-                        app:layout_constraintTop_toTopOf="@+id/kitchen_text"
-                        app:layout_constraintBottom_toBottomOf="@+id/kitchen_text"
-                />
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/pets_text"
-                        android:text="@string/pets"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/kitchen_text"
-                        app:layout_constraintEnd_toStartOf="@+id/pet_icon"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/roboto"/>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/pet_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_pets_32"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/pets_text"
-                        app:layout_constraintTop_toTopOf="@+id/pets_text"
-                        app:layout_constraintBottom_toBottomOf="@+id/pets_text"
-                />
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/sauna_text"
-                        android:text="@string/sauna"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/sauna_icon"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintTop_toBottomOf="@+id/pets_text"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/roboto"/>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/sauna_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_sauna_32"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/sauna_text"
-                        app:layout_constraintTop_toTopOf="@+id/sauna_text"
-                        app:layout_constraintBottom_toBottomOf="@+id/sauna_text"
-                />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_marginTop="16dp"/>
                 <View
                         android:id="@+id/divider3"
                         android:layout_width="match_parent"
@@ -278,7 +205,7 @@
                         android:background="?android:attr/listDivider"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/sauna_icon"
+                        app:layout_constraintTop_toBottomOf="@+id/amenitiesList"
                         android:layout_marginTop="32dp"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
@@ -300,8 +227,7 @@
                         android:id="@+id/cottage_description_body"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Here will be the cottage description..."
-                        android:paddingBottom="200dp"
+                        android:text="@{viewModel.selectedCottage.description}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cottage_description_header"
@@ -435,6 +361,7 @@
                         android:layout_marginStart="32dp"
                         app:layout_constraintTop_toBottomOf="@+id/host_header"
                         android:layout_marginTop="24dp"
+                        android:onClick="@{() -> viewModel.onAskHostClicked()}"
                 />
                 <View
                         android:id="@+id/divider6"
@@ -464,7 +391,7 @@
                     android:text="@string/check_availability"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_rounded_accent_color"
+                    android:background="@drawable/shape_continue_border"
                     android:textColor="@color/colorWhite"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="16dp"

@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.accountScreenFragment -> {
                     // here will be the logic for navigating to user profile or navigating to login
+
+                    // Navigation to user profile
                     navController.navigate(R.id.accountScreenFragment)
                 }
                 R.id.faqScreenFragment -> {

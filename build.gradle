@@ -5,7 +5,7 @@ buildscript {
         kotlin_version = '1.4.31'
         navigationVersion = '2.3.4'
         googleServices = '4.3.5'
-        version_glide = "4.8.0"
+        version_picasso = "2.71828"
     }
     repositories {
         google()

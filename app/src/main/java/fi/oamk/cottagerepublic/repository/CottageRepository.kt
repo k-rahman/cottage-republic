@@ -2,9 +2,13 @@ package fi.oamk.cottagerepublic.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import fi.oamk.cottagerepublic.data.Cottage
 
+@Suppress("UNCHECKED_CAST")
 class CottageRepository(private val databaseReference: DatabaseReference) {
 
     private lateinit var listener: ValueEventListener
@@ -29,7 +33,7 @@ class CottageRepository(private val databaseReference: DatabaseReference) {
         val cottages = MutableLiveData<MutableList<Cottage>>()
         val list = mutableListOf<Cottage>()
 
-         listener = object : ValueEventListener {
+        listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 cottages.value = createCottageList(list, dataSnapshot)
             }
@@ -74,7 +78,22 @@ class CottageRepository(private val databaseReference: DatabaseReference) {
                 if (values["location"] != null)
                     location = values["location"].toString()
                 if (values["price"] != null)
-                    price = values["price"].toString().toFloat()
+                    price = values["price"].toString().toInt()
+                if (values["guests"] != null)
+                    guests = values["guests"].toString().toInt()
+                if (values["amenities"] != null) {
+                    amenities.clear()
+                    for (amenity in values["amenities"] as ArrayList<String>) {
+                        amenities.add(amenity)
+                    }
+                }
+                if (values["description"] != null) {
+                    description = values["description"].toString()
+                }
+                if (values["coordinates"] !=null)
+                   for (coordination in values["coordinates"] as HashMap<String, Double>) {
+                       coordinates[coordination.key]= coordination.value
+                   }
             }
             list.add(newCottage)
         }

@@ -42,8 +42,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     // Enables data binding.
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 
     kotlinOptions {

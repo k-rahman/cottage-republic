@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.savvi.rangedatepicker.CalendarPickerView
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCalendarBinding
+import fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailFragmentDirections
 import fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,12 +61,7 @@ class CalendarFragment : Fragment() {
         binding.calendar.init(start.time, end.time, SimpleDateFormat("MMMM  YYYY", Locale.getDefault()))
             .inMode(CalendarPickerView.SelectionMode.RANGE)
             .withHighlightedDates(arrayList)
-
-        binding.bookingButton.setOnClickListener {
-//            Toast.makeText(requireContext(), "list " + binding.calendar.selectedDates.toString(), Toast.LENGTH_LONG).show();
-//            Toast.makeText(requireContext(), "list " + arrayList.toString(), Toast.LENGTH_LONG).show();
-        }
-
+            .withSelectedDate(Date())
 
         val datesToDisable = mutableListOf<Date?>()
         val reservedCalendar = Calendar.getInstance()
@@ -73,10 +69,13 @@ class CalendarFragment : Fragment() {
         binding.calendar.setOnDateSelectedListener(object : CalendarPickerView.OnDateSelectedListener {
             override fun onDateSelected(date: Date?) {
 
+                // set number of nights (check BindingAdapters)
+                binding.numberOfNights = binding.calendar.selectedDates.size - 1
+
                 // disable the days from the first reserved day after the selected day till the end of the calendar
                 // client must select consecutive days
                 for (reservedDate in arrayList) {
-                    if (date!! < reservedDate && binding.calendar.selectedDates.size < 2) {
+                    if (date!! < reservedDate && binding.calendar.selectedDates.size <= 2) {
                         val timeDifference = end.time.time - reservedDate.time // get time difference
                         val days = (timeDifference / (1000 * 60 * 60 * 24)).toInt() // get days
                         reservedCalendar.time = reservedDate // set date
@@ -100,6 +99,13 @@ class CalendarFragment : Fragment() {
             }
 
             override fun onDateUnselected(date: Date?) {
+            }
+        })
+
+        viewModel.navigateToBookingDetails.observe(viewLifecycleOwner, {
+            if (it) {
+                findNavController().navigate(CottageDetailFragmentDirections.actionCottageDetailFragmentToBookingDetailFragment())
+                viewModel.onBookingNavigated()
             }
         })
 

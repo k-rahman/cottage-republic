@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+>
     <data>
         <variable
                 name="viewModel"
-                type="fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailViewModel"/>
+                type="fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailViewModel"
+        />
+        <variable
+                name="numberOfNights"
+                type="Integer"
+        />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,7 +35,8 @@
                 android:elevation="100dp"
                 app:cardElevation="5dp"
                 app:cardCornerRadius="25dp"
-                app:cardUseCompatPadding="false">
+                app:cardUseCompatPadding="false"
+        >
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -41,14 +48,15 @@
                         android:id="@+id/calendar_title"
                         android:textAlignment="center"
                         android:textColor="@color/colorBlack"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="32dp"
                         app:layout_constraintStart_toEndOf="@+id/calendar_close"
-                        android:layout_marginEnd="32dp"/>
+                        android:layout_marginEnd="32dp"
+                />
                 <ImageView
                         android:id="@+id/calendar_close"
                         android:layout_width="wrap_content"
@@ -61,25 +69,33 @@
                         app:layout_constraintHorizontal_chainStyle="packed"
                         android:onClick="@{() -> viewModel.calendarHide()}"
                         android:layout_marginStart="16dp"
+                        android:contentDescription="@string/close"
                 />
                 <TextView
-                        android:text="Please select check-in and check-out dates"
+                        android:id="@+id/calendar_subtitle"
+                        android:text="@string/calendar_subtitle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" android:id="@+id/calendar_subtitle"
+                        android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/calendar_title" android:layout_marginTop="32dp"
-                        android:fontFamily="@font/roboto" android:textSize="18sp"
-                        android:textAlignment="center" android:layout_marginStart="32dp"
-                        android:layout_marginEnd="32dp"/>
+                        app:layout_constraintTop_toBottomOf="@+id/calendar_title"
+                        android:layout_marginTop="32dp"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                />
                 <View
                         android:id="@+id/divider1"
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
+                        android:layout_height="2dp"
                         android:background="@color/colorBlack"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/calendar_subtitle"/>
+                        android:layout_marginTop="32dp"
+                        app:layout_constraintTop_toBottomOf="@+id/calendar_subtitle"
+                />
                 <com.savvi.rangedatepicker.CalendarPickerView
                         android:id="@+id/calendar"
                         android:layout_width="0dp"
@@ -98,12 +114,13 @@
                 <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
+                        android:layout_height="2dp"
                         android:background="@color/colorBlack"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/booking_button"
-                        android:layout_marginBottom="32dp"/>
+                        android:layout_marginBottom="32dp"
+                />
                 <Button
                         android:id="@+id/booking_button"
                         android:text="@string/book"
@@ -111,22 +128,46 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
                         android:background="@drawable/shape_continue_border"
-                        android:fontFamily="@font/roboto" android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/colorWhite"
                         android:textAllCaps="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/nights_number"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:textSize="18sp" android:layout_marginBottom="32dp" android:layout_marginEnd="16dp"/>
+                        android:textSize="18sp"
+                        android:layout_marginBottom="32dp"
+                        android:layout_marginEnd="16dp"
+                        android:onClick="@{() -> viewModel.onBookClicked()}"
+                />
                 <TextView
-                        android:text="3 nights"
+                        android:id="@+id/nights_number_title"
+                        android:text="@string/you_have_selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        app:layout_constraintEnd_toStartOf="@+id/booking_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider2"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintBottom_toTopOf="@+id/nights_number"
+                        app:layout_constraintVertical_chainStyle="packed"
+                />
+                <TextView
+                        android:id="@+id/nights_number"
+                        app:numberOfNights="@{numberOfNights}"
                         android:layout_width="165dp"
-                        android:layout_height="wrap_content" android:id="@+id/nights_number"
-                        android:fontFamily="@font/roboto" android:textSize="18sp"
-                        android:textColor="@color/colorBlack" android:textAlignment="center"
-                        app:layout_constraintTop_toTopOf="@+id/booking_button"
-                        app:layout_constraintBottom_toBottomOf="@+id/booking_button"
-                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintEnd_toStartOf="@+id/booking_button" android:textStyle="bold"/>
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorBlack"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintEnd_toStartOf="@+id/booking_button"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@+id/nights_number_title"
+                />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

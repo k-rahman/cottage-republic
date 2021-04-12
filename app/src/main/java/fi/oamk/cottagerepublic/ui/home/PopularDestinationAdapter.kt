@@ -8,22 +8,23 @@ To display your data in a RecyclerView, you need the following parts:
     with the RecyclerView.
  */
 
-package fi.oamk.cottagerepublic
+package fi.oamk.cottagerepublic.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import fi.oamk.cottagerepublic.databinding.ListItemPopularCottagesBinding
+import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.databinding.ListItemPopularDestinationBinding
 
 // Data
-data class Cottage(
+data class Destination(
     val image: Int = R.drawable.ic_launcher_background,
-    val cottageLabel: String = "testLabel"
+    val destinationName: String = "testLabel"
 )
 
-class PopularCottagesAdapter(val clickListener: CottageListener) : RecyclerView.Adapter<PopularCottagesAdapter.ViewHolder>() {
+class PopularDestinationAdapter(val clickListener: DestinationListener) : RecyclerView.Adapter<PopularDestinationAdapter.ViewHolder>() {
 
-    val data = listOf(Cottage(), Cottage(), Cottage())
+    val data = listOf<Destination>(Destination(), Destination(), Destination())
 
     // used by RecyleView to get the number of items it will render
     override fun getItemCount(): Int = data.size
@@ -41,14 +42,15 @@ class PopularCottagesAdapter(val clickListener: CottageListener) : RecyclerView.
 
     // wrapper around the list item (the card view in this case)
     // ViewHolder is an private inner class of PopularDestinationAdapter class
-    class ViewHolder private constructor(val binding: ListItemPopularCottagesBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: ListItemPopularDestinationBinding) : RecyclerView.ViewHolder(binding.root) {
 
         // binding data in ViewHolder is a better practice
-        fun bind(item: Cottage, clickListener: CottageListener) {
+        fun bind(item: Destination, clickListener: DestinationListener) {
 //            binding.cardImage.setImageResource(item.image)
-//            binding.cardLabel.text = item.label
-            binding.cottage = item
-            binding.cottageListener = clickListener
+//            binding.cardLabel.text = item.destinationName
+            binding.destination = item
+            binding.destinationListener = clickListener
+            binding.executePendingBindings()
         }
 
         // companion object is the same as static keyword in Java
@@ -58,13 +60,14 @@ class PopularCottagesAdapter(val clickListener: CottageListener) : RecyclerView.
             fun from(parent: ViewGroup): ViewHolder {
                 // Inflation should happen in the ViewHolder
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ListItemPopularCottagesBinding.inflate(layoutInflater, parent, false)
+                val binding = ListItemPopularDestinationBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 }
 
-class CottageListener(val clickListener: (cottageLabel: String) -> Unit) {
-    fun onClick(cottage: Cottage) = clickListener(cottage.cottageLabel)
+// handles click on recycleView item
+class DestinationListener(val clickListener: (destinationName: String) -> Unit) {
+    fun onClick(destination: Destination) = clickListener(destination.destinationName)
 }

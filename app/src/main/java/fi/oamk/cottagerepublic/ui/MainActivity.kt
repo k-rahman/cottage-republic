@@ -1,4 +1,4 @@
-package fi.oamk.cottagerepublic
+package fi.oamk.cottagerepublic.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +30,20 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
+        binding.bottomNavView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.homeScreenFragment -> {
+                    navController.navigate(R.id.homeScreenFragment)
+                }
+                R.id.accountScreenFragment -> {
+                    // here will be the logic for navigating to user profile or navigating to login
+                }
+                R.id.faqScreenFragment -> {
+                }
+            }
+
+            true
+        }
     }
 
     fun addCottage(view: View) {

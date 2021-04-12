@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">CottageRepublic</string>
     <string name="main_screen_title" color="#ffffff">Cottage Republic</string>
-    <string name="search_placeholder">Search&#8230;</string>
+    <string name="search_screen_title" color="#ffffff">Search</string>
+    <string name="search_placeholder">Type location to go&#8230;</string>
+    <string name="search_hint">Where do you plan to go?</string>
     <string name="popular_cottages">Popular Cottages</string>
     <string name="popular_destinations">Popular Destinations</string>
     <string name="city_image">City Image</string>
@@ -9,16 +11,4 @@
     <string name="home_menu_item_title">Home</string>
     <string name="account_menu_item_title">Account</string>
     <string name="faq_menu_item_title">FAQ</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="my_account">My Account</string>
-    <string name="john_doe">John Doe</string>
-    <string name="john_doe_com">john@doe.com</string>
-    <string name="user_settings">User Settings</string>
-    <string name="my_cottages">My Cottages</string>
-    <string name="my_reservation">My Reservation</string>
-    <string name="my_reservations">My Reservations</string>
-    <string name="logout">Logout</string>
-    <string name="user_image">User Image</string>
 </resources>

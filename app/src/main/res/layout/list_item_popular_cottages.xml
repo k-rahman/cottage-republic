@@ -4,9 +4,9 @@
         xmlns:tools="http://schemas.android.com/tools">
 <data>
     <variable name="cottage"
-              type="fi.oamk.cottagerepublic.Cottage"/>
+              type="fi.oamk.cottagerepublic.data.Cottage"/>
     <variable name="cottageListener"
-              type="fi.oamk.cottagerepublic.CottageListener"/>
+              type="fi.oamk.cottagerepublic.ui.home.CottageListener"/>
 </data>
 
     <androidx.cardview.widget.CardView
@@ -33,7 +33,8 @@
                     tools:srcCompat="@tools:sample/avatars[9]"
                     app:image="@{cottage}"
                     android:scaleType="fitXY"
-                    android:contentDescription="@string/cottage_image"/>
+                    android:contentDescription="@string/cottage_image"
+            />
             <RatingBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -41,8 +42,13 @@
                     style="?attr/ratingBarStyleSmall"
                     app:layout_constraintTop_toBottomOf="@+id/cottage_image"
                     app:layout_constraintEnd_toEndOf="@+id/cottage_image"
-                    app:layout_constraintStart_toStartOf="@+id/cottage_image" app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginStart="16dp" android:layout_marginTop="8dp"/>
+                    app:layout_constraintStart_toStartOf="@+id/cottage_image"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:isIndicator="true"
+                    app:rating="@{cottage}"
+            />
             <TextView
                     android:id="@+id/cottage_label"
                     android:layout_width="match_parent"
@@ -59,7 +65,9 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/roboto"
                     app:cottageLabel="@{cottage}"
-                    app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="16dp"/>
+                    app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginStart="16dp"
+            />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

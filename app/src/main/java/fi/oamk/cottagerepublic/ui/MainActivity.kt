@@ -6,8 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.ActivityMainBinding
@@ -24,11 +22,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.homeScreenFragment, R.id.accountScreenFragment, R.id.cottagesScreenFragment
-        ))
-        supportActionBar?.hide()
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
         binding.bottomNavView.setupWithNavController(navController)
         binding.bottomNavView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -37,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.accountScreenFragment -> {
                     // here will be the logic for navigating to user profile or navigating to login
+                    navController.navigate(R.id.accountScreenFragment)
                 }
                 R.id.faqScreenFragment -> {
                 }

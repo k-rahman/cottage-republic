@@ -130,6 +130,8 @@ class CottageDetailFragment : Fragment() {
                 //need this to prompts email client only
                 email.type = "text/plain"
                 startActivity(email)
+
+                viewModel.onEmailLaunched()
             }
         })
     }

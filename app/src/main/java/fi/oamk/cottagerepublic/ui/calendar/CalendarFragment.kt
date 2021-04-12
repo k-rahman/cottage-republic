@@ -61,7 +61,6 @@ class CalendarFragment : Fragment() {
         binding.calendar.init(start.time, end.time, SimpleDateFormat("MMMM  YYYY", Locale.getDefault()))
             .inMode(CalendarPickerView.SelectionMode.RANGE)
             .withHighlightedDates(arrayList)
-            .withSelectedDate(Date())
 
         val datesToDisable = mutableListOf<Date?>()
         val reservedCalendar = Calendar.getInstance()

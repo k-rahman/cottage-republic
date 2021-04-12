@@ -59,4 +59,8 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     fun onAskHostClicked() {
         _launchEmail.value = true
     }
+
+    fun onEmailLaunched() {
+        _launchEmail.value = false
+    }
 }

@@ -33,12 +33,9 @@ class MapFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
 
         val locationsList = arrayListOf<HashMap<String, Double>>()
-        val singleLocation = hashMapOf<String, Double>()
-        singleLocation.put("long", 25.46816)
-        singleLocation.put("lat", 65.01236)
+        val singleLocation = MapFragmentArgs.fromBundle(requireArguments()).selectedCottageCoordinate.coordinates
         locationsList.add(singleLocation)
         MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, true)
-
 
         return binding.root
     }

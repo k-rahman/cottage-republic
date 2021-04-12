@@ -36,4 +36,7 @@
     <string name="book">Book</string>
     <string name="select_date">Select dates</string>
     <string name="cottage_location">Cottage Location</string>
+    <string name="you_have_selected">You have selected</string>
+    <string name="close">close</string>
+    <string name="calendar_subtitle">Please select check-in and check-out dates</string>
 </resources>

@@ -2,7 +2,7 @@ package fi.oamk.cottagerepublic.util
 
 import androidx.recyclerview.widget.DiffUtil
 
-class ImageDiffCallBack : DiffUtil.ItemCallback<String>() {
+class StringDiffCallBack : DiffUtil.ItemCallback<String>() {
     override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
        return oldItem== newItem
     }

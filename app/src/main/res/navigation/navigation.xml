@@ -56,6 +56,15 @@
             android:id="@+id/accountCottageScreenFragment"
             android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
             tools:layout="@layout/fragment_account_cottage_screen">
+        <action android:id="@+id/action_accountCottageScreenFragment_to_addCottageFormFragment"
+                app:destination="@id/addCottageFormFragment"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/addCottageFormFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AddCottageFormFragment"
+            tools:layout="@layout/fragment_add_cottage_form"
+            android:label="@string/new_cottage_form">
 
     </fragment>
 

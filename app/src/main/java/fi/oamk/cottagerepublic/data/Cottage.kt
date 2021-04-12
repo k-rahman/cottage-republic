@@ -8,18 +8,18 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Cottage (
     var cottageId: Long = 0L,
-    var cottageLabel: String = "Test",
+    var cottageLabel: String = "Cottage for rent",
     var images:MutableList<String> = mutableListOf<String>(
         R.drawable.cottage_image_sample.toString(),
         R.drawable.cottage_image_sample1.toString(),
         R.drawable.cottage_image_sample2.toString()
     ),
     var rating: Float = 0.0F,
-    var price: Float = 0.0F,
+    var price: Int = 0,
     var location: String = "",
-    var hottub: Boolean = true,
-    var kitchen: Boolean = true,
-    var pets: Boolean = true,
-    var sauna: Boolean = true
+    var guests: Int = 0,
+    var amenities: MutableList<String> = mutableListOf(),
+    var description: String = "Cottage for rent",
+    var coordinates: HashMap<String, Double> = hashMapOf()
 ) : Parcelable {
 }

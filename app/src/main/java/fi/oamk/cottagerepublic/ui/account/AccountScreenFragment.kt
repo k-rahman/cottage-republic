@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentAccountScreenBinding
 
@@ -25,7 +26,12 @@ class AccountScreenFragment : Fragment() {
             container,
             false
         )
-        
+
+        // Open My Cottages
+        binding.cottagesLayout.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountCottageScreenFragment)
+        }
+
         return binding.root
     }
 

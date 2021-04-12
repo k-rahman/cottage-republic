@@ -50,6 +50,8 @@
 
         <action android:id="@+id/action_accountScreenFragment_to_accountCottageScreenFragment"
                 app:destination="@id/accountCottageScreenFragment"/>
+        <action android:id="@+id/action_accountScreenFragment_to_accountReservationsScreenFragment"
+                app:destination="@id/accountReservationsScreenFragment"/>
     </fragment>
 
     <fragment
@@ -65,6 +67,12 @@
             android:name="fi.oamk.cottagerepublic.ui.account.AddCottageFormFragment"
             tools:layout="@layout/fragment_add_cottage_form"
             android:label="@string/new_cottage_form">
+    </fragment>
+
+    <fragment
+            android:id="@+id/accountReservationsScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountReservationsScreenFragment"
+            tools:layout="@layout/fragment_account_reservations_screen">
 
     </fragment>
 

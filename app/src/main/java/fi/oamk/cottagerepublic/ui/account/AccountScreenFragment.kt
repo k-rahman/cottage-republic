@@ -31,6 +31,10 @@ class AccountScreenFragment : Fragment() {
         binding.cottagesLayout.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountCottageScreenFragment)
         }
+        // Open My Reservations
+        binding.reservationLayout.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountReservationsScreenFragment)
+        }
 
         return binding.root
     }

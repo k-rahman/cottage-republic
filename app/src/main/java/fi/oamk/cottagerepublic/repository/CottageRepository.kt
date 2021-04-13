@@ -25,6 +25,10 @@ class CottageRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
+    fun createNewCottage(NewCottage){
+
+    }
+
     fun getAllCottages(): MutableLiveData<MutableList<Cottage>> {
         val cottages = MutableLiveData<MutableList<Cottage>>()
         val list = mutableListOf<Cottage>()

@@ -11,20 +11,22 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.repository.AuthRepository
+import fi.oamk.cottagerepublic.repository.UserRepository
 
 
 class RegisterFragmentEnd : Fragment() {
 
-    lateinit var username: String
+    lateinit var email: String
     lateinit var password: String
     lateinit var navController: NavController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        username = requireArguments().getString("email").toString().trim()
+        email = requireArguments().getString("email").toString().trim()
         password = requireArguments().getString("password").toString().trim()
     }
     override fun onCreateView(
@@ -36,19 +38,18 @@ class RegisterFragmentEnd : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        val message = "New account for $username"
+        val message = "New account for $email"
         view.findViewById<TextView>(R.id.newUserConfirmEmail).text = message
         val message2 = "The password for $password"
         view.findViewById<TextView>(R.id.newUserConfirmPassword).text = message2
 
         view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener {register()}
-
-            //Navigation.createNavigateOnClickListener(R.id.action_registerFragmentEnd_to_loginScreenFragment, null))
     }
 
     private fun register (){
         val application: Application = context?.applicationContext as Application
         val authRepository = AuthRepository(application)
-        authRepository.register(username,password)
+        authRepository.register(email,password)
+        if (FirebaseAuth.getInstance().currentUser != null) UserRepository().createUser(email)
     }
 }

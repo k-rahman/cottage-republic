@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.textfield.TextInputLayout
 import fi.oamk.cottagerepublic.R
 
 
@@ -23,21 +24,32 @@ class RegisterFragmentEmail : Fragment(),View.OnClickListener {
     ): View? {
         return inflater.inflate(R.layout.fragment_register_email, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         view.findViewById<Button>(R.id.navigate_button_email).setOnClickListener(this)
     }
+
+    private fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
+            .matches()
+    }
+
     override fun onClick(v: View?) {
         val email = view?.findViewById<EditText>(R.id.userEmail)?.text.toString()
-        print(email)
-        when(v!!.id){
-            R.id.navigate_button_email ->{
-                if (!TextUtils.isEmpty(email)){
-                    val bundle = bundleOf("email" to email)
-                    navController.navigate(R.id.action_registerFragmentEmail_to_registerFragmentPassword,bundle)
-                }
+            if (email.isEmailValid()) {
+                val bundle = bundleOf("email" to email)
+                navController.navigate(
+                    R.id.action_registerFragmentEmail_to_registerFragmentPassword,
+                    bundle
+                )
+            }
+            else {
+                view?.findViewById<TextInputLayout>(R.id.registerEmailLayout)?.error = "Please type in correct email"
             }
         }
-    }
+
 }
+
+

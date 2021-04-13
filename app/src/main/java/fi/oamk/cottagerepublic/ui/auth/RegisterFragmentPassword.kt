@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import fi.oamk.cottagerepublic.R
 
 
@@ -41,15 +42,16 @@ class RegisterFragmentPassword : Fragment() , View.OnClickListener {
 
         val password = view?.findViewById<TextInputEditText>(R.id.userpassword1)?.text.toString()
         val password2 = view?.findViewById<TextInputEditText>(R.id.userpassword2)?.text.toString()
-
-        when(v!!.id){
-            R.id.navigate_button_required ->{
                 // Check if empty or does password is equal to password2
-                if (!TextUtils.isEmpty(password) && (password == password2) ){
+                if (!TextUtils.isEmpty(password) && (password == password2) && password.length >= 6 ){
                     val bundle = bundleOf("email" to email,"password" to password)
                     navController.navigate(R.id.action_registerFragmentPassword_to_registerFragmentEnd,bundle)
                 }
-            }
-        }
+                if (password.length < 6){
+                    view?.findViewById<TextInputLayout>(R.id.editPassword2)?.error = "Password needs to be at least 6 characters long"
+                }
+                if ( !(password == password2)){
+                    view?.findViewById<TextInputLayout>(R.id.editPassword2)?.error = "Password needs to be match"
+                  }
     }
 }

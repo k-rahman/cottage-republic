@@ -25,7 +25,7 @@ class CottageRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
-    fun createNewCottage(NewCottage){
+    fun createNewCottage(){
 
     }
 

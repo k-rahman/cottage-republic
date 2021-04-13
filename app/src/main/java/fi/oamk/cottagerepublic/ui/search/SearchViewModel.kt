@@ -1,6 +1,5 @@
 package fi.oamk.cottagerepublic.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,12 +21,16 @@ class SearchViewModel : ViewModel() {
     val navigateToCottageDetail: LiveData<Cottage>
         get() = _navigateToCottageDetail
 
+
+    private val _isSearchBarFocused = MutableLiveData<Boolean>()
+    val isSearchBarFocused: LiveData<Boolean>
+        get() = _isSearchBarFocused
+
     fun searchByLocation(query: String?) {
         val filteredList = _cottagesList.value?.filter {
             it.location.equals(query.toString(), ignoreCase = true)
         }!!
 
-        Log.i("List", query.toString())
 
         for (cottage in filteredList)
             _cottagesList.value?.add(cottage)
@@ -47,8 +50,16 @@ class SearchViewModel : ViewModel() {
         searchQuery.value = ""
     }
 
+    fun showKeyboard() {
+       _isSearchBarFocused.value = true
+    }
+
+    fun closeKeyboard() {
+        _isSearchBarFocused.value = false
+    }
+
     override fun onCleared() {
         super.onCleared()
-//        dataSource.removeListener()
+        dataSource.removeListener()
     }
 }

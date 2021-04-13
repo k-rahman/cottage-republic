@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import fi.oamk.cottagerepublic.*
+import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentHomeScreenBinding
 import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
 
@@ -56,11 +55,11 @@ class HomeScreenFragment : Fragment() {
 
     private fun setHomeAdapters() {
         popularDestinationsAdapter = PopularDestinationAdapter(DestinationListener { destinationName ->
-            Toast.makeText(context, destinationName, Toast.LENGTH_LONG).show()
+//            Toast.makeText(context, destinationName, Toast.LENGTH_LONG).show()
         })
 
         popularCottagesAdapter = PopularCottagesAdapter(CottageListener { cottage ->
-            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
+//            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
             // handle popular cottage click
             viewModel.onPopularCottageClicked(cottage)
         })

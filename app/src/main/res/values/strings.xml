@@ -2,6 +2,7 @@
     <string name="app_name">CottageRepublic</string>
     <string name="main_screen_title" color="#ffffff">Cottage Republic</string>
     <string name="search_screen_title" color="#ffffff">Search</string>
+    <string name="booking_screen_title" color="#ffffff">Booking Details</string>
     <string name="search_placeholder">Type location to go&#8230;</string>
     <string name="search_hint">Where do you plan to go?</string>
     <string name="popular_cottages">Popular Cottages</string>
@@ -11,12 +12,14 @@
     <string name="home_menu_item_title">Home</string>
     <string name="account_menu_item_title">Account</string>
     <string name="faq_menu_item_title">FAQ</string>
+
     <!-- login screen strings -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcometext_login_screen">Welcome</string>
     <string name="cottagerepublic_splash_screen_image_description">CottageRepublic splash screen image</string>
     <string name="register_button_text"><u>Or register a new account</u></string>
 
+    <!--  Register pages strings-->
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
@@ -33,4 +36,39 @@
     <string name="submit">Submit</string>
     <string name="name">Name</string>
     <string name="login">Login</string>
+
+    <!--  Settings page strings  -->
+    <string name="my_account">My Account</string>
+    <string name="john_doe">John Doe</string>
+    <string name="john_doe_com">john@doe.com</string>
+    <string name="user_settings">User Settings</string>
+    <string name="my_cottages">My Cottages</string>
+    <string name="my_reservation">My Reservation</string>
+    <string name="my_reservations">My Reservations</string>
+    <string name="logout">Logout</string>
+    <string name="user_image">User Image</string>
+    <string name="test_cottage_name">Kemi Cottage 1</string>
+    <string name="upload_cottage">Upload Cottage</string>
+    <string name="new_cottage_form">Add New Cottage Form</string>
+    <string name="sauna">Sauna</string>
+    <string name="pets">Pets</string>
+    <string name="hot_tub">Hot tub</string>
+    <string name="kitchen">Kitchen</string>
+    <string name="amenities">Amenities</string>
+    <string name="host_description">Host says</string>
+    <string name="location_title">Location</string>
+    <string name="host">Hosted by</string>
+    <string name="check_availability">Check availability</string>
+    <string name="guest_number">Number of guests</string>
+    <string name="check_in">Check-in</string>
+    <string name="check_out">Check-out</string>
+    <string name="mapbox_access_token">
+        pk.eyJ1IjoiYWJhZGRkZGRvbiIsImEiOiJja244bTV5bzYwdGttMm9uejdlczJ0YzhjIn0.Q3ZDPttv7o-0U2WQg-1DkA
+    </string>
+    <string name="taxes">Taxes</string>
+    <string name="total">Total</string>
+    <string name="cancel">Cancel</string>
+    <string name="continue_">Continue</string>
+    <string name="ask_the_host">Ask the host</string>
+    <string name="do_you_have_any_questions">Do you have any questions?</string>
 </resources>

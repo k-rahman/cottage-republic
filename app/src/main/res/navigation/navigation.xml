@@ -42,15 +42,6 @@
                 app:destination="@id/cottageDetailFragment"/>
     </fragment>
 
-    <fragment android:id="@+id/cottageDetailFragment"
-              android:name="fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailFragment"
-              tools:layout="@layout/fragment_cottage_detail"
-    >
-        <argument
-                android:name="selectedCottage"
-                app:argType="fi.oamk.cottagerepublic.data.Cottage"
-        />
-    </fragment>
     <fragment
         android:id="@+id/registerFragmentPassword"
         android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentPassword"

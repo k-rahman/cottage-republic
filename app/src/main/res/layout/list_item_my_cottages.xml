@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="cottage"
+                  type="fi.oamk.cottagerepublic.ui.account.NewCottage"/>
+        <variable name="myCottageListener"
+                  type="fi.oamk.cottagerepublic.ui.account.MyCottageListener"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_cottage_layout"
+            android:padding="4dp">
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:id="@+id/cardView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="10dp"
+        >
+        </androidx.cardview.widget.CardView>
+        <TextView
+                android:id="@+id/cottage_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:layout_constraintEnd_toEndOf="@+id/cardView"
+                app:layout_constraintStart_toStartOf="@+id/cardView"
+                android:textAlignment="viewStart"
+                tools:text="Cottage Name"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                app:cottageName="@{cottage}"
+                app:layout_constraintHorizontal_bias="0.0"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

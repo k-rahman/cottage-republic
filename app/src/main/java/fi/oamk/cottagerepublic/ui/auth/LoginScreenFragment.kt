@@ -22,7 +22,7 @@ class LoginScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        Log.v("test: ", "i'm created")
+       // Log.v("test: ", "i'm created")
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login_screen, container, false)
@@ -32,7 +32,7 @@ class LoginScreenFragment : Fragment() {
 
 
         viewModel.username.observe(viewLifecycleOwner, {
-            Log.v("test: ", it)
+        //    Log.v("test: ", it)
             //Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
 

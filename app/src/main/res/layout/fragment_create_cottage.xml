@@ -39,7 +39,7 @@
     <androidx.core.widget.NestedScrollView
 
         android:layout_width="0dp"
-        android:layout_height="1535dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
         android:fillViewport="true"
         android:paddingLeft="16dp"
@@ -51,26 +51,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/form_box_border"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editCottageTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginBottom="10dp"
+                android:autofillHints=""
+                android:ems="10"
                 android:hint="@string/editCottageTitleString"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/editCottageLocataion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginBottom="10dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/editCottageLocationString"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
 
             <LinearLayout
@@ -86,10 +92,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:layout_weight="1"
-                    android:hint="@string/editCottagePriceString"
+                    android:autofillHints=""
                     android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:autofillHints="" />
+                    android:hint="@string/editCottagePriceString"
+                    android:inputType="numberDecimal" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -111,7 +117,9 @@
                 android:id="@+id/spinnerGuestAmount"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/colorWhite"
                 android:spinnerMode="dropdown" />
@@ -127,15 +135,17 @@
                 android:id="@+id/editCottageDescription"
                 android:layout_width="match_parent"
                 android:layout_height="128dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/description_box_border"
                 android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:maxLines="12"
                 android:hint="@string/editCottageDescription"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLines="12" />
 
 
             <TextView
@@ -149,6 +159,8 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="308dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:background="#679854"
                 android:clickable="true"
                 android:focusable="true"
@@ -216,33 +228,35 @@
                 android:text="@string/checkBoxSixString" />
 
             <LinearLayout
+                style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="32dp"
-                android:orientation="horizontal"
-                style="?android:attr/buttonBarStyle">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/cancelButtonCreateCottage"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:textColor="@color/colorWhite"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:text="@string/cancelButtonString" />
+                    android:background="@color/colorAccent"
+                    android:text="@string/cancelButtonString"
+                    android:textColor="@color/colorWhite" />
 
                 <Button
                     android:id="@+id/confirmButtonCreateCottage"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:background="@color/colorPrimary"
-                    android:textColor="@color/colorWhite"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:text="@string/confirmButtonString" />
+                    android:text="@string/confirmButtonString"
+                    android:textColor="@color/colorWhite" />
             </LinearLayout>
 
         </LinearLayout>

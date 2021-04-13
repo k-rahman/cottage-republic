@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.FragmentHomeScreenBinding
 import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
 import fi.oamk.cottagerepublic.util.Resource
@@ -47,7 +48,7 @@ class HomeScreenFragment : Fragment() {
 
         // Specify the current activity as the lifecycle owner of the binding.
         // This is necessary so that the binding can observe LiveData updates.
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setHomeAdapters()
         setObservers()
@@ -78,12 +79,30 @@ class HomeScreenFragment : Fragment() {
 
     private fun setObservers() {
 
-        //istAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
-//        viewModel.popularCottages.observe(viewLifecycleOwner, {
-//            it?.let {
-//                popularCottagesAdapter.submitList(it.toList().reversed()) // pass a copy of the list to be diffed
-//            }
-//        })
+        viewModel.popularCottages.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Loading -> {
+                        binding.progressIndicator.show()
+                }
+                is Resource.Success -> {
+
+                    // ListAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
+                    var cottageList = it.data as MutableList<Cottage>
+                    popularCottagesAdapter.submitList(
+                        cottageList.toList().reversed()
+                    ) // pass a copy of the list to be diffed
+
+                    binding.progressIndicator.hide()
+                }
+                is Resource.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "An error has occurred:${it.throwable.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
 
         viewModel.popularDestinations.observe(viewLifecycleOwner, {
             it?.let {
@@ -118,29 +137,6 @@ class HomeScreenFragment : Fragment() {
                 )
                 viewModel.onSearchNavigated()
             }
-        })
-
-        viewModel.popularCottages.observe(viewLifecycleOwner, {
-            when (it) {
-                is Resource.Loading -> {
-                    // Before try catch in viewmodel we can use emit(Resource.Loading()) to tell the view we started fetching results and this will be triggered
-                }
-                is Resource.Success -> {
-                    // we get the list data with it.data
-                    popularCottagesAdapter.submitList(
-                        it.data.toList().reversed()
-                    ) // pass a copy of the list to be diffed
-                }
-                is Resource.Failure -> {
-                    //Handle the failure
-                    Toast.makeText(
-                        requireContext(),
-                        "An error has occurred:${it.throwable.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
         })
     }
 }

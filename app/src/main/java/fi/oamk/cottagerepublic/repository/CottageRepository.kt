@@ -29,13 +29,13 @@ class CottageRepository(
         }
     }
 
-    suspend fun getAllCottages(): MutableList<Cottage> {
+    suspend fun getAllCottages(): Resource<MutableList<Cottage>> {
         var cottagesList = mutableListOf<Cottage>()
         val dataSnapshot = databaseReference.get().await().children
 
         cottagesList = createCottageList(cottagesList, dataSnapshot)
 
-        return cottagesList
+        return Resource.Success(cottagesList)
     }
 
     suspend fun getPopularCottages(limit: Int): Resource<MutableList<Cottage>> {

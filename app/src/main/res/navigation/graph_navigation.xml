@@ -42,4 +42,58 @@
         />
     </fragment>
 
+    <!-- Account Screens -->
+    <fragment
+            android:id="@+id/accountScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountScreenFragment"
+            tools:layout="@layout/fragment_account_screen">
+
+        <action android:id="@+id/action_accountScreenFragment_to_accountCottageScreenFragment"
+                app:destination="@id/accountCottageScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:launchSingleTop="true"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_left"/>
+        <action android:id="@+id/action_accountScreenFragment_to_accountReservationsScreenFragment"
+                app:destination="@id/accountReservationsScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:launchSingleTop="true"/>
+        <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
+                app:destination="@id/homeScreenFragment"/>
+        <action android:id="@+id/action_accountScreenFragment_to_accountSettingScreenFragment"
+                app:destination="@id/accountSettingScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+            android:id="@+id/accountSettingScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountSettingsScreenFragment"
+            tools:layout="@layout/fragment_account_settings_screen">
+    </fragment>
+
+    <fragment
+            android:id="@+id/accountCottageScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
+            tools:layout="@layout/fragment_account_cottage_screen">
+        <action android:id="@+id/action_accountCottageScreenFragment_to_addCottageFormFragment"
+                app:destination="@id/addCottageFormFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:launchSingleTop="true"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/addCottageFormFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AddCottageFormFragment"
+            tools:layout="@layout/fragment_add_cottage_form"
+            android:label="@string/new_cottage_form">
+    </fragment>
+
+    <fragment
+            android:id="@+id/accountReservationsScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountReservationsScreenFragment"
+            tools:layout="@layout/fragment_account_reservations_screen">
+
+    </fragment>
+
 </navigation>

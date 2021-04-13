@@ -44,4 +44,5 @@ fun TextView.setCottagePrice(item: Cottage) {
 @BindingAdapter("imageUrl")
 fun ImageView.setSliderImage(item: String) {
     setImageResource(Integer.valueOf(item))
+
 }

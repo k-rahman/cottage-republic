@@ -25,7 +25,7 @@
 
     <style name="BottomNavigation">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="itemBackground">@color/bottom_navigation</item>
+        <item name="itemBackground">@color/selector_bottom_nav</item>
         <item name="itemIconTint">@color/colorWhite</item>
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="itemIconSize">30dp</item>

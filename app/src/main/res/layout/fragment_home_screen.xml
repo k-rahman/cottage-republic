@@ -34,7 +34,7 @@
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
                 />
-                <com.google.android.material.textview.MaterialTextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -51,13 +51,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:background="@drawable/search_borders"
+                        android:background="@drawable/shape_searchbar_borders"
                         android:layout_margin="6dp"
                         android:padding="8dp"
                         android:hint="@string/search_hint"
                         android:gravity="center_horizontal"
                         android:textSize="15sp"
-                        android:drawableStart="@drawable/ic_baseline_search_24"
+                        android:drawableStart="@drawable/icon_search_24"
                         android:onClick="@{() -> homeViewModel.onSearchClicked()}"
                 />
             </com.google.android.material.appbar.CollapsingToolbarLayout>

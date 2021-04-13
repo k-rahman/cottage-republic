@@ -62,9 +62,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     // Material UI
-    //    implementation 'com.google.android.material:material:1.3.0'
+        implementation 'com.google.android.material:material:1.3.0'
     // Reason for this is to solve rendering problem Path.op()
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+//    implementation 'com.google.android.material:material:1.2.0-alpha02'
 
     // JetPack UI
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

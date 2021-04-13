@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCreateCottageBinding
 
-class LoginScreenFragment : Fragment() {
+class CreateCottageFragment : Fragment() {
 
     private lateinit var binding: FragmentCreateCottageBinding
 
@@ -25,7 +25,7 @@ class LoginScreenFragment : Fragment() {
         // Log.v("test: ", "i'm created")
 
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_login_screen, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_create_cottage, container, false)
 
         val viewModel = ViewModelProvider(this).get(CreateCottageViewModel::class.java)
 

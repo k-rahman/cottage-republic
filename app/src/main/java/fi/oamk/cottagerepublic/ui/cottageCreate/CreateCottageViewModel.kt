@@ -9,9 +9,13 @@ import fi.oamk.cottagerepublic.data.Cottage
 
 class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _createCottage = MutableLiveData<Cottage>()
-    val selectedCottage: LiveData<Cottage>
-        get() = _createCottage
-
+    val newCottageTitle = MutableLiveData<String>()
+    val newCottageLocation = MutableLiveData<String>()
+    val newCottageDescription = MutableLiveData<String>()
+    val newCottagePrice = MutableLiveData<Int>()
+    val newCottageGuests = MutableLiveData<Int>()
+    val newCottageLocationLat = MutableLiveData<String>()
+    val newCottageLocationLon = MutableLiveData<String>()
+    val newCottageAmenities = MutableLiveData<BooleanArray>()
 
 }

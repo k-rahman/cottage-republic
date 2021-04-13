@@ -72,10 +72,11 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/editCottageTitleString"
+                android:text="@={CreateViewModel.newCottageTitle}"
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/editCottageLocataion"
+                android:id="@+id/editCottageLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -84,6 +85,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/editCottageLocationString"
+                android:text="@={CreateViewModel.newCottageLocation}"
                 android:inputType="textPersonName" />
 
 
@@ -103,6 +105,7 @@
                     android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/editCottagePriceString"
+                    android:value="@={CreateViewModel.newCottagePrice}"
                     android:inputType="numberDecimal" />
 
                 <TextView
@@ -153,7 +156,9 @@
                 android:hint="@string/editCottageDescription"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:maxLines="12" />
+                android:maxLines="12"
+                android:text="@={CreateViewModel.newCottageDescription}"
+                />
 
 
             <TextView
@@ -193,7 +198,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxOneString" />
+                android:text="@string/checkBoxOneString"
+                android:checked="@={CreateViewModel.newCottageAmenities[0]}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox5"
@@ -201,7 +208,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxTwoString" />
+                android:text="@string/checkBoxTwoString"
+                android:checked="@={CreateViewModel.newCottageAmenities[1]}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox6"
@@ -209,7 +218,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxThreeString" />
+                android:text="@string/checkBoxThreeString"
+                android:checked="@={CreateViewModel.newCottageAmenities[2]}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox7"
@@ -217,7 +228,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxFourString" />
+                android:text="@string/checkBoxFourString"
+                android:checked="@={CreateViewModel.newCottageAmenities[3]}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox8"
@@ -225,7 +238,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxFiveString" />
+                android:text="@string/checkBoxFiveString"
+                android:checked="@={CreateViewModel.newCottageAmenities[4]}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox10"
@@ -233,7 +248,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxSixString" />
+                android:text="@string/checkBoxSixString"
+                android:checked="@={CreateViewModel.newCottageAmenities[5]}"
+                />
 
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
@@ -241,7 +258,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:checked="@={CreateViewModel.newCottageAmenities[6]}"
+                >
 
                 <Button
                     android:id="@+id/cancelButtonCreateCottage"

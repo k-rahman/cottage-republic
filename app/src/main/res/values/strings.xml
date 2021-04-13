@@ -12,6 +12,44 @@
     <string name="home_menu_item_title">Home</string>
     <string name="account_menu_item_title">Account</string>
     <string name="faq_menu_item_title">FAQ</string>
+
+    <!-- login screen strings -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcometext_login_screen">Welcome</string>
+    <string name="cottagerepublic_splash_screen_image_description">CottageRepublic splash screen image</string>
+    <string name="register_button_text"><u>Or register a new account</u></string>
+
+    <!--  Register pages strings-->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="place_and_postcode">Place and postcode</string>
+    <string name="birth_date">Birth date</string>
+    <string name="register">Register</string>
+    <string name="address">Address</string>
+    <string name="cabin_renter">Cabin renter</string>
+    <string name="cabin_owner">Cabin owner</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="name">Name</string>
+    <string name="login">Login</string>
+
+    <!--  Settings page strings  -->
+    <string name="my_account">My Account</string>
+    <string name="john_doe">John Doe</string>
+    <string name="john_doe_com">john@doe.com</string>
+    <string name="user_settings">User Settings</string>
+    <string name="my_cottages">My Cottages</string>
+    <string name="my_reservation">My Reservation</string>
+    <string name="my_reservations">My Reservations</string>
+    <string name="logout">Logout</string>
+    <string name="user_image">User Image</string>
+    <string name="test_cottage_name">Kemi Cottage 1</string>
+    <string name="upload_cottage">Upload Cottage</string>
+    <string name="new_cottage_form">Add New Cottage Form</string>
     <string name="sauna">Sauna</string>
     <string name="pets">Pets</string>
     <string name="hot_tub">Hot tub</string>

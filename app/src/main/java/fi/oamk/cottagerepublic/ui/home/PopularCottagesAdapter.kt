@@ -12,7 +12,6 @@ package fi.oamk.cottagerepublic.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import fi.oamk.cottagerepublic.data.Cottage
@@ -42,8 +41,6 @@ class PopularCottagesAdapter(private val clickListener: CottageListener) :
 
         // binding data in ViewHolder is a better practice
         fun bind(item: Cottage, clickListener: CottageListener) {
-//            binding.cardImage.setImageResource(item.image)
-//            binding.cardLabel.text = item.label
             binding.cottage = item
             binding.cottageListener = clickListener
 

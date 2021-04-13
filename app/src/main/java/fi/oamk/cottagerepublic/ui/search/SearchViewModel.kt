@@ -1,26 +1,40 @@
 package fi.oamk.cottagerepublic.ui.search
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
+import kotlinx.coroutines.Dispatchers
 
 class SearchViewModel(fragment: Fragment) : ViewModel() {
-    private val dataSource = CottageRepository.getInstance(Firebase.database.getReference("cottages"))
     private var destination = SearchFragmentArgs.fromBundle(fragment.requireArguments()).destination
 
-    private var _cottagesList = dataSource.getAllCottages()
-    val cottagesList: LiveData<MutableList<Cottage>>
-        get() = _cottagesList
+    private val dataSource =
+        CottageRepository.getInstance(
+            Firebase.database.getReference("cottages"),
+            Firebase.storage.getReference("cottages")
+        )
+
+    val cottagesList = liveData(Dispatchers.IO) {
+        try {
+            val cottages = dataSource.getAllCottages()
+            emit(cottages)
+        } catch (e: Exception) {
+            Log.e("SearchViewModel", e.cause.toString())
+        }
+    }
 
     val searchQuery = MutableLiveData<String>()
 
-    private val _navigateToCottageDetail = MutableLiveData<Cottage>()
-    val navigateToCottageDetail: LiveData<Cottage>
+    private val _navigateToCottageDetail = MutableLiveData<Cottage?>()
+    val navigateToCottageDetail: LiveData<Cottage?>
         get() = _navigateToCottageDetail
 
 
@@ -52,12 +66,6 @@ class SearchViewModel(fragment: Fragment) : ViewModel() {
             destination = null
             return true
         }
-
         return false
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        dataSource.removeListener()
     }
 }

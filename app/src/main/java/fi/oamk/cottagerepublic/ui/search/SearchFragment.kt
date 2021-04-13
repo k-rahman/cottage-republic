@@ -59,7 +59,6 @@ class SearchFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.cottagesList.observe(viewLifecycleOwner, {
-
             it?.let {
                 searchAdapter.submitList(it.toList()) // pass a copy of the list to be diffed
                 searchAdapter.fullList = it.toList()

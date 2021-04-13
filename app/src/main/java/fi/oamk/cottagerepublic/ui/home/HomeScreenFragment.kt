@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentHomeScreenBinding
 import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
+import fi.oamk.cottagerepublic.util.Resource
 
 class HomeScreenFragment : Fragment() {
     private lateinit var binding: FragmentHomeScreenBinding
@@ -77,11 +79,11 @@ class HomeScreenFragment : Fragment() {
     private fun setObservers() {
 
         //istAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
-        viewModel.popularCottages.observe(viewLifecycleOwner, {
-            it?.let {
-                popularCottagesAdapter.submitList(it.toList().reversed()) // pass a copy of the list to be diffed
-            }
-        })
+//        viewModel.popularCottages.observe(viewLifecycleOwner, {
+//            it?.let {
+//                popularCottagesAdapter.submitList(it.toList().reversed()) // pass a copy of the list to be diffed
+//            }
+//        })
 
         viewModel.popularDestinations.observe(viewLifecycleOwner, {
             it?.let {
@@ -116,6 +118,29 @@ class HomeScreenFragment : Fragment() {
                 )
                 viewModel.onSearchNavigated()
             }
+        })
+
+        viewModel.popularCottages.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Loading -> {
+                    // Before try catch in viewmodel we can use emit(Resource.Loading()) to tell the view we started fetching results and this will be triggered
+                }
+                is Resource.Success -> {
+                    // we get the list data with it.data
+                    popularCottagesAdapter.submitList(
+                        it.data.toList().reversed()
+                    ) // pass a copy of the list to be diffed
+                }
+                is Resource.Failure -> {
+                    //Handle the failure
+                    Toast.makeText(
+                        requireContext(),
+                        "An error has occurred:${it.throwable.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
         })
     }
 }

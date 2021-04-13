@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="cottage"
+        <variable name="newCottage"
                   type="fi.oamk.cottagerepublic.ui.account.NewCottage"/>
         <variable name="myCottageListener"
                   type="fi.oamk.cottagerepublic.ui.account.MyCottageListener"/>
@@ -38,7 +38,7 @@
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/roboto"
-                app:cottageName="@{cottage}"
+                app:cottageName="@{newCottage}"
                 app:layout_constraintHorizontal_bias="0.0"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

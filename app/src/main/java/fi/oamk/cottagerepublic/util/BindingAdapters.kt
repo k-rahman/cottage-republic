@@ -5,6 +5,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.ui.account.NewCottage
 
 @BindingAdapter("image")
 fun ImageView.setDestinationImage(item: Destination) = setImageResource(item.image)
@@ -45,4 +46,9 @@ fun TextView.setCottagePrice(item: Cottage) {
 fun ImageView.setSliderImage(item: String) {
     setImageResource(Integer.valueOf(item))
 
+}
+
+@BindingAdapter("cottageName")
+fun TextView.setCottageName(item: NewCottage) {
+    text = item.cottageName
 }

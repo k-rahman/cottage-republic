@@ -47,7 +47,7 @@ class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adap
 
         // binding data in ViewHolder is a better practice
         fun bind(item: NewCottage, clickListener: MyCottageListener) {
-            binding.cottage = item
+            binding.newCottage = item
             binding.myCottageListener = clickListener
             binding.executePendingBindings()
         }
@@ -68,5 +68,5 @@ class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adap
 
 // handles click on recycleView item
 class MyCottageListener(val clickListener: (cottageName: String) -> Unit) {
-    fun onClick(destination: NewCottage) = clickListener(destination.cottageName)
+    fun onClick(newCottage: NewCottage) = clickListener(newCottage.cottageName)
 }

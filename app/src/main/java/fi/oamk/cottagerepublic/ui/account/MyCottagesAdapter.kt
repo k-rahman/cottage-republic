@@ -13,18 +13,19 @@ package fi.oamk.cottagerepublic.ui.account
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.ListItemMyCottagesBinding
 
 
 // Data
-data class NewCottage(
-//    val image: Int = R.drawable.ic_launcher_background,
-    val cottageName: String = "testLabel"
-)
+//data class NewCottage(
+////    val image: Int = R.drawable.ic_launcher_background,
+//    val cottageName: String = "testLabel"
+//)
+
 class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adapter<MyCottagesAdapter.ViewHolder>() {
 
-    val data = listOf<NewCottage>(NewCottage(), NewCottage(), NewCottage())
+    val data = listOf(Cottage(), Cottage(), Cottage())
 
     // used by RecycleView to get the number of items it will render
     override fun getItemCount(): Int = data.size
@@ -46,7 +47,7 @@ class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adap
     class ViewHolder private constructor(val binding: ListItemMyCottagesBinding) : RecyclerView.ViewHolder(binding.root) {
 
         // binding data in ViewHolder is a better practice
-        fun bind(item: NewCottage, clickListener: MyCottageListener) {
+        fun bind(item: Cottage, clickListener: MyCottageListener) {
             binding.cottage = item
             binding.myCottageListener = clickListener
             binding.executePendingBindings()
@@ -67,6 +68,6 @@ class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adap
 }
 
 // handles click on recycleView item
-class MyCottageListener(val clickListener: (cottageName: String) -> Unit) {
-    fun onClick(destination: NewCottage) = clickListener(destination.cottageName)
+class MyCottageListener(val clickListener: (cottage: Cottage) -> Unit) {
+    fun onClick(cottage: Cottage) = clickListener(cottage)
 }

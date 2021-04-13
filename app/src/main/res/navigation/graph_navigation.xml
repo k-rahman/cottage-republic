@@ -120,4 +120,43 @@
 
     </fragment>
 
+    <!-- login and register -->
+    <fragment
+            android:id="@+id/loginScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment"
+            android:label="LoginScreenFragment" >
+        <action
+                android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
+                app:destination="@id/registerFragmentEmail" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/registerFragmentPassword"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentPassword"
+            android:label="fragment_register_password"
+            tools:layout="@layout/fragment_register_password" >
+        <action
+                android:id="@+id/action_registerFragmentPassword_to_registerFragmentEnd"
+                app:destination="@id/registerFragmentEnd" />
+    </fragment>
+    <fragment
+            android:id="@+id/registerFragmentEmail"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEmail"
+            android:label="fragment_register_email"
+            tools:layout="@layout/fragment_register_email" >
+        <action
+                android:id="@+id/action_registerFragmentEmail_to_registerFragmentPassword"
+                app:destination="@id/registerFragmentPassword" />
+    </fragment>
+    <fragment
+            android:id="@+id/registerFragmentEnd"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
+            android:label="fragment_register_end"
+            tools:layout="@layout/fragment_register_end" >
+        <action
+                android:id="@+id/action_registerFragmentEnd_to_loginScreenFragment"
+                app:destination="@id/loginScreenFragment"
+                app:popUpToInclusive="true" />
+    </fragment>
+
 </navigation>

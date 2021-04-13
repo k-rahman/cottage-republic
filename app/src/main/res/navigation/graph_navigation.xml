@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation"
+        app:startDestination="@id/homeScreenFragment"
+>
+
+    <fragment
+            android:id="@+id/homeScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.home.HomeScreenFragment"
+            tools:layout="@layout/fragment_home_screen"
+    >
+        <action
+                android:id="@+id/action_homeScreenFragment_to_searchFragment"
+                app:destination="@id/searchFragment"
+        />
+        <action
+                android:id="@+id/action_homeScreenFragment_to_cottageDetailFragment"
+                app:destination="@id/cottageDetailFragment"
+        />
+    </fragment>
+
+    <fragment
+            android:id="@+id/searchFragment"
+            android:name="fi.oamk.cottagerepublic.ui.search.SearchFragment"
+            tools:layout="@layout/fragment_search_screen"
+    >
+        <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
+                app:destination="@id/cottageDetailFragment"
+        />
+        <argument android:name="destination" app:argType="fi.oamk.cottagerepublic.data.Destination" app:nullable="true"
+                  android:defaultValue="@null"/>
+    </fragment>
+
+    <fragment android:id="@+id/cottageDetailFragment"
+              android:name="fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailFragment"
+              tools:layout="@layout/fragment_cottage_detail_screen"
+    >
+        <argument
+                android:name="selectedCottage"
+                app:argType="fi.oamk.cottagerepublic.data.Cottage"
+        />
+        <action android:id="@+id/action_cottageDetailFragment_to_mapFragment"
+                app:destination="@id/mapFragment"
+        />
+        <action android:id="@+id/action_cottageDetailFragment_to_bookingDetailFragment"
+                app:destination="@id/bookingDetailFragment"
+        />
+    </fragment>
+
+    <fragment android:id="@+id/bookingDetailFragment"
+              android:name="fi.oamk.cottagerepublic.ui.bookingDetail.BookingDetailFragment"
+              android:label="BookingDetailFragment"
+              tools:layout="@layout/fragment_booking_detail_screen"
+    />
+
+    <fragment
+            android:id="@+id/mapFragment"
+            android:name="fi.oamk.cottagerepublic.ui.map.MapFragment"
+            tools:layout="@layout/fragment_map"
+    >
+        <argument android:name="selectedCottageCoordinate"
+                  app:argType="fi.oamk.cottagerepublic.data.Cottage"
+        />
+    </fragment>
+
+    <!-- Account Screens -->
+    <fragment
+            android:id="@+id/accountScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountScreenFragment"
+            tools:layout="@layout/fragment_account_screen">
+
+        <action android:id="@+id/action_accountScreenFragment_to_accountCottageScreenFragment"
+                app:destination="@id/accountCottageScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:launchSingleTop="true"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_left"/>
+        <action android:id="@+id/action_accountScreenFragment_to_accountReservationsScreenFragment"
+                app:destination="@id/accountReservationsScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:launchSingleTop="true"/>
+        <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
+                app:destination="@id/homeScreenFragment"/>
+        <action android:id="@+id/action_accountScreenFragment_to_accountSettingScreenFragment"
+                app:destination="@id/accountSettingScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+            android:id="@+id/accountSettingScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountSettingsScreenFragment"
+            tools:layout="@layout/fragment_account_settings_screen">
+    </fragment>
+
+    <fragment
+            android:id="@+id/accountCottageScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
+            tools:layout="@layout/fragment_account_cottage_screen">
+        <action android:id="@+id/action_accountCottageScreenFragment_to_addCottageFormFragment"
+                app:destination="@id/addCottageFormFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:launchSingleTop="true"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/addCottageFormFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AddCottageFormFragment"
+            tools:layout="@layout/fragment_add_cottage_form"
+            android:label="@string/new_cottage_form">
+    </fragment>
+
+    <fragment
+            android:id="@+id/accountReservationsScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountReservationsScreenFragment"
+            tools:layout="@layout/fragment_account_reservations_screen">
+
+    </fragment>
+
+</navigation>

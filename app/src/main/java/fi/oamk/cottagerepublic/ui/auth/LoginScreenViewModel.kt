@@ -54,7 +54,7 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
            _navigateToRegister.value = false
 
        }
-        fun doneNavigate() {
-        _navigate.value = false
-        }
+//        fun doneNavigate() {
+//        _navigate.value = false
+//        }
 }

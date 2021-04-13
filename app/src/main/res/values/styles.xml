@@ -1,13 +1,20 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="Divider">
+        <item name="android:background">@color/gray</item> //you can give your color here. that will change all divider color in your app.
+    </style>
+    <style name="Divider.Horizontal" parent="Divider">
+        <item name="android:layout_width">350dp</item>
+        <item name="android:layout_height">1dp</item> // You can change thickness here.
+    </style>
 
-    <style name="list_header_text">
+    <style name="ListHeaderText">
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:textSize">20sp</item>
@@ -18,9 +25,24 @@
 
     <style name="BottomNavigation">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="itemBackground">@color/bottom_navigation</item>
+        <item name="itemBackground">@color/selector_bottom_nav</item>
         <item name="itemIconTint">@color/colorWhite</item>
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="itemIconSize">30dp</item>
     </style>
+
+<!--    cottage details screen title expanded-->
+    <style name="TextAppearance.App.CollapsingToolbar.Expanded"
+           parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/colorTransparent</item>
+    </style>
+
+<!--    cottage details screen title collapsed-->
+    <style name="TextAppearance.App.CollapsingToolbar.Collapsed"
+           parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

@@ -10,7 +10,7 @@
 </data>
 
     <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:elevation="100dp"
             app:cardBackgroundColor="@color/colorWhite"
@@ -44,7 +44,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/cottage_image"
                     app:layout_constraintStart_toStartOf="@+id/cottage_image"
                     app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:isIndicator="true"
                     app:rating="@{cottage}"
@@ -60,13 +60,13 @@
                     android:textAlignment="viewStart"
                     tools:text="@tools:sample/first_names"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="8dp"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/roboto"
                     app:cottageLabel="@{cottage}"
                     app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
             />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

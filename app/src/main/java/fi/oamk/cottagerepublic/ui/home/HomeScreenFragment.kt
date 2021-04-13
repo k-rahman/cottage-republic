@@ -11,9 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import fi.oamk.cottagerepublic.*
+import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentHomeScreenBinding
 import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
+import fi.oamk.cottagerepublic.util.Resource
 
 class HomeScreenFragment : Fragment() {
     private lateinit var binding: FragmentHomeScreenBinding
@@ -55,14 +56,15 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun setHomeAdapters() {
-        popularDestinationsAdapter = PopularDestinationAdapter(DestinationListener { destinationName ->
-            Toast.makeText(context, destinationName, Toast.LENGTH_LONG).show()
+        popularDestinationsAdapter = PopularDestinationAdapter(DestinationListener {
+            viewModel.onPopularDestinationClicked(it)
+//            Toast.makeText(context, destinationName, Toast.LENGTH_LONG).show()
         })
 
-        popularCottagesAdapter = PopularCottagesAdapter(CottageListener { cottage ->
-            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
+        popularCottagesAdapter = PopularCottagesAdapter(CottageListener {
+//            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
             // handle popular cottage click
-            viewModel.onPopularCottageClicked(cottage)
+            viewModel.onPopularCottageClicked(it)
         })
 
         with(binding) {
@@ -77,19 +79,34 @@ class HomeScreenFragment : Fragment() {
     private fun setObservers() {
 
         //istAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
-        viewModel.popularCottages.observe(viewLifecycleOwner, {
+//        viewModel.popularCottages.observe(viewLifecycleOwner, {
+//            it?.let {
+//                popularCottagesAdapter.submitList(it.toList().reversed()) // pass a copy of the list to be diffed
+//            }
+//        })
+
+        viewModel.popularDestinations.observe(viewLifecycleOwner, {
             it?.let {
-                popularCottagesAdapter.submitList(it.toList().reversed()) // pass a copy of the list to be diffed
+                popularDestinationsAdapter.submitList(it.toList())
             }
         })
 
         // When popular cottage is clicked navigate to cottage detail fragment
-        viewModel.navigateToCottageDetail.observe(viewLifecycleOwner, { cottage ->
-            cottage?.let {
+        viewModel.navigateToCottageDetail.observe(viewLifecycleOwner, {
+            it?.let {
                 findNavController().navigate(
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToCottageDetailFragment(cottage)
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToCottageDetailFragment(it)
                 )
                 viewModel.onCottageDetailNavigated()
+            }
+        })
+
+        viewModel.navigateToSearchDestination.observe(viewLifecycleOwner, {
+            it?.let {
+                findNavController().navigate(
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(it)
+                )
+                viewModel.onSearchDestinationNavigated()
             }
         })
 
@@ -97,10 +114,33 @@ class HomeScreenFragment : Fragment() {
         viewModel.navigateToSearch.observe(viewLifecycleOwner, {
             if (it) {
                 findNavController().navigate(
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment()
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null)
                 )
                 viewModel.onSearchNavigated()
             }
+        })
+
+        viewModel.popularCottages.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Loading -> {
+                    // Before try catch in viewmodel we can use emit(Resource.Loading()) to tell the view we started fetching results and this will be triggered
+                }
+                is Resource.Success -> {
+                    // we get the list data with it.data
+                    popularCottagesAdapter.submitList(
+                        it.data.toList().reversed()
+                    ) // pass a copy of the list to be diffed
+                }
+                is Resource.Failure -> {
+                    //Handle the failure
+                    Toast.makeText(
+                        requireContext(),
+                        "An error has occurred:${it.throwable.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
         })
     }
 }

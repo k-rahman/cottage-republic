@@ -78,7 +78,7 @@ class AuthRepository(private val application: Application) {
     fun logOut() {
         firebaseAuth.signOut()
         loggedOutLiveData.postValue(true)
-        Log.v("test2", "Logged out")
+        //Log.v("test2", "Logged out")
     }
 
     fun fillInBoxes (){

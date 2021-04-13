@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation"
+        app:startDestination="@id/homeScreenFragment"
+>
+
+    <fragment
+            android:id="@+id/homeScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.home.HomeScreenFragment"
+            tools:layout="@layout/fragment_home_screen"
+
+    />
+    <!-- placeholder -->
+    <fragment
+        android:id="@+id/loginScreenFragment"
+        android:name="fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment"
+        android:label="LoginScreenFragment" >
+        <action
+            android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
+            app:destination="@id/registerFragmentEmail" />
+    </fragment>
+
+        <action
+                android:id="@+id/action_homeScreenFragment_to_searchFragment"
+                app:destination="@id/searchFragment"
+        />
+        <action
+                android:id="@+id/action_homeScreenFragment_to_cottageDetailFragment"
+                app:destination="@id/cottageDetailFragment"
+        />
+
+
+    <fragment
+            android:id="@+id/searchFragment"
+            android:name="fi.oamk.cottagerepublic.ui.search.SearchFragment"
+            tools:layout="@layout/fragment_search_screen"
+    >
+        <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
+                app:destination="@id/cottageDetailFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragmentPassword"
+        android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentPassword"
+        android:label="fragment_register_password"
+        tools:layout="@layout/fragment_register_password" >
+        <action
+            android:id="@+id/action_registerFragmentPassword_to_registerFragmentEnd"
+            app:destination="@id/registerFragmentEnd" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragmentEmail"
+        android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEmail"
+        android:label="fragment_register_email"
+        tools:layout="@layout/fragment_register_email" >
+        <action
+            android:id="@+id/action_registerFragmentEmail_to_registerFragmentPassword"
+            app:destination="@id/registerFragmentPassword" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragmentEnd"
+        android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
+        android:label="fragment_register_end"
+        tools:layout="@layout/fragment_register_end" >
+        <action
+            android:id="@+id/action_registerFragmentEnd_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import fi.oamk.cottagerepublic.databinding.ListItemCottageImageBinding
-import fi.oamk.cottagerepublic.util.ImageDiffCallBack
+import fi.oamk.cottagerepublic.util.StringDiffCallBack
 
 class CottageImageAdapter(private val clickListener: CottageImageListener) :
-    ListAdapter<String, CottageImageAdapter.ViewHolder>(ImageDiffCallBack()) {
+    ListAdapter<String, CottageImageAdapter.ViewHolder>(StringDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)

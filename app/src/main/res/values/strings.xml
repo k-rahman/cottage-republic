@@ -71,4 +71,10 @@
     <string name="continue_">Continue</string>
     <string name="ask_the_host">Ask the host</string>
     <string name="do_you_have_any_questions">Do you have any questions?</string>
+    <string name="book">Book</string>
+    <string name="select_date">Select dates</string>
+    <string name="cottage_location">Cottage Location</string>
+    <string name="you_have_selected">You have selected</string>
+    <string name="close">close</string>
+    <string name="calendar_subtitle">Please select check-in and check-out dates</string>
 </resources>

@@ -1,45 +1,46 @@
 package fi.oamk.cottagerepublic.ui.search
 
+import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
+import kotlinx.coroutines.Dispatchers
 
-class SearchViewModel : ViewModel() {
-    private val dataSource = CottageRepository.getInstance(Firebase.database.getReference("cottages"))
+class SearchViewModel(fragment: Fragment) : ViewModel() {
+    private var destination = SearchFragmentArgs.fromBundle(fragment.requireArguments()).destination
 
-    private var _cottagesList = dataSource.getAllCottages()
-    val cottagesList: LiveData<MutableList<Cottage>>
-        get() = _cottagesList
+    private val dataSource =
+        CottageRepository.getInstance(
+            Firebase.database.getReference("cottages"),
+            Firebase.storage.getReference("cottages")
+        )
+
+    val cottagesList = liveData(Dispatchers.IO) {
+        try {
+            val cottages = dataSource.getAllCottages()
+            emit(cottages)
+        } catch (e: Exception) {
+            Log.e("SearchViewModel", e.cause.toString())
+        }
+    }
 
     val searchQuery = MutableLiveData<String>()
 
-    private val _navigateToCottageDetail = MutableLiveData<Cottage>()
-    val navigateToCottageDetail: LiveData<Cottage>
+    private val _navigateToCottageDetail = MutableLiveData<Cottage?>()
+    val navigateToCottageDetail: LiveData<Cottage?>
         get() = _navigateToCottageDetail
 
 
     private val _isSearchBarFocused = MutableLiveData<Boolean>()
     val isSearchBarFocused: LiveData<Boolean>
         get() = _isSearchBarFocused
-
-    fun searchByLocation(query: String?) {
-        val filteredList = _cottagesList.value?.filter {
-            it.location.equals(query.toString(), ignoreCase = true)
-        }!!
-
-
-        for (cottage in filteredList)
-            _cottagesList.value?.add(cottage)
-//        if (query.isNullOrEmpty())
-//            _cottagesList = dataSource.getAllCottages()
-//
-//        else
-//            _cottagesList = dataSource.searchByLocation(query)
-    }
 
     fun onSearchItemClicked(cottage: Cottage) {
         _navigateToCottageDetail.value = cottage
@@ -51,15 +52,20 @@ class SearchViewModel : ViewModel() {
     }
 
     fun showKeyboard() {
-       _isSearchBarFocused.value = true
+        _isSearchBarFocused.value = true
+        searchQuery.value = ""
     }
 
     fun closeKeyboard() {
         _isSearchBarFocused.value = false
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        dataSource.removeListener()
+    fun checkForPassedArgs(): Boolean {
+        if (destination != null) {
+            searchQuery.value = "${destination!!.location["city"]}, ${destination!!.location["country"]}"
+            destination = null
+            return true
+        }
+        return false
     }
 }

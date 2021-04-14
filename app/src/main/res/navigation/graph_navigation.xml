@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/navigation"
-        app:startDestination="@id/homeScreenFragment"
+        app:startDestination="@id/CreateCottageFragment"
 >
 
     <fragment
@@ -21,6 +21,12 @@
                 app:destination="@id/cottageDetailFragment"
         />
     </fragment>
+
+    <fragment
+        android:id="@+id/CreateCottageFragment"
+        android:name="fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageFragment"
+        tools:layout="@layout/fragment_create_cottage"
+        />
 
     <fragment
             android:id="@+id/searchFragment"

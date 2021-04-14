@@ -28,17 +28,11 @@ class LoginScreenFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(LoginScreenViewModel::class.java)
 
-        viewModel.username.observe(viewLifecycleOwner, {
-        //    Log.v("test: ", it)
-            //Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        })
-
-        viewModel.navigate.observe(viewLifecycleOwner,{
-        // navigate to next screen
-        // findNavController().navigate()
-        // viewModel.doneNavigate()
-
-        })
+//        viewModel.username.observe(viewLifecycleOwner, {
+//        })
+//
+//        viewModel.navigate.observe(viewLifecycleOwner,{
+//        })
         //Gets the action from navchart and is used to naviagte
 
         viewModel.navigateToRegister.observe(viewLifecycleOwner,{

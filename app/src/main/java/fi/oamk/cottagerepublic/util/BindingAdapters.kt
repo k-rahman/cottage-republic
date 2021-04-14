@@ -1,13 +1,19 @@
 package fi.oamk.cottagerepublic.util
 
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
+import android.util.Log
+import android.view.View
+import android.widget.*
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.core.view.get
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
+import androidx.databinding.ObservableField
 import com.squareup.picasso.Picasso
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.data.Destination
+
 
 // destination bindings
 @BindingAdapter("image")
@@ -85,3 +91,48 @@ fun TextView.setNumberOfNights(item: Int) {
 
     text = "$item night(s)"
 }
+
+
+@BindingAdapter("entries")
+fun Spinner.setEntries(entries: List<Any>?) {
+
+    if (entries != null) {
+        val newEntries= mutableListOf<String>()
+        for(entry in entries)
+        {
+            newEntries.add("$entry Guests")
+        }
+        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, newEntries)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter = arrayAdapter
+    }
+}
+
+    @BindingAdapter("onItemSelected")
+    fun Spinner.setSpinnerItemSelectedListener(item: ObservableField<Int>) {
+
+
+        if (item == null) {
+            onItemSelectedListener = null
+        } else {
+            onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                )
+                {
+                    item.set(parent.getItemAtPosition(position).toString().slice(IntRange(0,0)).toInt())
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+        }
+    }
+
+
+
+
+

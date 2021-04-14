@@ -58,6 +58,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="128dp"
             android:background="@drawable/form_box_border"
             android:orientation="vertical">
 
@@ -72,8 +73,8 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/editCottageTitleString"
-                android:text="@={CreateViewModel.newCottageTitle}"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="@={CreateViewModel.newCottageTitle}" />
 
             <EditText
                 android:id="@+id/editCottageLocation"
@@ -85,9 +86,23 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/editCottageLocationString"
+                android:inputType="textPersonName"
                 android:text="@={CreateViewModel.newCottageLocation}"
-                android:inputType="textPersonName" />
 
+                />
+
+            <EditText
+                android:id="@+id/editCottageCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/editCottageLocationString"
+                android:inputType="textPersonName"
+                android:text="@={CreateViewModel.newCottageCountry}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,7 +120,6 @@
                     android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/editCottagePriceString"
-                    android:value="@={CreateViewModel.newCottagePrice}"
                     android:inputType="numberDecimal" />
 
                 <TextView
@@ -124,7 +138,7 @@
                 android:textAlignment="center"
                 android:textSize="16sp" />
 
-            <Spinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinnerGuestAmount"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
@@ -133,7 +147,25 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/colorWhite"
-                android:spinnerMode="dropdown" />
+                app:entries="@{CreateViewModel.amountOfGuests}"
+                app:onItemSelected="@{CreateViewModel.numberOfGuests}"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(CreateViewModel.numberOfGuests)}"
+                android:textAlignment="center"
+                android:textSize="16sp"
+
+                />
+<!--            app:NumberOfGuests="@={CreateViewModel.amountOfGuests}"-->
+<!--            android:entries="@array/spinnerGuestAmount"-->
+<!--            app:clicks="@={CreateViewModel.amountOfGuests}"-->
+<!--            app:entries="@{CreateViewModel.amountOfGuests}"-->
+<!--            app:onItemSelected="@{(NewValue) -> CreateViewModel.onItemSelected(NewValue) }"-->
+<!--            app:newValue="@={CreateViewModel.quantity}"-->
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -156,9 +188,7 @@
                 android:hint="@string/editCottageDescription"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:maxLines="12"
-                android:text="@={CreateViewModel.newCottageDescription}"
-                />
+                android:maxLines="12" />
 
 
             <TextView
@@ -198,9 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxOneString"
-                android:checked="@={CreateViewModel.newCottageAmenities[0]}"
-                />
+                android:text="@string/checkBoxOneString" />
 
             <CheckBox
                 android:id="@+id/checkBox5"
@@ -208,9 +236,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxTwoString"
-                android:checked="@={CreateViewModel.newCottageAmenities[1]}"
-                />
+                android:text="@string/checkBoxTwoString" />
 
             <CheckBox
                 android:id="@+id/checkBox6"
@@ -218,9 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxThreeString"
-                android:checked="@={CreateViewModel.newCottageAmenities[2]}"
-                />
+                android:text="@string/checkBoxThreeString" />
 
             <CheckBox
                 android:id="@+id/checkBox7"
@@ -228,9 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxFourString"
-                android:checked="@={CreateViewModel.newCottageAmenities[3]}"
-                />
+                android:text="@string/checkBoxFourString" />
 
             <CheckBox
                 android:id="@+id/checkBox8"
@@ -238,9 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxFiveString"
-                android:checked="@={CreateViewModel.newCottageAmenities[4]}"
-                />
+                android:text="@string/checkBoxFiveString" />
 
             <CheckBox
                 android:id="@+id/checkBox10"
@@ -248,23 +268,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxSixString"
-                android:checked="@={CreateViewModel.newCottageAmenities[5]}"
-                />
+                android:text="@string/checkBoxSixString" />
 
             <LinearLayout
-                style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
-                android:orientation="horizontal"
-                android:checked="@={CreateViewModel.newCottageAmenities[6]}"
-                >
+                android:orientation="horizontal">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/cancelButtonCreateCottage"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -272,11 +286,12 @@
                     android:layout_weight="1"
                     android:background="@color/colorAccent"
                     android:text="@string/cancelButtonString"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/colorWhite"
+                    app:rippleColor="@color/calendar_range_middle_deactivated_bg" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/confirmButtonCreateCottage"
-                    style="?android:attr/buttonBarButtonStyle"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

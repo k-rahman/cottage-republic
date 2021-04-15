@@ -299,7 +299,9 @@
                     android:layout_weight="1"
                     android:background="@color/colorPrimary"
                     android:text="@string/confirmButtonString"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/colorWhite"
+                    android:onClick="@{() -> CreateViewModel.createCottage()}"
+                    />
             </LinearLayout>
 
         </LinearLayout>

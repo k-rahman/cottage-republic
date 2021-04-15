@@ -30,36 +30,33 @@ class CottageRepository(
     }
 
     suspend fun getAllCottages(): Resource<MutableList<Cottage>> {
-        var cottagesList = mutableListOf<Cottage>()
-        val dataSnapshot = databaseReference.get().await().children
+        val dataSnapshot = databaseReference.get().await()
 
-        cottagesList = createCottageList(cottagesList, dataSnapshot)
+        val cottagesList = createCottageList(dataSnapshot)
 
         return Resource.Success(cottagesList)
     }
 
     suspend fun getPopularCottages(limit: Int): Resource<MutableList<Cottage>> {
-        var cottagesList = mutableListOf<Cottage>()
         val dataSnapshot = databaseReference
             .orderByChild("rating")
             .limitToLast(limit)
-            .get().await().children
+            .get().await()
 
-        cottagesList = createCottageList(cottagesList, dataSnapshot)
+        val cottagesList = createCottageList(dataSnapshot)
 
         return Resource.Success(cottagesList)
     }
 
-    private suspend fun createCottageList(
-        cottagesList: MutableList<Cottage>,
-        dataSnapshot: MutableIterable<DataSnapshot>
-    ): MutableList<Cottage> {
-        for (cottage in dataSnapshot) {
+    private suspend fun createCottageList(dataSnapshot: DataSnapshot): MutableList<Cottage> {
+        val cottagesList = mutableListOf<Cottage>()
+
+        for (cottage in dataSnapshot.children) {
             val values = cottage.value as HashMap<*, *>
             val newCottage = Cottage()
             with(newCottage) {
                 if (values["cottageId"] != null)
-                    cottageId = values["cottageId"].toString().toLong()
+                    cottageId = values["cottageId"].toString()
 
                 if (values["cottageLabel"] != null)
                     cottageLabel = values["cottageLabel"].toString()

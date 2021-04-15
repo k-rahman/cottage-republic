@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Cottage (
-    var cottageId: Long = 0L,
+    var cottageId: String = "",
     var cottageLabel: String = "Cottage for rent",
     var images:MutableList<String> = mutableListOf(),
     var rating: Float = 0.0F,

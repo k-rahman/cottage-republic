@@ -32,7 +32,9 @@ class CottageRepository(
 
     fun createNewCottage(cottage: Cottage){
         var key = databaseReference.child("cottages").push().key
-        databaseReference.child("cottage$key").setValue(cottage)
+        key = "cottage$key"
+        cottage.cottageId = key.toString()
+        databaseReference.child(key).setValue(cottage)
     }
 
 
@@ -66,7 +68,7 @@ class CottageRepository(
             val newCottage = Cottage()
             with(newCottage) {
                 if (values["cottageId"] != null)
-                    cottageId = values["cottageId"].toString().toLong()
+                    cottageId = values["cottageId"].toString()
 
                 if (values["cottageLabel"] != null)
                     cottageLabel = values["cottageLabel"].toString()

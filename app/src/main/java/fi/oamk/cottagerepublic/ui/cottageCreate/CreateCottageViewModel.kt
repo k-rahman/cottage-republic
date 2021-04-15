@@ -2,6 +2,7 @@ package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Application
 import android.util.Log
+import android.util.MutableBoolean
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.databinding.Observable
@@ -35,25 +36,79 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
     val newCottagePrice = MutableLiveData<Int>()
-    val newCottageGuests = MutableLiveData<String>()
     val newCottageLocationLat = MutableLiveData<String>()
     val newCottageLocationLon = MutableLiveData<String>()
-    val newCottageAmenities = MutableLiveData<BooleanArray>()
-//    val amountOfGuests = ObservableField<List<Int>>(listOf(1,2,3,4,5,6,7,8,9))
-//    val numberOfGuests = ObservableField<Int>()
+
+    val newCottageAmenityList: MutableMap<String,Boolean> =  mutableMapOf<String,Boolean>(
+        "Sauna" to false,
+        "Pets" to false,
+        "Power" to false,
+        "Hottub" to false,
+        "Smoking" to false,
+        "Water" to false
+        )
+    val newCottageAmenities: MutableList<String> = mutableListOf()
+
+
+
 
 
     fun createCottage()
     {
+        createAmenitiesList()
         val newCottage = Cottage()
         newCottage.guests = numberOfGuests.value!!.toInt()
         newCottage.rating = ((0..5).random()).toFloat()
         newCottage.cottageLabel = newCottageTitle.value.toString()
         newCottage.description = newCottageDescription.value.toString()
         newCottage.location[newCottageCountry.value.toString()]=newCottageLocation.value.toString()
+        newCottage.amenities=newCottageAmenities
+
         Log.v("Cottage: ",newCottage.toString())
-        cottageDataSource.createNewCottage(newCottage)
+        Log.v("Amenities: ",newCottageAmenityList.toString())
+        //cottageDataSource.createNewCottage(newCottage)
     }
+
+    fun createAmenitiesList()
+    {
+
+        for(amenity in newCottageAmenityList)
+        {
+            Log.v("Amenity: ", amenity.toString())
+            if(amenity.value == true)
+            {
+                newCottageAmenities.add(amenity.key)
+            }
+        }
+    }
+
+    fun saunaCheck(checked : Boolean)
+    {
+        newCottageAmenityList["Sauna"]= checked
+    }
+    fun waterCheck(checked : Boolean)
+    {
+        newCottageAmenityList["Water"] = checked
+    }
+    fun powerCheck(checked : Boolean)
+    {
+        newCottageAmenityList["power"] = checked
+    }
+    fun petsCheck(checked : Boolean)
+    {
+        newCottageAmenityList["Pets"] = checked
+    }
+    fun smokingCheck(checked : Boolean)
+    {
+        Log.v("checkprint", checked.toString())
+        newCottageAmenityList["Smoking"] = checked
+    }
+    fun hotTubCheck(checked : Boolean)
+    {
+        Log.v("checkprint", checked.toString())
+        newCottageAmenityList["Hottub"] = checked
+    }
+
 
 }
 

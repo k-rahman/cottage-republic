@@ -222,14 +222,15 @@
                 android:text="@string/textAminities"
                 android:textAlignment="center"
                 android:textSize="16sp" />
-
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBox4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxOneString" />
+                android:text="@string/checkBoxOneString"
+                android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.saunaCheck(checked)}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox5"

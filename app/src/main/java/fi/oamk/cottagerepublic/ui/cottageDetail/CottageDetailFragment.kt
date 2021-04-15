@@ -15,7 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.mapbox.mapboxsdk.Mapbox
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCottageDetailScreenBinding
-import fi.oamk.cottagerepublic.ui.calendar.CalendarFragment
+import fi.oamk.cottagerepublic.ui.calendar.CottageCalendarFragment
 import fi.oamk.cottagerepublic.util.MapUtils
 import fi.oamk.cottagerepublic.util.VerticalItemDecoration
 
@@ -87,7 +87,7 @@ class CottageDetailFragment : Fragment() {
             }
         })
 
-        val calendarFragment = CalendarFragment()
+        val calendarFragment = CottageCalendarFragment()
         viewModel.showCalendar.observe(viewLifecycleOwner, {
             if (it) {
                 this.parentFragmentManager.commit {
@@ -101,6 +101,7 @@ class CottageDetailFragment : Fragment() {
             } else {
                 this.parentFragmentManager.commit {
                     remove(calendarFragment)
+                    viewModel.numberOfNights.set(0)
                 }
 
                 // disable all actions in the background fragment, so it is not clickable

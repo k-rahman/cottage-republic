@@ -13,10 +13,11 @@ import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCalendarBinding
 import fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailFragmentDirections
 import fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailViewModel
+import fi.oamk.cottagerepublic.util.Resource
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarFragment : Fragment() {
+class CottageCalendarFragment : Fragment() {
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var viewModel: CottageDetailViewModel
 
@@ -26,7 +27,7 @@ class CalendarFragment : Fragment() {
 
         val backStackEntry = findNavController().getBackStackEntry(R.id.cottageDetailFragment)
         viewModel = ViewModelProvider(backStackEntry).get(CottageDetailViewModel::class.java)
-        binding.viewModel = viewModel
+        binding.cottageDetailViewModel = viewModel
 
         // start at the current year, current month, current day
         val start = Calendar.getInstance()
@@ -35,32 +36,36 @@ class CalendarFragment : Fragment() {
         val end = Calendar.getInstance()
         end.add(Calendar.DAY_OF_YEAR, 365)
 
-        val arrayList = arrayListOf<Date>()
-        val dateformat = SimpleDateFormat("dd-MM-yyyy")
+        var arrayList = listOf<Date>()
 
-        val d1 = "22-4-2021"
-        val d2 = "23-4-2021"
-        val d3 = "24-4-2021"
-        val d4 = "25-4-2021"
-        val d5 = "1-5-2021"
+        viewModel.cottageReservations.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Loading -> {
+                    binding.progressIndicator.bringToFront()
+                    binding.progressIndicator.show()
+                }
+                is Resource.Success -> {
+                    val dateformat = SimpleDateFormat("dd-MM-yyyy")
+                    val data = it.data as List<String>
 
-        val newdate = dateformat.parse(d3)
-        val newdate2 = dateformat.parse(d2)
-        val newdate3 = dateformat.parse(d1)
-        val newdate4 = dateformat.parse(d4)
-        val newdate5 = dateformat.parse(d5)
-        arrayList.add(newdate!!)
-        arrayList.add(newdate2!!)
-        arrayList.add(newdate3!!)
-        arrayList.add(newdate4!!)
-        arrayList.add(newdate5!!)
+                    arrayList = data.map { date ->
+                        dateformat.parse(date)
+                    }
 
-        // sort the reserved date list (just in case)
-        arrayList.sort()
+                    // sort the reserved date list (just in case)
+                    arrayList.sorted()
+
+                    binding.calendar.highlightDates(arrayList)
+                    binding.progressIndicator.hide()
+                }
+                is Resource.Failure -> {
+
+                }
+            }
+        })
 
         binding.calendar.init(start.time, end.time, SimpleDateFormat("MMMM  YYYY", Locale.getDefault()))
             .inMode(CalendarPickerView.SelectionMode.RANGE)
-            .withHighlightedDates(arrayList)
 
         val datesToDisable = mutableListOf<Date?>()
         val reservedCalendar = Calendar.getInstance()
@@ -69,12 +74,12 @@ class CalendarFragment : Fragment() {
             override fun onDateSelected(date: Date?) {
 
                 // set number of nights (check BindingAdapters)
-                binding.numberOfNights = binding.calendar.selectedDates.size - 1
+                viewModel.numberOfNights.set(binding.calendar.selectedDates.size - 1)
 
                 // disable the days from the first reserved day after the selected day till the end of the calendar
                 // client must select consecutive days
                 for (reservedDate in arrayList) {
-                    if (date!! < reservedDate && binding.calendar.selectedDates.size <= 2) {
+                    if (date!! < reservedDate && binding.calendar.selectedDates.size < 2) {
                         val timeDifference = end.time.time - reservedDate.time // get time difference
                         val days = (timeDifference / (1000 * 60 * 60 * 24)).toInt() // get days
                         reservedCalendar.time = reservedDate // set date
@@ -89,8 +94,8 @@ class CalendarFragment : Fragment() {
                         break
                     }
 
-                    // if 2 days are selected open the free days
-                    if (binding.calendar.selectedDates.size > 2) {
+                    // if at least 2 days are selected open the free days
+                    if (binding.calendar.selectedDates.size >= 2) {
                         binding.calendar.clearHighlightedDates()
                         binding.calendar.highlightDates(arrayList)
                     }
@@ -103,7 +108,18 @@ class CalendarFragment : Fragment() {
 
         viewModel.navigateToBookingDetails.observe(viewLifecycleOwner, {
             if (it) {
-                findNavController().navigate(CottageDetailFragmentDirections.actionCottageDetailFragmentToBookingDetailFragment())
+                val selectedDates = binding.calendar.selectedDates
+                val formatDates = SimpleDateFormat("dd-MM-yyyy")
+                val formattedSelectedDates = selectedDates.map { date ->
+                    formatDates.format(date)
+                }
+                findNavController().navigate(
+                    CottageDetailFragmentDirections
+                        .actionCottageDetailFragmentToBookingDetailFragment(
+                            viewModel.selectedCottage.value!!,
+                            formattedSelectedDates.toTypedArray()
+                        )
+                )
                 viewModel.onBookingNavigated()
             }
         })

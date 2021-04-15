@@ -14,7 +14,7 @@ class VerticalItemDecoration(private val spaceHeight: Int) :
         with(outRect) {
             // first item
             if (parent.getChildAdapterPosition(view) == 0) {
-                top = 0
+                top = spaceHeight
             }
 
             left = spaceHeight

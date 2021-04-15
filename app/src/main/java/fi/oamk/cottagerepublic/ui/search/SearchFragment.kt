@@ -3,10 +3,12 @@ package fi.oamk.cottagerepublic.ui.search
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -15,7 +17,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.FragmentSearchScreenBinding
+import fi.oamk.cottagerepublic.util.Resource
 import fi.oamk.cottagerepublic.util.VerticalItemDecoration
 
 class SearchFragment : Fragment() {
@@ -49,7 +53,7 @@ class SearchFragment : Fragment() {
         viewModelFactory = SearchViewModelFactory(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
         binding.searchViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setObservers()
         setSearchAdapter()
@@ -59,14 +63,30 @@ class SearchFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.cottagesList.observe(viewLifecycleOwner, {
-            it?.let {
-                searchAdapter.submitList(it.toList()) // pass a copy of the list to be diffed
-                searchAdapter.fullList = it.toList()
-            }
+            Log.i("Search", "OutSide ${it}")
+            when (it) {
+                is Resource.Loading -> {
+                    binding.progressIndicator.show()
+                }
+                is Resource.Success -> {
+                    val cottagesList = it.data as MutableList<Cottage>
+                    searchAdapter.submitList(cottagesList.toList()) // pass a copy of the list to be diffed
+                    searchAdapter.fullList = cottagesList.toList()
 
-            if (!viewModel.checkForPassedArgs()) {
-                binding.searchView.requestFocus()
-                viewModel.showKeyboard()
+                    if (!viewModel.checkForPassedArgs()) {
+                        binding.searchView.requestFocus()
+                        viewModel.showKeyboard()
+                    }
+
+                    binding.progressIndicator.hide()
+                }
+                is Resource.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "An error has occurred:${it.throwable.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         })
 

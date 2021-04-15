@@ -1,5 +1,7 @@
 package fi.oamk.cottagerepublic.util
 
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -78,10 +80,37 @@ fun TextView.setDescription(item: Cottage) {
 // calendar bindings
 @BindingAdapter("numberOfNights")
 fun TextView.setNumberOfNights(item: Int) {
-    if (item == 0) {
-        text = "1 day"
-        return
-    }
+    text = if (item == 0) {
+        "-"
+    } else
+        "$item night(s)"
+}
 
-    text = "$item night(s)"
+@BindingAdapter("numberOfNightNote")
+fun TextView.setNumberOfNightsNote(item: Int) {
+    visibility = if (item == 0)
+        View.VISIBLE
+    else
+        View.INVISIBLE
+}
+
+@BindingAdapter("moreThanOneNight")
+fun Button.setBookEnabled(item: Int) {
+    isEnabled = item != 0
+}
+
+// booking binding
+@BindingAdapter("priceOfNight", "numberOfNights")
+fun TextView.setPriceByNumberOfNights(price: Int, numberOfNights: Int) {
+    text = "$price € x $numberOfNights night(s)"
+}
+
+@BindingAdapter("taxes")
+fun TextView.setTaxesAmount(taxes: Int) {
+    text = "$taxes €"
+}
+
+@BindingAdapter("total")
+fun TextView.setTotalBeforeTaxes(total: Int) {
+    text = "$total €"
 }

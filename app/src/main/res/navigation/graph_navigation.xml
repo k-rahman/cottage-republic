@@ -47,14 +47,19 @@
         />
         <action android:id="@+id/action_cottageDetailFragment_to_bookingDetailFragment"
                 app:destination="@id/bookingDetailFragment"
-        />
+                app:popUpTo="@id/searchFragment"/>
     </fragment>
 
     <fragment android:id="@+id/bookingDetailFragment"
               android:name="fi.oamk.cottagerepublic.ui.bookingDetail.BookingDetailFragment"
               android:label="BookingDetailFragment"
               tools:layout="@layout/fragment_booking_detail_screen"
-    />
+    >
+        <argument android:name="selectedCottage" app:argType="fi.oamk.cottagerepublic.data.Cottage"/>
+        <action android:id="@+id/action_bookingDetailFragment_to_searchFragment" app:destination="@id/searchFragment"
+        />
+        <argument android:name="selectedDates" app:argType="string[]"/>
+    </fragment>
 
     <fragment
             android:id="@+id/mapFragment"

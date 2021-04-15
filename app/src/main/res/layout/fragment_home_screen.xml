@@ -62,7 +62,6 @@
                 />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,6 +72,17 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
             >
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:contentDescription="@string/loading"
+                        app:showAnimationBehavior="inward"
+                        app:hideAnimationBehavior="inward"
+                        app:indicatorColor="@color/colorPrimaryDark"
+                        android:visibility="invisible"
+                />
                 <TextView
                         android:id="@+id/popular_destination_header"
                         android:layout_width="match_parent"

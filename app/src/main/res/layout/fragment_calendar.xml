@@ -5,14 +5,11 @@
 >
     <data>
         <variable
-                name="viewModel"
+                name="cottageDetailViewModel"
                 type="fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailViewModel"
         />
-        <variable
-                name="numberOfNights"
-                type="Integer"
-        />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -41,6 +38,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
             >
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" android:id="@+id/progress_indicator"
+                        android:contentDescription="@string/loading" android:visibility="invisible"
+                        app:indicatorColor="@color/colorPrimaryDark" app:showAnimationBehavior="inward"
+                        android:indeterminate="true"/>
                 <TextView
                         android:text="@string/select_date"
                         android:layout_width="0dp"
@@ -67,7 +72,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/calendar_title"
                         app:layout_constraintTop_toTopOf="@+id/calendar_title"
                         app:layout_constraintHorizontal_chainStyle="packed"
-                        android:onClick="@{() -> viewModel.calendarHide()}"
+                        android:onClick="@{() -> cottageDetailViewModel.calendarHide()}"
                         android:layout_marginStart="16dp"
                         android:contentDescription="@string/close"
                 />
@@ -86,6 +91,21 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginEnd="24dp"
                 />
+                <TextView
+                        android:id="@+id/night_number_note"
+                        android:text="@string/select_at_least_1_night"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/calendar_subtitle"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginBottom="8dp"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        app:numberOfNightNote="@{cottageDetailViewModel.numberOfNights}"
+                />
                 <View
                         android:id="@+id/divider1"
                         android:layout_width="match_parent"
@@ -94,7 +114,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginTop="32dp"
-                        app:layout_constraintTop_toBottomOf="@+id/calendar_subtitle"
+                        app:layout_constraintTop_toBottomOf="@+id/night_number_note"
                 />
                 <com.savvi.rangedatepicker.CalendarPickerView
                         android:id="@+id/calendar"
@@ -137,7 +157,8 @@
                         android:textSize="18sp"
                         android:layout_marginBottom="32dp"
                         android:layout_marginEnd="16dp"
-                        android:onClick="@{() -> viewModel.onBookClicked()}"
+                        android:onClick="@{() -> cottageDetailViewModel.onBookClicked()}"
+                        app:moreThanOneNight="@{cottageDetailViewModel.numberOfNights}"
                 />
                 <TextView
                         android:id="@+id/nights_number_title"
@@ -154,7 +175,7 @@
                 />
                 <TextView
                         android:id="@+id/nights_number"
-                        app:numberOfNights="@{numberOfNights}"
+                        app:numberOfNights="@{cottageDetailViewModel.numberOfNights}"
                         android:layout_width="165dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"

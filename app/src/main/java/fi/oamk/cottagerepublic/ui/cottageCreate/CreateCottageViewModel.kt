@@ -35,7 +35,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageLocation = MutableLiveData<String>()
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
-    val newCottagePrice = MutableLiveData<Int>()
+    val newCottagePrice = MutableLiveData<String>("0")
     val newCottageLocationLat = MutableLiveData<String>()
     val newCottageLocationLon = MutableLiveData<String>()
 
@@ -51,8 +51,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
 
 
 
-
-
     fun createCottage()
     {
         createAmenitiesList()
@@ -63,10 +61,11 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.description = newCottageDescription.value.toString()
         newCottage.location[newCottageCountry.value.toString()]=newCottageLocation.value.toString()
         newCottage.amenities=newCottageAmenities
+        newCottage.price = newCottagePrice?.value!!.toInt()
 
         Log.v("Cottage: ",newCottage.toString())
         Log.v("Amenities: ",newCottageAmenityList.toString())
-        //cottageDataSource.createNewCottage(newCottage)
+        cottageDataSource.createNewCottage(newCottage)
     }
 
     fun createAmenitiesList()
@@ -81,6 +80,8 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
             }
         }
     }
+
+
 
     fun saunaCheck(checked : Boolean)
     {
@@ -100,12 +101,10 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     }
     fun smokingCheck(checked : Boolean)
     {
-        Log.v("checkprint", checked.toString())
         newCottageAmenityList["Smoking"] = checked
     }
     fun hotTubCheck(checked : Boolean)
     {
-        Log.v("checkprint", checked.toString())
         newCottageAmenityList["Hottub"] = checked
     }
 

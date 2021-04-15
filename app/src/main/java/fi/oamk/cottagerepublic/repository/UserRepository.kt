@@ -1,8 +1,6 @@
 package fi.oamk.cottagerepublic.repository
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -16,5 +14,12 @@ class UserRepository() {
 
     fun createUser(email:String){
         databaseReference.child("users").child(userid!!.uid).child("email").setValue(email)
+    }
+
+    fun getCurrentUserId() : String {
+        if (userid != null)
+            return userid.uid
+
+        throw Exception("User isn't logged in")
     }
 }

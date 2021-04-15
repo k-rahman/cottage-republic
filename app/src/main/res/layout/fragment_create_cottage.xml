@@ -222,6 +222,7 @@
                 android:text="@string/textAminities"
                 android:textAlignment="center"
                 android:textSize="16sp" />
+
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBox4"
                 android:layout_width="match_parent"
@@ -238,7 +239,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxTwoString" />
+                android:text="@string/checkBoxTwoString"
+                android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.petsCheck(checked)}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox6"
@@ -246,7 +249,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxThreeString" />
+                android:text="@string/checkBoxThreeString"
+                android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.smokingCheck(checked)}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox7"
@@ -254,7 +259,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxFourString" />
+                android:text="@string/checkBoxFourString"
+                android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.waterCheck(checked)}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox8"
@@ -262,7 +269,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxFiveString" />
+                android:text="@string/checkBoxFiveString"
+                android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.powerCheck(checked)}"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox10"
@@ -270,7 +279,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/checkBoxSixString" />
+                android:text="@string/checkBoxSixString"
+                android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.hotTubCheck(checked)}"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"

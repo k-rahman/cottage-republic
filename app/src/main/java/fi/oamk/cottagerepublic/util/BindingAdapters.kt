@@ -1,5 +1,6 @@
 package fi.oamk.cottagerepublic.util
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -13,8 +14,12 @@ import fi.oamk.cottagerepublic.data.Destination
 
 // destination bindings
 @BindingAdapter("image")
-fun ImageView.setDestinationImage(item: Destination) = setImageResource(item.image.toInt())
+fun setCottageImage(view: ImageView, item: Destination) {
+    if (item.images.isNotEmpty())
+        Picasso.get().load(item.images[0]).into(view)
+}
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("location")
 fun TextView.setDestinationName(item: Destination) {
     text = "${item.location["city"]}, ${item.location["country"]}"

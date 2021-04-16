@@ -43,13 +43,13 @@ class CottageRepository(
             .limitToLast(limit)
             .get().await()
 
-        val cottagesList = createCottageList(dataSnapshot)
+        val cottages = createCottageList(dataSnapshot)
 
-        return Resource.Success(cottagesList)
+        return Resource.Success(cottages)
     }
 
     private suspend fun createCottageList(dataSnapshot: DataSnapshot): MutableList<Cottage> {
-        val cottagesList = mutableListOf<Cottage>()
+        val cottages = mutableListOf<Cottage>()
 
         for (cottage in dataSnapshot.children) {
             val values = cottage.value as HashMap<*, *>
@@ -91,8 +91,8 @@ class CottageRepository(
                     for (image in values["images"] as ArrayList<String>)
                         images.add(storageReference.child(image).downloadUrl.await().toString())
             }
-            cottagesList.add(newCottage)
+            cottages.add(newCottage)
         }
-        return cottagesList
+        return cottages
     }
 }

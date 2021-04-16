@@ -28,6 +28,8 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                     app:contentScrim="@color/colorPrimary"
                     app:expandedTitleGravity="bottom"
+                    app:collapsedTitleGravity="center"
+                    android:textAlignment="textStart"
                     app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
                     app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
                     app:title="Cottage Details"
@@ -46,6 +48,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
+                        app:contentInsetStartWithNavigation="0dp"
+                        android:layout_marginEnd="32dp"
                 />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>

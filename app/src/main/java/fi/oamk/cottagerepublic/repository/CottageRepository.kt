@@ -1,23 +1,27 @@
 package fi.oamk.cottagerepublic.repository
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.util.Resource
+import kotlinx.coroutines.tasks.await
 
-class CottageRepository(private val databaseReference: DatabaseReference) {
-
-    private lateinit var listener: ValueEventListener
+@Suppress("UNCHECKED_CAST")
+class CottageRepository(
+    private val databaseReference: DatabaseReference,
+    private val storageReference: StorageReference
+) {
 
     // Singleton
     companion object {
         @Volatile
         private var INSTANCE: CottageRepository? = null
-        fun getInstance(databaseReference: DatabaseReference): CottageRepository {
+        fun getInstance(databaseReference: DatabaseReference, storageReference: StorageReference): CottageRepository {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
-                    instance = CottageRepository(databaseReference)
+                    instance = CottageRepository(databaseReference, storageReference)
                     INSTANCE = instance
                 }
                 return instance
@@ -25,79 +29,70 @@ class CottageRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
-    fun getAllCottages(): MutableLiveData<MutableList<Cottage>> {
-        val cottages = MutableLiveData<MutableList<Cottage>>()
-        val list = mutableListOf<Cottage>()
+    suspend fun getAllCottages(): Resource<MutableList<Cottage>> {
+        val dataSnapshot = databaseReference.get().await()
 
-         listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                cottages.value = createCottageList(list, dataSnapshot)
-            }
+        val cottagesList = createCottageList(dataSnapshot)
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Cottages failed, log a message
-                Log.w("CottageRepository:onCancelled", databaseError.toException())
-            }
-        }
-        databaseReference.addValueEventListener(listener)
-        return cottages
+        return Resource.Success(cottagesList)
     }
 
-    fun getPopularCottages(limit: Int): MutableLiveData<MutableList<Cottage>> {
-        val cottages = MutableLiveData<MutableList<Cottage>>()
-        val list = mutableListOf<Cottage>()
-
-        databaseReference
+    suspend fun getPopularCottages(limit: Int): Resource<MutableList<Cottage>> {
+        val dataSnapshot = databaseReference
             .orderByChild("rating")
             .limitToLast(limit)
-            .get()
-            .addOnSuccessListener { dataSnapshot ->
-                cottages.value = createCottageList(list, dataSnapshot)
-            }
-            .addOnFailureListener {
-                Log.e("firebase", "Error getting data", it)
-            }
-        return cottages
+            .get().await()
+
+        val cottagesList = createCottageList(dataSnapshot)
+
+        return Resource.Success(cottagesList)
     }
 
-    private fun createCottageList(list: MutableList<Cottage>, dataSnapshot: DataSnapshot): MutableList<Cottage> {
-        for (snapShot in dataSnapshot.children) {
-            val values = snapShot.value as HashMap<*, *>
+    private suspend fun createCottageList(dataSnapshot: DataSnapshot): MutableList<Cottage> {
+        val cottagesList = mutableListOf<Cottage>()
+
+        for (cottage in dataSnapshot.children) {
+            val values = cottage.value as HashMap<*, *>
             val newCottage = Cottage()
             with(newCottage) {
                 if (values["cottageId"] != null)
-                    cottageId = values["cottageId"].toString().toLong()
+                    cottageId = values["cottageId"].toString()
+
                 if (values["cottageLabel"] != null)
                     cottageLabel = values["cottageLabel"].toString()
+
                 if (values["rating"] != null)
                     rating = values["rating"].toString().toFloat()
+
                 if (values["location"] != null)
-                    location = values["location"].toString()
+                    for (spot in values["location"] as HashMap<String, String>)
+                        location[spot.key] = spot.value
+
                 if (values["price"] != null)
-                    price = values["price"].toString().toFloat()
+                    price = values["price"].toString().toInt()
+
+                if (values["guests"] != null)
+                    guests = values["guests"].toString().toInt()
+
+                if (values["amenities"] != null) {
+                    amenities.clear()
+                    for (amenity in values["amenities"] as ArrayList<String>)
+                        amenities.add(amenity)
+                }
+
+                if (values["description"] != null)
+                    description = values["description"].toString()
+
+                if (values["coordinates"] != null)
+                    for (coordinate in values["coordinates"] as HashMap<String, Double>)
+                        coordinates[coordinate.key] = coordinate.value
+
+                if (values["images"] != null)
+                    for (image in values["images"] as ArrayList<String>)
+                        images.add(storageReference.child(image).downloadUrl.await().toString())
             }
-            list.add(newCottage)
+            cottagesList.add(newCottage)
         }
-        return list
+        return cottagesList
     }
-
-    fun removeListener() {
-        databaseReference.removeEventListener(listener)
-    }
-
-//    fun searchByLocation(query: String?): MutableLiveData<MutableList<Cottage>> {
-//        databaseReference
-//            .orderByChild("location")
-//            .startAt(query)
-//            .endAt(query + "\uf8ff")
-//            .get()
-//            .addOnSuccessListener { dataSnapshot ->
-//                cottages.value = createCottageList(dataSnapshot)
-//            }
-//            .addOnFailureListener {
-//                Log.e("firebase", "Error getting data", it)
-//            }
-//
-//        return cottages
-//    }
 }

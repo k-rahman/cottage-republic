@@ -12,6 +12,32 @@
     <string name="home_menu_item_title">Home</string>
     <string name="account_menu_item_title">Account</string>
     <string name="faq_menu_item_title">FAQ</string>
+
+    <!-- login screen strings -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcometext_login_screen">Welcome</string>
+    <string name="cottagerepublic_splash_screen_image_description">CottageRepublic splash screen image</string>
+    <string name="register_button_text"><u>Or register a new account</u></string>
+
+    <!--  Register pages strings-->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="place_and_postcode">Place and postcode</string>
+    <string name="birth_date">Birth date</string>
+    <string name="register">Register</string>
+    <string name="address">Address</string>
+    <string name="cabin_renter">Cabin renter</string>
+    <string name="cabin_owner">Cabin owner</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="name">Name</string>
+    <string name="login">Login</string>
+
+    <!--  Settings page strings  -->
     <string name="my_account">My Account</string>
     <string name="john_doe">John Doe</string>
     <string name="john_doe_com">john@doe.com</string>
@@ -39,10 +65,18 @@
     <string name="mapbox_access_token">
         pk.eyJ1IjoiYWJhZGRkZGRvbiIsImEiOiJja244bTV5bzYwdGttMm9uejdlczJ0YzhjIn0.Q3ZDPttv7o-0U2WQg-1DkA
     </string>
-    <string name="taxes">Taxes</string>
+    <string name="taxes">Taxes 21%</string>
     <string name="total">Total</string>
     <string name="cancel">Cancel</string>
     <string name="continue_">Continue</string>
     <string name="ask_the_host">Ask the host</string>
     <string name="do_you_have_any_questions">Do you have any questions?</string>
+    <string name="book">Book</string>
+    <string name="select_date">Select dates</string>
+    <string name="cottage_location">Cottage Location</string>
+    <string name="you_have_selected">You have selected</string>
+    <string name="close">close</string>
+    <string name="calendar_subtitle">Please select check-in and check-out dates</string>
+    <string name="loading">Loading</string>
+    <string name="select_at_least_1_night">Select at least 1 night</string>
 </resources>

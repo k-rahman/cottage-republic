@@ -20,6 +20,10 @@ class VerticalItemDecoration(private val spaceHeight: Int) :
             left = spaceHeight
             right = spaceHeight
             bottom = spaceHeight
+
+            if (parent.getChildAdapterPosition(view) == parent.layoutManager?.itemCount?.minus(1)) {
+                bottom = 0
+            }
         }
     }
 }

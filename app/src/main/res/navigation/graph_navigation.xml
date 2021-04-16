@@ -11,7 +11,6 @@
             android:id="@+id/homeScreenFragment"
             android:name="fi.oamk.cottagerepublic.ui.home.HomeScreenFragment"
             tools:layout="@layout/fragment_home_screen"
-
     >
         <action
                 android:id="@+id/action_homeScreenFragment_to_searchFragment"
@@ -29,7 +28,10 @@
             tools:layout="@layout/fragment_search_screen"
     >
         <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
-                app:destination="@id/cottageDetailFragment"/>
+                app:destination="@id/cottageDetailFragment"
+        />
+        <argument android:name="destination" app:argType="fi.oamk.cottagerepublic.data.Destination" app:nullable="true"
+                  android:defaultValue="@null"/>
     </fragment>
 
     <fragment android:id="@+id/cottageDetailFragment"
@@ -39,6 +41,33 @@
         <argument
                 android:name="selectedCottage"
                 app:argType="fi.oamk.cottagerepublic.data.Cottage"
+        />
+        <action android:id="@+id/action_cottageDetailFragment_to_mapFragment"
+                app:destination="@id/mapFragment"
+        />
+        <action android:id="@+id/action_cottageDetailFragment_to_bookingDetailFragment"
+                app:destination="@id/bookingDetailFragment"
+                app:popUpTo="@id/searchFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/bookingDetailFragment"
+              android:name="fi.oamk.cottagerepublic.ui.bookingDetail.BookingDetailFragment"
+              android:label="BookingDetailFragment"
+              tools:layout="@layout/fragment_booking_detail_screen"
+    >
+        <argument android:name="selectedCottage" app:argType="fi.oamk.cottagerepublic.data.Cottage"/>
+        <action android:id="@+id/action_bookingDetailFragment_to_searchFragment" app:destination="@id/searchFragment"
+        />
+        <argument android:name="selectedDates" app:argType="string[]"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/mapFragment"
+            android:name="fi.oamk.cottagerepublic.ui.map.MapFragment"
+            tools:layout="@layout/fragment_map"
+    >
+        <argument android:name="selectedCottageCoordinate"
+                  app:argType="fi.oamk.cottagerepublic.data.Cottage"
         />
     </fragment>
 
@@ -94,6 +123,45 @@
             android:name="fi.oamk.cottagerepublic.ui.account.AccountReservationsScreenFragment"
             tools:layout="@layout/fragment_account_reservations_screen">
 
+    </fragment>
+
+    <!-- login and register -->
+    <fragment
+            android:id="@+id/loginScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment"
+            android:label="LoginScreenFragment" >
+        <action
+                android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
+                app:destination="@id/registerFragmentEmail" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/registerFragmentPassword"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentPassword"
+            android:label="fragment_register_password"
+            tools:layout="@layout/fragment_register_password" >
+        <action
+                android:id="@+id/action_registerFragmentPassword_to_registerFragmentEnd"
+                app:destination="@id/registerFragmentEnd" />
+    </fragment>
+    <fragment
+            android:id="@+id/registerFragmentEmail"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEmail"
+            android:label="fragment_register_email"
+            tools:layout="@layout/fragment_register_email" >
+        <action
+                android:id="@+id/action_registerFragmentEmail_to_registerFragmentPassword"
+                app:destination="@id/registerFragmentPassword" />
+    </fragment>
+    <fragment
+            android:id="@+id/registerFragmentEnd"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
+            android:label="fragment_register_end"
+            tools:layout="@layout/fragment_register_end" >
+        <action
+                android:id="@+id/action_registerFragmentEnd_to_loginScreenFragment"
+                app:destination="@id/loginScreenFragment"
+                app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

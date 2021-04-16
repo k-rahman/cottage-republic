@@ -11,6 +11,7 @@ import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.data.Destination
 import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.repository.DestinationRepository
+import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers
 
 class HomeViewModel : ViewModel() {
@@ -26,8 +27,13 @@ class HomeViewModel : ViewModel() {
     // populate popularCottages live data when the getPopularCottage function return
     // using liveData builder https://developer.android.com/topic/libraries/architecture/coroutines#livedata
     val popularCottages = liveData(Dispatchers.IO) {
-        val popularCottagesList = cottageDataSource.getPopularCottages(3)
-        emit(popularCottagesList)
+        emit(Resource.Loading<Boolean>())
+        try {
+            val popularCottagesList = cottageDataSource.getPopularCottages(3)
+            emit(popularCottagesList)
+        } catch (e: Exception) {
+            emit(Resource.Failure<Exception>(e.cause!!))
+        }
     }
 
     private val _popularDestinations = destinationDataSource.getPopularDestinations()

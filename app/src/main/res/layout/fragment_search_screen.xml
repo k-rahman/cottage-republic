@@ -68,12 +68,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-                android:layout_marginTop="5dp">
+                >
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
             >
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:contentDescription="@string/loading"
+                        app:showAnimationBehavior="inward"
+                        app:hideAnimationBehavior="inward"
+                        app:indicatorColor="@color/colorPrimaryDark"
+                        android:visibility="invisible"
+                />
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/search_list"
                         android:layout_width="match_parent"

@@ -35,9 +35,15 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageLocation = MutableLiveData<String>()
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
-    val newCottagePrice = MutableLiveData<String>("0")
+    val newCottagePrice = MutableLiveData<String>("00025")
     val newCottageLocationLat = MutableLiveData<String>()
-    val newCottageLocationLon = MutableLiveData<String>()
+//    val newCottageLocationLon = MutableLiveData<String>()
+//    private var _navigateToMap = MutableLiveData<Boolean>()
+//    val navigateToMap = _navigateToMap.value
+
+    private var _navigateToMap = MutableLiveData<Boolean>()
+    val navigateToMap: LiveData<Boolean>
+        get() = _navigateToMap
 
     val newCottageAmenityList: MutableMap<String,Boolean> =  mutableMapOf<String,Boolean>(
         "sauna" to false,
@@ -50,10 +56,10 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageAmenities: MutableList<String> = mutableListOf()
 
 
-    fun editPrice(value: String)
-    {
-        newCottagePrice.value = newCottagePrice.value.toString().replaceFirst("^0+(?!$)", "")
-    }
+//    fun editPrice(value: String)
+//    {
+//        newCottagePrice.value = newCottagePrice.value.toString().replaceFirst("^0+(?!$)", "")
+//    }
 
     fun createCottage()
     {
@@ -80,7 +86,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         for(amenity in newCottageAmenityList)
         {
             Log.v("Amenity: ", amenity.toString())
-            if(amenity.value == true)
+            if(amenity.value)
             {
                 newCottageAmenities.add(amenity.key)
             }
@@ -99,7 +105,12 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     }
     fun powerCheck(checked : Boolean)
     {
-        newCottageAmenityList["power"] = checked
+        if(checked)
+            newCottageAmenities.add("power")
+        else
+            newCottageAmenities.remove("power")
+
+       // newCottageAmenityList["power"] = checked
     }
     fun petsCheck(checked : Boolean)
     {
@@ -114,7 +125,13 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottageAmenityList["hottub"] = checked
     }
 
+    fun onMapClicked() {
+        _navigateToMap.value = true
+    }
 
+    fun onMapNavigated() {
+        _navigateToMap.value = false
+    }
 }
 
 

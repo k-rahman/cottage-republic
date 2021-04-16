@@ -2,11 +2,15 @@ package fi.oamk.cottagerepublic.util
 
 
 import android.widget.*
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import com.squareup.picasso.Picasso
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.data.Destination
+import org.w3c.dom.Text
 
 
 // destination bindings
@@ -86,13 +90,28 @@ fun TextView.setNumberOfNights(item: Int) {
 }
 
 @BindingAdapter("CottagePrice")
-    fun TextView.setPrice(Price: String)
+fun TextView.setPrice(Price: String) {
+//    if (Price != text.toString())
+//        text = Price.replaceFirst("^0+".toRegex(), "")
+    if(Price.startsWith("0"))
     {
-        text = Price.replaceFirst("^0+(?!$)", "")
+        text = Price.replaceFirst("^0+".toRegex(), "")
+
     }
+}
 
+@InverseBindingAdapter(attribute = "CottagePrice")
+fun TextView.getPrice(): String {
+    return text.toString()
+    //.toString().replaceFirst("^0+".toRegex(), "")
+}
 
-
+@BindingAdapter("CottagePriceAttrChanged")
+fun TextView.priceChanged(listener: InverseBindingListener) {
+    addTextChangedListener {
+        listener?.onChange()
+    }
+}
 //
 //@BindingAdapter("entries")
 //fun Spinner.setEntries(entries: List<Any>?) {

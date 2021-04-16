@@ -121,7 +121,7 @@
                     android:ems="10"
                     android:hint="@string/editCottagePriceString"
                     android:inputType="numberSigned"
-                    app:CottagePrice="@{CreateViewModel.newCottagePrice}"
+                    app:CottagePrice="@={CreateViewModel.newCottagePrice}"
                     />
 
 <!--                 android:text="@={CreateViewModel.newCottagePrice}" -->
@@ -205,18 +205,48 @@
                 android:textAlignment="center"
                 android:textSize="16sp" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="308dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="#679854"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:forceHasOverlappingRendering="true">
+<!--            <FrameLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="308dp"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:layout_marginRight="8dp"-->
+<!--                android:background="#679854"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:focusableInTouchMode="true"-->
+<!--                android:forceHasOverlappingRendering="true">-->
 
-            </FrameLayout>
+<!--            </FrameLayout>-->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cottage_map_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cottage_map_header"
+                android:elevation="50dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="16dp"
+                >
+                <com.mapbox.mapboxsdk.maps.MapView
+                    android:id="@+id/cottage_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_map_header"
+                    android:background="@drawable/shape_searchbar_borders"
+                    >
+                    <View
+                        android:id="@+id/cottage_ma_clickable"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:onClick="@{() -> CreateViewModel.onMapClicked()}"
+                        />
+                </com.mapbox.mapboxsdk.maps.MapView>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/textView"

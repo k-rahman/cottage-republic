@@ -10,8 +10,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.mapbox.mapboxsdk.Mapbox
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCreateCottageBinding
+import fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailFragmentDirections
+import fi.oamk.cottagerepublic.util.MapUtils
 
 class CreateCottageFragment : Fragment() {
 
@@ -22,6 +25,9 @@ class CreateCottageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token))
+
         Log.v("createTest: ", "im created")
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_cottage, container, false)
@@ -29,6 +35,20 @@ class CreateCottageFragment : Fragment() {
         val viewModel = ViewModelProvider(this).get(CreateCottageViewModel::class.java)
 
 
+
+        MapUtils.initializeCreateCottageMap(savedInstanceState,binding.cottageMap)
+
+
+        viewModel.navigateToMap.observe(viewLifecycleOwner, {
+            if (it) {
+                findNavController().navigate(
+                    CreateCottageFragmentDirections.actionCreateCottageFragmentToCreateCottageMapFragment(
+
+                    )
+                )
+                viewModel.onMapNavigated()
+            }
+        })
 
         binding.createViewModel = viewModel
 

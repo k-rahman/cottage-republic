@@ -26,7 +26,11 @@
         android:id="@+id/CreateCottageFragment"
         android:name="fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageFragment"
         tools:layout="@layout/fragment_create_cottage"
-        />
+        >
+        <action
+            android:id="@+id/action_CreateCottageFragment_to_createCottageMapFragment"
+            app:destination="@id/createCottageMapFragment" />
+    </fragment>
 
     <fragment
             android:id="@+id/searchFragment"
@@ -68,8 +72,7 @@
             tools:layout="@layout/fragment_map"
     >
         <argument android:name="selectedCottageCoordinate"
-                  app:argType="fi.oamk.cottagerepublic.data.Cottage"
-        />
+                  app:argType="fi.oamk.cottagerepublic.data.Cottage" />
     </fragment>
 
     <!-- Account Screens -->
@@ -164,5 +167,9 @@
                 app:destination="@id/loginScreenFragment"
                 app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/createCottageMapFragment"
+        android:name="fi.oamk.cottagerepublic.ui.map.CreateCottageMapFragment"
+        android:label="CreateCottageMapFragment" />
 
 </navigation>

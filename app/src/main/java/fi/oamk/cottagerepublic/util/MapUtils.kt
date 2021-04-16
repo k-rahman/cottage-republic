@@ -27,7 +27,7 @@ object MapUtils {
         savedInstanceState: Bundle?,
         resource: Resources,
         mapView: MapView,
-        locations: ArrayList<HashMap<String, Double>>,
+        locations: ArrayList<HashMap<String, Double>> = ArrayList(),
         isAllGesturesEnabled: Boolean,
     ) {
         mapView.onCreate(savedInstanceState)
@@ -87,4 +87,35 @@ object MapUtils {
             }
         }
     }
+
+    //creat cottage map
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    fun initializeCreateCottageMap(
+        savedInstanceState: Bundle?,
+        mapView: MapView,
+    ) {
+        mapView.onCreate(savedInstanceState)
+
+
+        mapView.getMapAsync { mapboxMap ->
+            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+                // Map is set up and the style has loaded.
+                // Now you can add data or make other map adjustments
+                // 65.142455, 27.078449
+                mapboxMap.cameraPosition =
+                    CameraPosition.Builder()
+                        .target(LatLng(65.142455,27.078449))
+                        .zoom(4.0)
+                        .build()
+
+                val uiSettings = mapboxMap.uiSettings
+                uiSettings.setAllGesturesEnabled(true)
+                uiSettings.isCompassEnabled = false
+                uiSettings.isAttributionEnabled = false
+                uiSettings.isQuickZoomGesturesEnabled = false
+            }
+        }
+    }
+
 }

@@ -29,12 +29,14 @@ class RegisterFragmentEnd : Fragment() {
         email = requireArguments().getString("email").toString().trim()
         password = requireArguments().getString("password").toString().trim()
     }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_register_end, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
@@ -43,13 +45,20 @@ class RegisterFragmentEnd : Fragment() {
         val message2 = "The password for $password"
         view.findViewById<TextView>(R.id.newUserConfirmPassword).text = message2
 
-        view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener {register()}
+        view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener { register() }
     }
 
-    private fun register (){
+    private fun register() {
         val application: Application = context?.applicationContext as Application
         val authRepository = AuthRepository(application)
-        authRepository.register(email,password)
-        if (FirebaseAuth.getInstance().currentUser != null) UserRepository().createUser(email)
+        authRepository.register(email, password)
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            UserRepository().createUser(email)
+             navController.navigate(R.id.action_registerFragmentEnd_to_accountSettingScreenFragment)
+            }
+        else {
+                navController.navigate(R.id.action_registerFragmentEnd_to_loginScreenFragment)
+            }
+        }
     }
 }

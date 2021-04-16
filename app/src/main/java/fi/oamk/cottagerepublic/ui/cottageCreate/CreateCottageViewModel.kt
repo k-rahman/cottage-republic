@@ -35,7 +35,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageLocation = MutableLiveData<String>()
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
-    val newCottagePrice = MutableLiveData<String>("00025")
+    val newCottagePrice = MutableLiveData<String>("0")
     val newCottageLocationLat = MutableLiveData<String>()
 //    val newCottageLocationLon = MutableLiveData<String>()
 //    private var _navigateToMap = MutableLiveData<Boolean>()
@@ -45,26 +45,21 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val navigateToMap: LiveData<Boolean>
         get() = _navigateToMap
 
-    val newCottageAmenityList: MutableMap<String,Boolean> =  mutableMapOf<String,Boolean>(
-        "sauna" to false,
-        "pets" to false,
-        "power" to false,
-        "hottub" to false,
-        "smoking" to false,
-        "water" to false
-        )
+//    val newCottageAmenityList: MutableMap<String,Boolean> =  mutableMapOf<String,Boolean>(
+//        "sauna" to false,
+//        "pets" to false,
+//        "power" to false,
+//        "hottub" to false,
+//        "smoking" to false,
+//        "water" to false
+//        )
+
     val newCottageAmenities: MutableList<String> = mutableListOf()
 
 
-//    fun editPrice(value: String)
-//    {
-//        newCottagePrice.value = newCottagePrice.value.toString().replaceFirst("^0+(?!$)", "")
-//    }
-
     fun createCottage()
     {
-        createAmenitiesList()
-     //   editPrice()
+//        createAmenitiesList()
 
         val newCottage = Cottage()
         newCottage.guests = numberOfGuests.value!!.toInt()
@@ -75,33 +70,51 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.amenities=newCottageAmenities
         newCottage.price = newCottagePrice?.value!!.toInt()
 
-        Log.v("Cottage: ",newCottage.toString())
-        Log.v("Amenities: ",newCottageAmenityList.toString())
-       // cottageDataSource.createNewCottage(newCottage)
+
+        //create new cottage
+        cottageDataSource.createNewCottage(newCottage)
+
+    //debug
+//        Log.v("Cottage: ",newCottage.toString())
+//        Log.v("Amenities: ",newCottageAmenityList.toString())
+
     }
 
-    fun createAmenitiesList()
-    {
-
-        for(amenity in newCottageAmenityList)
-        {
-            Log.v("Amenity: ", amenity.toString())
-            if(amenity.value)
-            {
-                newCottageAmenities.add(amenity.key)
-            }
-        }
-    }
+//    fun createAmenitiesList()
+//    {
+//
+//        for(amenity in newCottageAmenityList)
+//        {
+//            Log.v("Amenity: ", amenity.toString())
+//            if(amenity.value)
+//            {
+//                newCottageAmenities.add(amenity.key)
+//            }
+//        }
+//    }
 
 
 
     fun saunaCheck(checked : Boolean)
     {
-        newCottageAmenityList["sauna"]= checked
+
+
+        if(checked)
+            newCottageAmenities.add("sauna")
+        else
+            newCottageAmenities.remove("sauna")
+
+     //   newCottageAmenityList["sauna"]= checked
     }
     fun waterCheck(checked : Boolean)
     {
-        newCottageAmenityList["water"] = checked
+
+        if(checked)
+            newCottageAmenities.add("water")
+        else
+            newCottageAmenities.remove("water")
+
+    //    newCottageAmenityList["water"] = checked
     }
     fun powerCheck(checked : Boolean)
     {
@@ -114,15 +127,33 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     }
     fun petsCheck(checked : Boolean)
     {
-        newCottageAmenityList["pets"] = checked
+
+        if(checked)
+            newCottageAmenities.add("pets")
+        else
+            newCottageAmenities.remove("pets")
+
+    //    newCottageAmenityList["pets"] = checked
     }
     fun smokingCheck(checked : Boolean)
     {
-        newCottageAmenityList["smoking"] = checked
+
+        if(checked)
+            newCottageAmenities.add("smoking")
+        else
+            newCottageAmenities.remove("smoking")
+
+   //     newCottageAmenityList["smoking"] = checked
     }
     fun hotTubCheck(checked : Boolean)
     {
-        newCottageAmenityList["hottub"] = checked
+
+        if(checked)
+            newCottageAmenities.add("huttub")
+        else
+            newCottageAmenities.remove("hottub")
+
+   //     newCottageAmenityList["hottub"] = checked
     }
 
     fun onMapClicked() {

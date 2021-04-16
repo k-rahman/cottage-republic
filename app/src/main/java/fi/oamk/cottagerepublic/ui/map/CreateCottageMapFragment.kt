@@ -17,6 +17,7 @@ import fi.oamk.cottagerepublic.util.MapUtils
 
 class CreateCottageMapFragment : Fragment() {
     private lateinit var binding: FragmentMapBinding
+    // private lateinit var viewModel: CreateCottageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,10 +25,12 @@ class CreateCottageMapFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
 
-        val backStackEntry = findNavController().getBackStackEntry(R.id.cottageDetailFragment)
+        //init viewModel and binding
+        val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
         val viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
+        binding.createViewModel = viewModel
 
 
         // toolbar configuration

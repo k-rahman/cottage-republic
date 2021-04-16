@@ -25,8 +25,8 @@
     <fragment
         android:id="@+id/CreateCottageFragment"
         android:name="fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageFragment"
-        tools:layout="@layout/fragment_create_cottage"
-        >
+        android:label="CreateCottageFragment"
+        tools:layout="@layout/fragment_create_cottage">
         <action
             android:id="@+id/action_CreateCottageFragment_to_createCottageMapFragment"
             app:destination="@id/createCottageMapFragment" />
@@ -107,19 +107,9 @@
             android:id="@+id/accountCottageScreenFragment"
             android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
             tools:layout="@layout/fragment_account_cottage_screen">
-        <action android:id="@+id/action_accountCottageScreenFragment_to_addCottageFormFragment"
-                app:destination="@id/addCottageFormFragment" app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-                app:launchSingleTop="true"
-                app:popEnterAnim="@anim/slide_in_right"
-                app:popExitAnim="@anim/slide_out_left"/>
-    </fragment>
-
-    <fragment
-            android:id="@+id/addCottageFormFragment"
-            android:name="fi.oamk.cottagerepublic.ui.account.AddCottageFormFragment"
-            tools:layout="@layout/fragment_add_cottage_form"
-            android:label="@string/new_cottage_form">
+        <action
+            android:id="@+id/action_accountCottageScreenFragment_to_CreateCottageFragment"
+            app:destination="@id/CreateCottageFragment" />
     </fragment>
 
     <fragment

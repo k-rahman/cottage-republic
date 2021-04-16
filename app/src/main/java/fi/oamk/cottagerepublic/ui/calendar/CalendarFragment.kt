@@ -16,6 +16,7 @@ import fi.oamk.cottagerepublic.ui.cottageDetail.CottageDetailViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class CalendarFragment : Fragment() {
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var viewModel: CottageDetailViewModel

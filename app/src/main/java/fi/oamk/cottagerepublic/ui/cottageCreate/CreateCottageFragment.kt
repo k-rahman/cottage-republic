@@ -32,7 +32,7 @@ class CreateCottageFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_cottage, container, false)
 
-        val backStackEntry = findNavController().getBackStackEntry(R.id.cottageDetailFragment)
+        val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
 
         val viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
 

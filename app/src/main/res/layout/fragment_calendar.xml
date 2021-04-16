@@ -32,7 +32,7 @@
                 app:cardElevation="5dp"
                 app:cardCornerRadius="25dp"
                 app:cardUseCompatPadding="false"
-        >
+                app:cardBackgroundColor="@color/colorBackground">
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -129,7 +129,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/divider2"
                         app:layout_constraintTop_toBottomOf="@+id/divider1"
                         android:padding="16dp"
-                />
+                        android:background="@color/colorBackground"/>
                 <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"

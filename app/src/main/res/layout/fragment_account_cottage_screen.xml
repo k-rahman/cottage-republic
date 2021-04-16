@@ -47,12 +47,13 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_baseline_post_add_24"
                     app:maxImageSize="42dp"
-                    android:tint="@color/colorWhite"
+                    app:tint="@color/colorWhite"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:layout_marginEnd="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="25dp"/>
+                    android:layout_marginBottom="25dp" app:rippleColor="@color/colorWhite"
+                    android:contentDescription="@string/add_new_cottage_form"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,9 @@
         <action
                 android:id="@+id/action_homeScreenFragment_to_searchFragment"
                 app:destination="@id/searchFragment"
-        />
+                app:enterAnim="@anim/slide_in_right"
+                app:popEnterAnim="@android:anim/slide_in_left" app:popExitAnim="@android:anim/slide_out_right"
+                app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 
     <fragment
@@ -25,7 +27,8 @@
     >
         <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
                 app:destination="@id/cottageDetailFragment"
-        />
+                app:exitAnim="@anim/slide_out_left" app:enterAnim="@anim/slide_in_right"
+                app:popEnterAnim="@android:anim/slide_in_left" app:popExitAnim="@android:anim/slide_out_right"/>
         <argument android:name="destination" app:argType="fi.oamk.cottagerepublic.data.Destination" app:nullable="true"
                   android:defaultValue="@null"/>
         <argument android:name="cottage" app:argType="fi.oamk.cottagerepublic.data.Cottage" app:nullable="true"
@@ -42,10 +45,12 @@
         />
         <action android:id="@+id/action_cottageDetailFragment_to_mapFragment"
                 app:destination="@id/mapFragment"
-        />
+                app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@android:anim/slide_in_left" app:popExitAnim="@android:anim/slide_out_right"/>
         <action android:id="@+id/action_cottageDetailFragment_to_bookingDetailFragment"
                 app:destination="@id/bookingDetailFragment"
-        />
+                app:enterAnim="@anim/slide_in_right" app:popEnterAnim="@android:anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left" app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/bookingDetailFragment"

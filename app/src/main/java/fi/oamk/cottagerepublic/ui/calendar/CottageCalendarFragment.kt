@@ -113,11 +113,13 @@ class CottageCalendarFragment : Fragment() {
     private fun toggleCalendar(showCalendar: Boolean) {
         if (showCalendar) {
             parentFragmentManager.commit {
+                setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_in_top)
                 show(this@CottageCalendarFragment)
             }
 
         } else {
             parentFragmentManager.commit {
+                setCustomAnimations(R.anim.slide_out_bottom, R.anim.slide_out_top)
                 hide(this@CottageCalendarFragment)
             }
         }

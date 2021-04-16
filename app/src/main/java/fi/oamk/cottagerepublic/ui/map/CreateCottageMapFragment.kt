@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentMapBinding
+import fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageViewModel
 import fi.oamk.cottagerepublic.util.MapUtils
 
 class CreateCottageMapFragment : Fragment() {
@@ -23,6 +25,10 @@ class CreateCottageMapFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+
+        val backStackEntry = findNavController().getBackStackEntry(R.id.cottageDetailFragment)
+        val viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
+
 
         // toolbar configuration
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)

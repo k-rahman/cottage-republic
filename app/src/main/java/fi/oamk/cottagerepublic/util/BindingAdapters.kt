@@ -85,6 +85,12 @@ fun TextView.setNumberOfNights(item: Int) {
     text = "$item night(s)"
 }
 
+@BindingAdapter("CottagePrice")
+    fun TextView.setPrice(Price: String)
+    {
+        text = Price.replaceFirst("^0+(?!$)", "")
+    }
+
 
 
 //

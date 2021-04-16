@@ -120,10 +120,11 @@
                     android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/editCottagePriceString"
-                    android:inputType="numberDecimal"
-                    android:text="@={CreateViewModel.newCottagePrice}"
+                    android:inputType="numberSigned"
+                    app:CottagePrice="@{CreateViewModel.newCottagePrice}"
                     />
 
+<!--                 android:text="@={CreateViewModel.newCottagePrice}" -->
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"

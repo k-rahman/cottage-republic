@@ -40,20 +40,26 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageLocationLon = MutableLiveData<String>()
 
     val newCottageAmenityList: MutableMap<String,Boolean> =  mutableMapOf<String,Boolean>(
-        "Sauna" to false,
-        "Pets" to false,
-        "Power" to false,
-        "Hottub" to false,
-        "Smoking" to false,
-        "Water" to false
+        "sauna" to false,
+        "pets" to false,
+        "power" to false,
+        "hottub" to false,
+        "smoking" to false,
+        "water" to false
         )
     val newCottageAmenities: MutableList<String> = mutableListOf()
 
 
+    fun editPrice(value: String)
+    {
+        newCottagePrice.value = newCottagePrice.value.toString().replaceFirst("^0+(?!$)", "")
+    }
 
     fun createCottage()
     {
         createAmenitiesList()
+     //   editPrice()
+
         val newCottage = Cottage()
         newCottage.guests = numberOfGuests.value!!.toInt()
         newCottage.rating = ((0..5).random()).toFloat()
@@ -65,7 +71,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
 
         Log.v("Cottage: ",newCottage.toString())
         Log.v("Amenities: ",newCottageAmenityList.toString())
-        cottageDataSource.createNewCottage(newCottage)
+       // cottageDataSource.createNewCottage(newCottage)
     }
 
     fun createAmenitiesList()
@@ -85,11 +91,11 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
 
     fun saunaCheck(checked : Boolean)
     {
-        newCottageAmenityList["Sauna"]= checked
+        newCottageAmenityList["sauna"]= checked
     }
     fun waterCheck(checked : Boolean)
     {
-        newCottageAmenityList["Water"] = checked
+        newCottageAmenityList["water"] = checked
     }
     fun powerCheck(checked : Boolean)
     {
@@ -97,15 +103,15 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     }
     fun petsCheck(checked : Boolean)
     {
-        newCottageAmenityList["Pets"] = checked
+        newCottageAmenityList["pets"] = checked
     }
     fun smokingCheck(checked : Boolean)
     {
-        newCottageAmenityList["Smoking"] = checked
+        newCottageAmenityList["smoking"] = checked
     }
     fun hotTubCheck(checked : Boolean)
     {
-        newCottageAmenityList["Hottub"] = checked
+        newCottageAmenityList["hottub"] = checked
     }
 
 

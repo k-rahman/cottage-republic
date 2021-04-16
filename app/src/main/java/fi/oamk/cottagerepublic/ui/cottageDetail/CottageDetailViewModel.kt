@@ -11,6 +11,7 @@ import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.ReservationRepository
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers
+import java.util.*
 
 class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     private val reservationDataSource = ReservationRepository.getInstance(Firebase.database.reference)
@@ -45,6 +46,7 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     val launchEmail: LiveData<Boolean>
         get() = _launchEmail
 
+    var selectedDates = ObservableField<List<Date>>()
     var numberOfNights = ObservableField(0)
 
     init {
@@ -68,8 +70,6 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     }
 
     fun onBookClicked() {
-
-        calendarHide()
         _navigateToBookingDetail.value = true
     }
 

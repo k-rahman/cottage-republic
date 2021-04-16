@@ -29,9 +29,9 @@ class BookingDetailViewModel(
     val navigateToSuccess: LiveData<Boolean>
         get() = _navigateToSuccess
 
-    private val _navigateToSearch = MutableLiveData<Boolean>()
-    val navigateToSearch: LiveData<Boolean>
-        get() = _navigateToSearch
+    private val _navigateToCottageDetail = MutableLiveData<Boolean>()
+    val navigateToCottageDetail: LiveData<Boolean>
+        get() = _navigateToCottageDetail
 
     private val taxesPercentage = 21
 
@@ -75,6 +75,9 @@ class BookingDetailViewModel(
     }
 
     fun onContinueClicked() {
+        // if user doesn't have an id
+        // redirect to login
+
         val userId = userDataSource.getCurrentUserId()
         reservationDataSource.createReservation(userId, selectedCottage.cottageId, selectedDates)
         _navigateToSuccess.value = true
@@ -85,10 +88,10 @@ class BookingDetailViewModel(
     }
 
     fun onCancelClicked() {
-        _navigateToSearch.value = true
+        _navigateToCottageDetail.value = true
     }
 
-    fun onSearchNavigated() {
-        _navigateToSearch.value = false
+    fun onCottageDetailNavigated() {
+        _navigateToCottageDetail.value = false
     }
 }

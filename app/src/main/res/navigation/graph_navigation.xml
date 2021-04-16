@@ -16,10 +16,6 @@
                 android:id="@+id/action_homeScreenFragment_to_searchFragment"
                 app:destination="@id/searchFragment"
         />
-        <action
-                android:id="@+id/action_homeScreenFragment_to_cottageDetailFragment"
-                app:destination="@id/cottageDetailFragment"
-        />
     </fragment>
 
     <fragment
@@ -31,6 +27,8 @@
                 app:destination="@id/cottageDetailFragment"
         />
         <argument android:name="destination" app:argType="fi.oamk.cottagerepublic.data.Destination" app:nullable="true"
+                  android:defaultValue="@null"/>
+        <argument android:name="cottage" app:argType="fi.oamk.cottagerepublic.data.Cottage" app:nullable="true"
                   android:defaultValue="@null"/>
     </fragment>
 
@@ -47,7 +45,7 @@
         />
         <action android:id="@+id/action_cottageDetailFragment_to_bookingDetailFragment"
                 app:destination="@id/bookingDetailFragment"
-                app:popUpTo="@id/searchFragment"/>
+        />
     </fragment>
 
     <fragment android:id="@+id/bookingDetailFragment"
@@ -56,14 +54,12 @@
               tools:layout="@layout/fragment_booking_detail_screen"
     >
         <argument android:name="selectedCottage" app:argType="fi.oamk.cottagerepublic.data.Cottage"/>
-        <action android:id="@+id/action_bookingDetailFragment_to_searchFragment" app:destination="@id/searchFragment"
-        />
         <argument android:name="selectedDates" app:argType="string[]"/>
     </fragment>
 
     <fragment
             android:id="@+id/mapFragment"
-            android:name="fi.oamk.cottagerepublic.ui.map.MapFragment"
+            android:name="fi.oamk.cottagerepublic.ui.map.CottageMapFragment"
             tools:layout="@layout/fragment_map"
     >
         <argument android:name="selectedCottageCoordinate"

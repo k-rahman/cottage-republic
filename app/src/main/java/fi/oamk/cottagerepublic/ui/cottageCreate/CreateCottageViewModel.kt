@@ -37,9 +37,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageDescription = MutableLiveData<String>()
     val newCottagePrice = MutableLiveData<String>("0")
     val newCottageLocationLat = MutableLiveData<String>()
-//    val newCottageLocationLon = MutableLiveData<String>()
-//    private var _navigateToMap = MutableLiveData<Boolean>()
-//    val navigateToMap = _navigateToMap.value
+    var cottageCoordinates = hashMapOf<String,Double>()
 
     private var _navigateToMap = MutableLiveData<Boolean>()
     val navigateToMap: LiveData<Boolean>
@@ -92,8 +90,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
 //            }
 //        }
 //    }
-
-
 
     fun saunaCheck(checked : Boolean)
     {

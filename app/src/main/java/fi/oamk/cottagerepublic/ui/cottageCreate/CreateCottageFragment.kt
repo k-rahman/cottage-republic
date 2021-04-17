@@ -38,7 +38,7 @@ class CreateCottageFragment : Fragment() {
 
 
 
-        MapUtils.initializeCreateCottageMap(savedInstanceState,binding.cottageMap)
+        MapUtils.initializeCreateCottageMap(savedInstanceState,resources,binding.cottageMap, null)
 
 
         viewModel.navigateToMap.observe(viewLifecycleOwner, {

@@ -1,4 +1,4 @@
-/*
+ /*
 To display your data in a RecyclerView, you need the following parts:
  - RecyclerView: To create an instance of RecyclerView, define a <RecyclerView> element in the layout file.
  - LayoutManager: A RecyclerView uses a LayoutManager to organize the layout of the items in the RecyclerView,
@@ -12,23 +12,26 @@ package fi.oamk.cottagerepublic.ui.account
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.ListItemMyCottagesBinding
+import fi.oamk.cottagerepublic.util.CottageDiffCallBack
 
 
-// Data
+ // Data
 //data class NewCottage(
 ////    val image: Int = R.drawable.ic_launcher_background,
 //    val cottageName: String = "testLabel"
 //)
 
-class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adapter<MyCottagesAdapter.ViewHolder>() {
+class MyCottagesAdapter(private val clickListener: MyCottageListener) :
+    ListAdapter<Cottage, MyCottagesAdapter.ViewHolder>(CottageDiffCallBack()) {
 
-    val data = listOf(Cottage(), Cottage(), Cottage())
+//    val data = listOf(Cottage(), Cottage(), Cottage())
 
     // used by RecycleView to get the number of items it will render
-    override fun getItemCount(): Int = data.size
+//    override fun getItemCount(): Int = data.size
 
     // used by RecycleView to get the ViewHolder (Wrapper around list item)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,7 +40,8 @@ class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adap
 
     // used by RecycleView to get access each list item and bind it with its data
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+//        val item = data[position]
+        val item = getItem(position)
         holder.bind(item, clickListener)
     }
 
@@ -50,6 +54,9 @@ class MyCottagesAdapter(val clickListener: MyCottageListener): RecyclerView.Adap
         fun bind(item: Cottage, clickListener: MyCottageListener) {
             binding.cottage = item
             binding.myCottageListener = clickListener
+
+            // it's always a good idea to call executePendingBindings() when you use binding adapters in a RecyclerView,
+            // because it can slightly speed up sizing the views.
             binding.executePendingBindings()
         }
 

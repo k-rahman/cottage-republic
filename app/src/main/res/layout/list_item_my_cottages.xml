@@ -9,30 +9,46 @@
         <variable name="myCottageListener"
                   type="fi.oamk.cottagerepublic.ui.account.MyCottageListener"/>
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="200dp"
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/new_cottage_layout"
-            android:padding="4dp">
-        <androidx.cardview.widget.CardView
+            android:elevation="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/colorWhite"
+            android:onClick="@{() -> myCottageListener.onClick(cottage)}"
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:id="@+id/cardView"
+                android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/cottage_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp"
-        >
-        </androidx.cardview.widget.CardView>
-        <TextView
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic[11]"
+                app:image="@{cottage}"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/cottage_image"
+        />
+
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/cottage_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
-                app:layout_constraintStart_toStartOf="@+id/cardView"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/cottage_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:textAlignment="viewStart"
                 tools:text="Cottage Name"
                 android:textSize="17sp"
@@ -40,5 +56,25 @@
                 android:fontFamily="@font/roboto"
                 app:cottageLabel="@{cottage}"
                 app:layout_constraintHorizontal_bias="0.0"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cottage_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textAlignment="viewStart"
+                    android:layout_marginBottom="16dp"
+                    tools:text="Cottage Location"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto"
+                    app:location="@{cottage}"
+                    app:layout_constraintHorizontal_bias="0.0"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
 </layout>

@@ -43,8 +43,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun addCottage(view: View) {
-        Toast.makeText(this, "Add new cottage", Toast.LENGTH_SHORT).show()
-    }
 
 }

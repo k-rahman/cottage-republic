@@ -78,20 +78,29 @@
             tools:layout="@layout/fragment_account_screen">
 
         <action android:id="@+id/action_accountScreenFragment_to_accountCottageScreenFragment"
-                app:destination="@id/accountCottageScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:destination="@id/accountCottageScreenFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
-                app:launchSingleTop="true"
-                app:popEnterAnim="@anim/slide_in_right"
-                app:popExitAnim="@anim/slide_out_left"/>
+        />
         <action android:id="@+id/action_accountScreenFragment_to_accountReservationsScreenFragment"
-                app:destination="@id/accountReservationsScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:destination="@id/accountReservationsScreenFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
-                app:launchSingleTop="true"/>
-        <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
-                app:destination="@id/homeScreenFragment"/>
+        />
         <action android:id="@+id/action_accountScreenFragment_to_accountSettingScreenFragment"
-                app:destination="@id/accountSettingScreenFragment" app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"/>
+                app:destination="@id/accountSettingScreenFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+        />
+        <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
+                app:destination="@id/homeScreenFragment"
+        />
     </fragment>
     <fragment
             android:id="@+id/accountSettingScreenFragment"
@@ -104,11 +113,12 @@
             android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
             tools:layout="@layout/fragment_account_cottage_screen">
         <action android:id="@+id/action_accountCottageScreenFragment_to_addCottageFormFragment"
-                app:destination="@id/addCottageFormFragment" app:enterAnim="@anim/slide_in_right"
+                app:destination="@id/addCottageFormFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
-                app:launchSingleTop="true"
-                app:popEnterAnim="@anim/slide_in_right"
-                app:popExitAnim="@anim/slide_out_left"/>
+        />
     </fragment>
 
     <fragment
@@ -133,6 +143,8 @@
         <action
                 android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
                 app:destination="@id/registerFragmentEmail" />
+        <action android:id="@+id/action_loginScreenFragment_to_accountScreenFragment"
+                app:destination="@id/accountScreenFragment"/>
     </fragment>
 
     <fragment

@@ -1,7 +1,5 @@
 package fi.oamk.cottagerepublic.ui.search
 
-import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,11 +8,12 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.data.Destination
 import fi.oamk.cottagerepublic.repository.CottageRepository
+import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers
 
-class SearchViewModel(fragment: Fragment) : ViewModel() {
-    private var destination = SearchFragmentArgs.fromBundle(fragment.requireArguments()).destination
+class SearchViewModel(val cottage: Cottage?, val destination: Destination?) : ViewModel() {
 
     private val dataSource =
         CottageRepository.getInstance(
@@ -22,12 +21,13 @@ class SearchViewModel(fragment: Fragment) : ViewModel() {
             Firebase.storage.getReference("cottages")
         )
 
-    val cottagesList = liveData(Dispatchers.IO) {
+    var cottagesList = liveData(Dispatchers.IO) {
+        emit(Resource.Loading<Boolean>())
         try {
             val cottages = dataSource.getAllCottages()
             emit(cottages)
         } catch (e: Exception) {
-            Log.e("SearchViewModel", e.cause.toString())
+            emit(Resource.Failure<Exception>(e.cause!!))
         }
     }
 
@@ -62,10 +62,15 @@ class SearchViewModel(fragment: Fragment) : ViewModel() {
 
     fun checkForPassedArgs(): Boolean {
         if (destination != null) {
-            searchQuery.value = "${destination!!.location["city"]}, ${destination!!.location["country"]}"
-            destination = null
+            searchQuery.value = "${destination.location["city"]}, ${destination.location["country"]}"
             return true
         }
+
+        if (cottage != null) {
+            searchQuery.value = "${cottage.location["city"]}, ${cottage.location["country"]}"
+            return true
+        }
+
         return false
     }
 }

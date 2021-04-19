@@ -3,6 +3,12 @@ package fi.oamk.cottagerepublic.util
 
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
+import android.annotation.SuppressLint
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -15,8 +21,12 @@ import org.w3c.dom.Text
 
 // destination bindings
 @BindingAdapter("image")
-fun ImageView.setDestinationImage(item: Destination) = setImageResource(item.image.toInt())
+fun setCottageImage(view: ImageView, item: Destination) {
+    if (item.images.isNotEmpty())
+        Picasso.get().load(item.images[0]).into(view)
+}
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("location")
 fun TextView.setDestinationName(item: Destination) {
     text = "${item.location["city"]}, ${item.location["country"]}"
@@ -82,11 +92,39 @@ fun TextView.setDescription(item: Cottage) {
 // calendar bindings
 @BindingAdapter("numberOfNights")
 fun TextView.setNumberOfNights(item: Int) {
-    if (item == 0) {
-        text = "1 day"
-        return
-    }
-    text = "$item night(s)"
+    text = if (item == 0) {
+        "-"
+    } else
+        "$item night(s)"
+}
+
+@BindingAdapter("numberOfNightNote")
+fun TextView.setNumberOfNightsNote(item: Int) {
+    visibility = if (item == 0)
+        View.VISIBLE
+    else
+        View.INVISIBLE
+}
+
+@BindingAdapter("moreThanOneNight")
+fun Button.setBookEnabled(item: Int) {
+    isEnabled = item != 0
+}
+
+// booking binding
+@BindingAdapter("priceOfNight", "numberOfNights")
+fun TextView.setPriceByNumberOfNights(price: Int, numberOfNights: Int) {
+    text = "$price € x $numberOfNights night(s)"
+}
+
+@BindingAdapter("taxes")
+fun TextView.setTaxesAmount(taxes: Int) {
+    text = "$taxes €"
+}
+
+@BindingAdapter("total")
+fun TextView.setTotalBeforeTaxes(total: Int) {
+    text = "$total €"
 }
 
 @BindingAdapter("CottagePrice")
@@ -112,49 +150,3 @@ fun TextView.priceChanged(listener: InverseBindingListener) {
         listener?.onChange()
     }
 }
-//
-//@BindingAdapter("entries")
-//fun Spinner.setEntries(entries: List<Any>?) {
-//
-//    if (entries != null) {
-//        val newEntries= mutableListOf<String>()
-//        for(entry in entries)
-//        {
-//            newEntries.add("$entry Guests")
-//        }
-//        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, newEntries)
-//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        adapter = arrayAdapter
-//    }
-//}
-//
-//    @BindingAdapter("onItemSelected")
-//    fun Spinner.setSpinnerItemSelectedListener(item: ObservableField<Int>) {
-//
-//
-//        if (item == null) {
-//            onItemSelectedListener = null
-//        } else {
-//            onItemSelectedListener = object :
-//                AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>,
-//                    view: View,
-//                    position: Int,
-//                    id: Long
-//                )
-//                {
-//                    item.set(parent.getItemAtPosition(position).toString().slice(IntRange(0,0)).toInt())
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//        }
-//    }
-
-
-
-
-
-
-

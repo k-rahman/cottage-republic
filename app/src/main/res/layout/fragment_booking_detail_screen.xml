@@ -6,13 +6,14 @@
         xmlns:tools="http://schemas.android.com/tools"
 >
     <data>
+        <variable name="bookingViewModel" type="fi.oamk.cottagerepublic.ui.bookingDetail.BookingDetailViewModel"/>
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-    >
+            android:background="@color/colorBackground">
         <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appBar_layout"
                 android:layout_width="match_parent"
@@ -36,7 +37,7 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         tools:text="Screen Title"
-                />
+                        android:textAlignment="center"/>
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -48,16 +49,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/appBar_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:cardElevation="5dp"
-        >
-            <androidx.appcompat.widget.LinearLayoutCompat
+                app:cardElevation="0dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardCornerRadius="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
             >
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/cottage_name_title"
-                        android:text="Cottage in middle of noWhere"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
@@ -65,29 +66,63 @@
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold"
                         android:layout_marginTop="16dp"
-                        android:textAlignment="center"
-                />
-
-                <androidx.appcompat.widget.AppCompatImageView
+                        app:cottageLabel="@{bookingViewModel.selectedCottage}"
+                        tools:text="@tools:sample/cities"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"/>
+                <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cottage_image"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/cottage_name_title"
                         android:layout_marginTop="16dp"
-                        app:srcCompat="@drawable/cottage_image_sample"
-                />
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        app:cardElevation="5dp" app:cardPreventCornerOverlap="true">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="250dp"
+                            android:layout_height="150dp"
+                            app:srcCompat="@drawable/cottage_image_sample"
+                            app:image="@{bookingViewModel.selectedCottage}"
+                            android:scaleType="fitXY"
+                    />
+                </com.google.android.material.card.MaterialCardView>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/cottage_price"
-                        android:text="50/ night"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:textColor="@color/colorAccent"
                         android:textSize="18sp"
-                        android:layout_marginTop="16dp"
                         android:textAlignment="center"
-                        android:layout_marginBottom="16dp"
+                        app:price="@{bookingViewModel.selectedCottage}"
+                        tools:text="@tools:sample/lorem"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/cottage_image"
+                        android:layout_marginEnd="16dp" app:layout_constraintTop_toBottomOf="@+id/cottage_name_title"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintBottom_toTopOf="@+id/cottage_rating"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintVertical_chainStyle="packed"/>
+                <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/cottage_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        style="@android:style/Widget.Material.RatingBar.Small"
+                        app:layout_constraintTop_toBottomOf="@+id/cottage_price"
+                        app:layout_constraintBottom_toBottomOf="@+id/cottage_image"
+                        app:layout_constraintStart_toEndOf="@+id/cottage_image"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        android:numStars="5"
+                        app:rating="@{bookingViewModel.selectedCottage.rating}"
                 />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <ScrollView
@@ -124,7 +159,7 @@
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/check_in_date"
-                        android:text="9. April"
+                        android:text="@{bookingViewModel.checkIn}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +185,7 @@
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/check_out_date"
-                        android:text="15. April"
+                        android:text="@{bookingViewModel.checkOut}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/check_out_title"
@@ -172,7 +207,6 @@
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/total_before_taxes_title"
-                        android:text="50€ x 4 nights"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toStartOf="@+id/total_before_taxes"
@@ -182,10 +216,11 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:fontFamily="@font/roboto"
                         android:textSize="18sp"
-                />
+                        priceOfNight="@{bookingViewModel.selectedCottage.price}"
+                        numberOfNights="@{bookingViewModel.numberOfNights}"
+                        tools:text="@tools:sample/first_names"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/total_before_taxes"
-                        android:text="264€"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/total_before_taxes_title"
@@ -194,6 +229,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:fontFamily="@font/roboto"
                         android:textSize="18sp"
+                        total="@{bookingViewModel.totalBeforeTaxes}"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/taxes_title"
@@ -211,7 +247,6 @@
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/taxes"
-                        android:text="20€"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
@@ -221,6 +256,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         android:layout_marginTop="24dp"
                         android:textSize="18sp"
+                        taxes="@{bookingViewModel.taxesAmount}"
                 />
                 <View
                         android:id="@+id/divider2"
@@ -233,43 +269,43 @@
                         android:layout_marginTop="32dp"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/total_title"
                         android:text="@string/total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView12"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider2"
                         android:fontFamily="@font/roboto"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintEnd_toStartOf="@+id/textView13"
+                        app:layout_constraintEnd_toStartOf="@+id/total"
                         app:layout_constraintHorizontal_chainStyle="spread_inside"
                         android:layout_marginTop="32dp"
                         android:textSize="18sp"
                         android:textColor="@color/colorBlack"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
-                        android:text="284€"
+                        android:id="@+id/total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView13"
                         android:fontFamily="@font/roboto"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView12"
+                        app:layout_constraintStart_toEndOf="@+id/total_title"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintTop_toBottomOf="@+id/divider2"
                         android:layout_marginTop="32dp"
                         android:textSize="18sp"
                         android:textColor="@color/colorBlack"
+                        total="@{bookingViewModel.totalAfterTaxes}"
                 />
                 <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/cancel_btn"
                         android:text="@android:string/cancel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintEnd_toStartOf="@+id/button"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12"
+                        app:layout_constraintEnd_toStartOf="@+id/continue_btn"
+                        app:layout_constraintTop_toBottomOf="@+id/total"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/roboto"
@@ -279,17 +315,17 @@
                         android:textSize="18sp"
                         android:layout_marginTop="32dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="32dp"
-                />
+                        android:onClick="@{() -> bookingViewModel.onCancelClicked()}"
+                        android:layout_marginBottom="8dp"/>
                 <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/continue_btn"
                         android:text="@string/continue_"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/button2"
+                        app:layout_constraintStart_toEndOf="@+id/cancel_btn"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13"
+                        app:layout_constraintTop_toBottomOf="@+id/total"
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/roboto"
                         android:textAllCaps="false"
@@ -298,8 +334,8 @@
                         android:background="@drawable/shape_continue_border"
                         android:layout_marginTop="32dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="32dp"
-                />
+                        android:onClick="@{() -> bookingViewModel.onContinueClicked()}"
+                        android:layout_marginBottom="8dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

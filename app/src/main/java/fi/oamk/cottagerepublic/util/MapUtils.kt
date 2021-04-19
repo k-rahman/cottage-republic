@@ -27,7 +27,7 @@ object MapUtils {
         savedInstanceState: Bundle?,
         resource: Resources,
         mapView: MapView,
-        locations: ArrayList<HashMap<String, Double>>,
+        locations: ArrayList<HashMap<String, Double>> = ArrayList<HashMap<String, Double>>(),
         isAllGesturesEnabled: Boolean,
     ) {
         mapView.onCreate(savedInstanceState)

@@ -82,7 +82,7 @@ class CottageDetailFragment : Fragment() {
                 if (!it.coordinates.isNullOrEmpty()) {
                     // initialize the map
                     coordinatesList.add(it.coordinates)
-                    MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, coordinatesList, false)
+                 //   MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, coordinatesList, false)
                 }
             }
         })

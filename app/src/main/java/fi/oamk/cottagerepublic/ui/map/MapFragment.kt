@@ -35,7 +35,7 @@ class MapFragment : Fragment() {
         val locationsList = arrayListOf<HashMap<String, Double>>()
         val singleLocation = MapFragmentArgs.fromBundle(requireArguments()).selectedCottageCoordinate.coordinates
         locationsList.add(singleLocation)
-        MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, true)
+      //  MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, true)
 
         return binding.root
     }

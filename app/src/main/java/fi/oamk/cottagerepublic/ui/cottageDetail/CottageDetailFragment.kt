@@ -130,7 +130,7 @@ class CottageDetailFragment : Fragment() {
         if (!cottage.coordinates.isNullOrEmpty()) {
             // initialize the map
             coordinatesList.add(cottage.coordinates)
-            MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, coordinatesList, false)
+           // MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, coordinatesList, false)
         }
     }
 

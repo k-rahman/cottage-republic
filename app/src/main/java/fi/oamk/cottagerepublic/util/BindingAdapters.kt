@@ -1,5 +1,8 @@
 package fi.oamk.cottagerepublic.util
 
+
+import android.widget.*
+import androidx.core.widget.addTextChangedListener
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.Button
@@ -7,10 +10,14 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import com.squareup.picasso.Picasso
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.data.Destination
+import org.w3c.dom.Text
+
 
 // destination bindings
 @BindingAdapter("image")
@@ -118,4 +125,28 @@ fun TextView.setTaxesAmount(taxes: Int) {
 @BindingAdapter("total")
 fun TextView.setTotalBeforeTaxes(total: Int) {
     text = "$total €"
+}
+
+@BindingAdapter("CottagePrice")
+fun TextView.setPrice(Price: String) {
+//    if (Price != text.toString())
+//        text = Price.replaceFirst("^0+".toRegex(), "")
+    if(Price.startsWith("0"))
+    {
+        text = Price.replaceFirst("^0+".toRegex(), "")
+
+    }
+}
+
+@InverseBindingAdapter(attribute = "CottagePrice")
+fun TextView.getPrice(): String {
+    return text.toString()
+    //.toString().replaceFirst("^0+".toRegex(), "")
+}
+
+@BindingAdapter("CottagePriceAttrChanged")
+fun TextView.priceChanged(listener: InverseBindingListener) {
+    addTextChangedListener {
+        listener?.onChange()
+    }
 }

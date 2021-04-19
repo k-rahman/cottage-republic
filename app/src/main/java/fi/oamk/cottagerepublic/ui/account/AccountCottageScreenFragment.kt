@@ -33,7 +33,7 @@ class AccountCottageScreenFragment : Fragment() {
 
         // Open form to upload new cottage
         binding.fabAddCottage.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_accountCottageScreenFragment_to_addCottageFormFragment)
+            view.findNavController().navigate(R.id.action_accountCottageScreenFragment_to_CreateCottageFragment)
         }
         return binding.root
     }

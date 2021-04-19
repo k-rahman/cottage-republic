@@ -44,6 +44,6 @@ class CottageMapFragment : Fragment() {
         val locationsList = arrayListOf<HashMap<String, Double>>()
         val singleLocation = CottageMapFragmentArgs.fromBundle(requireArguments()).selectedCottageCoordinate.coordinates
         locationsList.add(singleLocation)
-        MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, true)
+       // MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, true)
     }
 }

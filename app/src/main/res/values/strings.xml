@@ -19,7 +19,9 @@
     <string name="cottagerepublic_splash_screen_image_description">CottageRepublic splash screen image</string>
     <string name="register_button_text"><u>Or register a new account</u></string>
 
+
     <!--  Register pages strings-->
+
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
@@ -36,6 +38,39 @@
     <string name="submit">Submit</string>
     <string name="name">Name</string>
     <string name="login">Login</string>
+
+    <!-- create cottage screen -->
+    <string name="cottage_create_title"> "New Cottage" </string>
+
+    <string name="editCottageTitleString">Cottage Title</string>
+    <string name="editCottageCityString">City</string>
+    <string name="editCottageCountryString">Country</string>
+    <string name="editCottagePriceString">Cottage Price</string>
+    <string name="editCottageDescriptionString">Cottage Description: </string>
+    <string name="textGuestAmountString">Amount of guests: </string>
+    <string name="stringPriceAppend"> € / night</string>
+    <string name="textPreciseLocationString">Precise cottage location: </string>
+    <string name="cancelButtonString">Cancel</string>
+    <string name="confirmButtonString">Create Cottage</string>
+    <string name="textAminities">Aminities</string>
+    <string name="checkBoxOneString"> Sauna </string>
+    <string name="checkBoxTwoString"> Pets </string>
+    <string name="checkBoxThreeString"> Smoking </string>
+    <string name="checkBoxFourString"> Running water </string>
+    <string name="checkBoxFiveString"> Power </string>
+    <string name="checkBoxSixString"> Hot Tub </string>
+    <string name="editCottageDescription">Enter cottage description..</string>
+
+    <string-array name="spinnerGuestAmount">
+        <item>1 Guest</item>
+        <item>2 Guests</item>
+        <item>3 Guests</item>
+        <item>4 Guests</item>
+        <item>5 Guests</item>
+        <item>6 Guests</item>
+        <item>7+ Guests</item>
+    </string-array>
+
 
     <!--  Settings page strings  -->
     <string name="my_account">My Account</string>

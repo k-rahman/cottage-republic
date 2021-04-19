@@ -1,20 +1,11 @@
 package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Application
-import android.util.Log
-import android.util.MutableBoolean
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.databinding.Observable
-import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
@@ -66,7 +57,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.description = newCottageDescription.value.toString()
         newCottage.location[newCottageCountry.value.toString()]=newCottageLocation.value.toString()
         newCottage.amenities=newCottageAmenities
-        newCottage.price = newCottagePrice?.value!!.toInt()
+        newCottage.price = newCottagePrice.value!!.toInt()
 
 
         //create new cottage

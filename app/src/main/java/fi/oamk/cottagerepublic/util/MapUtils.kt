@@ -1,174 +1,93 @@
 package fi.oamk.cottagerepublic.util
 
-import android.annotation.SuppressLint
-import android.content.res.Resources
+import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
-import androidx.navigation.fragment.FragmentNavigator
+import androidx.lifecycle.MutableLiveData
 import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.storage.Resource
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import com.mapbox.mapboxsdk.utils.BitmapUtils
-import fi.oamk.cottagerepublic.R
-import fi.oamk.cottagerepublic.ui.map.CreateCottageMapFragment
 
-object Constants {
-    const val SOURCE_ID = "SOURCE_ID"
-    const val ICON_ID = "ICON_ID"
-    const val LAYER_ID = "LAYER_ID"
-}
+class MapUtils(
+    val savedInstanceState: Bundle?,
+    val context: Context,
+    mapView: MapView,
+    private val isAllGesturesEnabled: Boolean = false,
+    private val mapListener: MapboxMap.OnMapClickListener = MapboxMap.OnMapClickListener { _ -> true },
+) {
 
-object MapUtils {
+    var mapboxMap = MutableLiveData<MapboxMap>()
 
+    companion object {
+        const val SOURCE_ID = "SOURCE_ID"
+        const val ICON_ID = "ICON_ID"
+        const val LAYER_ID = "LAYER_ID"
+    }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    fun initializeMap(
-        savedInstanceState: Bundle?,
-        resource: Resources,
-        mapView: MapView,
-        locations: ArrayList<HashMap<String, Double>> = ArrayList(),
-        isAllGesturesEnabled: Boolean,
-    ) {
+    init {
         mapView.onCreate(savedInstanceState)
 
-        // list to hold marker locations
-        val features = arrayListOf<Feature>()
-        if (!locations.isNullOrEmpty()) {
-            locations.forEach {
-                // for each location, make a marker and add to the list
-                features.add(Feature.fromGeometry(Point.fromLngLat(it["long"]!!, it["lat"]!!)))
-            }
-        }
-
-        mapView.getMapAsync { mapboxMap ->
-            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+        mapView.getMapAsync {
+            it.setStyle(Style.MAPBOX_STREETS) { style ->
                 // Map is set up and the style has loaded.
                 // Now you can add data or make other map adjustments
-                with(it) {
-                    addSource(
-                        GeoJsonSource(
-                            Constants.SOURCE_ID,
-                            FeatureCollection.fromFeatures(features)
-                        )
-                    )
-
+                with(style) {
+                    addSource(GeoJsonSource(SOURCE_ID))
 
                     addImageAsync(
-                        Constants.ICON_ID,
-                        resource.getDrawable(R.drawable.map_marker_cottage_24, null)
+                        ICON_ID,
+                        com.mapbox.mapboxsdk.utils.BitmapUtils.getDrawableFromRes(
+                            context,
+                            fi.oamk.cottagerepublic.R.drawable.map_marker_cottage_24
+                        )!!
                     )
 
                     addLayer(
-                        SymbolLayer(
-                            Constants.LAYER_ID, Constants.SOURCE_ID
-                        )
+                        SymbolLayer(LAYER_ID, SOURCE_ID)
                             .withProperties(
-                                iconImage(Constants.ICON_ID),
-                                iconAllowOverlap(true),
-                                iconIgnorePlacement(true)
+                                com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage(ICON_ID),
+                                com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap(true),
+                                com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement(true)
                             )
                     )
-
-
                 }
 
-                mapboxMap.cameraPosition =
-                    CameraPosition.Builder()
-                        .target(LatLng(locations[0]["lat"]!!, locations[0]["long"]!!))
-                        .zoom(14.0)
-                        .build()
-
-                val uiSettings = mapboxMap.uiSettings
+                val uiSettings = it.uiSettings
                 uiSettings.setAllGesturesEnabled(isAllGesturesEnabled)
                 uiSettings.isCompassEnabled = false
                 uiSettings.isAttributionEnabled = false
                 uiSettings.isQuickZoomGesturesEnabled = false
+
+                // add click listener to the map
+                it.addOnMapClickListener(mapListener)
             }
+            mapboxMap.value = it
         }
     }
 
-    //create cottage map
-
-    var mapboxMapVar: MapboxMap? = null
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    fun initializeCreateCottageMap(
-        savedInstanceState: Bundle?,
-        resource: Resources,
-        mapView: MapView,
-        mapListener: CreateCottageMapFragment?
-    ): MapboxMap?
-    {
-
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { mapboxMap ->
-            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
-                // Map is set up and the style has loaded.
-                // Now you can add data or make other map adjustments
-                // 65.142455, 27.078449
-
-                with(it) {
-                    addSource(
-                        GeoJsonSource(
-                            Constants.SOURCE_ID,
-                            FeatureCollection.fromFeatures(arrayListOf(Feature.fromGeometry(Point.fromLngLat(27.078449, 65.142455,))))
-                        )
-                    )
-
-                    addImageAsync(
-                        Constants.ICON_ID,
-                        resource.getDrawable(R.drawable.map_marker_cottage_24, null)
-                       // BitmapUtils.getDrawableFromRes(mapView.context, R.drawable.map_marker_cottage_24)!!
-                    )
-
-                    addLayer(
-                        SymbolLayer(
-                            Constants.LAYER_ID, Constants.SOURCE_ID
-                        )
-                            .withProperties(
-                                iconImage(Constants.ICON_ID),
-                                iconAllowOverlap(true),
-                                iconIgnorePlacement(true)
-                            )
-                    )
-
-                }
-
-                mapboxMap.cameraPosition =
-                    CameraPosition.Builder()
-                        .target(LatLng(65.142455,27.078449))
-                        .zoom(14.0)
-                        .build()
-
-                if(mapListener != null)
-                mapboxMap.addOnMapClickListener(mapListener)
-
-                val uiSettings = mapboxMap.uiSettings
-                uiSettings.setAllGesturesEnabled(true)
-                uiSettings.isCompassEnabled = false
-                uiSettings.isAttributionEnabled = false
-                uiSettings.isQuickZoomGesturesEnabled = false
-
-                mapboxMapVar = mapboxMap
-            }
-
-        }
-       return mapboxMapVar
+    fun initCameraPosition(point: HashMap<String, Double>) {
+        mapboxMap.value?.cameraPosition =
+            CameraPosition.Builder()
+                .target(LatLng(point["lat"]!!, point["long"]!!))
+                .zoom(4.0)
+                .build()
     }
 
+    fun updateMapStyle(point: HashMap<String, Double>) {
+        mapboxMap.value?.getStyle {
+            val geoJsonSource = it.getSourceAs<GeoJsonSource>(SOURCE_ID)
+            geoJsonSource?.setGeoJson(Feature.fromGeometry(Point.fromLngLat(point["long"]!!, point["lat"]!!)))
+        }
 
-
-
-
-
-
+        mapboxMap.value?.cameraPosition =
+            CameraPosition.Builder()
+                .target(LatLng(point["lat"]!!, point["long"]!!))
+                .zoom(15.0)
+                .build()
+    }
 }

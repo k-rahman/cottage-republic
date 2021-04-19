@@ -120,7 +120,7 @@ object MapUtils {
                     addSource(
                         GeoJsonSource(
                             Constants.SOURCE_ID,
-                            FeatureCollection.fromFeatures(arrayListOf(Feature.fromGeometry(Point.fromLngLat(65.142455,27.078449))))
+                            FeatureCollection.fromFeatures(arrayListOf(Feature.fromGeometry(Point.fromLngLat(27.078449, 65.142455,))))
                         )
                     )
 
@@ -146,7 +146,7 @@ object MapUtils {
                 mapboxMap.cameraPosition =
                     CameraPosition.Builder()
                         .target(LatLng(65.142455,27.078449))
-                        .zoom(4.0)
+                        .zoom(14.0)
                         .build()
 
                 if(mapListener != null)

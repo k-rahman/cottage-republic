@@ -43,7 +43,8 @@
     <string name="cottage_create_title"> "New Cottage" </string>
 
     <string name="editCottageTitleString">Cottage Title</string>
-    <string name="editCottageLocationString">Cottage Location</string>
+    <string name="editCottageCityString">City</string>
+    <string name="editCottageCountryString">Country</string>
     <string name="editCottagePriceString">Cottage Price</string>
     <string name="editCottageDescriptionString">Cottage Description: </string>
     <string name="textGuestAmountString">Amount of guests: </string>

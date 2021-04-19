@@ -69,7 +69,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="16dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/editCottageTitleString"
@@ -82,10 +82,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:hint="@string/editCottageLocationString"
+                android:hint="@string/editCottageCityString"
                 android:inputType="textPersonName"
                 android:text="@={CreateViewModel.newCottageLocation}"
 
@@ -97,18 +98,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:hint="@string/editCottageLocationString"
+                android:hint="@string/editCottageCountryString"
                 android:inputType="textPersonName"
                 android:text="@={CreateViewModel.newCottageCountry}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
                 android:orientation="horizontal">
 
                 <EditText
@@ -134,11 +136,20 @@
                     android:text="@string/stringPriceAppend" />
             </LinearLayout>
 
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="@string/textGuestAmountString"
-                android:textAlignment="center"
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -154,27 +165,55 @@
                 app:numberOfGuests="@={CreateViewModel.numberOfGuests}"
                 />
 
-            <TextView
+            <View
+                android:id="@+id/divider2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(CreateViewModel.numberOfGuests)}"
-                android:textAlignment="center"
-                android:textSize="16sp"
-
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 />
-<!--            app:NumberOfGuests="@={CreateViewModel.amountOfGuests}"-->
+
+
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(CreateViewModel.numberOfGuests)}"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textSize="16sp"-->
+
+<!--                />-->
+<!--&lt;!&ndash;            app:NumberOfGuests="@={CreateViewModel.amountOfGuests}"&ndash;&gt;-->
 <!--            android:entries="@array/spinnerGuestAmount"-->
 <!--            app:clicks="@={CreateViewModel.amountOfGuests}"-->
 <!--            app:entries="@{CreateViewModel.amountOfGuests}"-->
 <!--            app:onItemSelected="@{(NewValue) -> CreateViewModel.onItemSelected(NewValue) }"-->
 <!--            app:newValue="@={CreateViewModel.quantity}"-->
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Images"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                />
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/editCottageDescriptionString"
-                android:textAlignment="center"
+                android:layout_marginStart="8dp"
                 android:textSize="16sp" />
 
             <EditText
@@ -190,10 +229,18 @@
                 android:gravity="start|top"
                 android:hint="@string/editCottageDescription"
                 android:importantForAutofill="no"
-                android:padding="5dp"
                 android:inputType="textMultiLine"
                 android:maxLines="12"
-                android:text="@={CreateViewModel.newCottageDescription}"
+                android:padding="5dp"
+                android:text="@={CreateViewModel.newCottageDescription}" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 />
 
 
@@ -202,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/textPreciseLocationString"
-                android:textAlignment="center"
+                android:layout_marginStart="8dp"
                 android:textSize="16sp" />
 
 <!--            <FrameLayout-->
@@ -248,22 +295,35 @@
                 </com.mapbox.mapboxsdk.maps.MapView>
             </com.google.android.material.card.MaterialCardView>
 
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                />
+
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/textAminities"
-                android:textAlignment="center"
+                android:layout_marginStart="8dp"
                 android:textSize="16sp" />
 
-            <androidx.appcompat.widget.AppCompatCheckBox
+
+            <CheckBox
                 android:id="@+id/checkBox4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/checkBoxOneString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.saunaCheck(checked)}"
                 />
@@ -274,6 +334,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/checkBoxTwoString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.petsCheck(checked)}"
                 />
@@ -284,6 +345,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/checkBoxThreeString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.smokingCheck(checked)}"
                 />
@@ -294,6 +356,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/checkBoxFourString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.waterCheck(checked)}"
                 />
@@ -304,6 +367,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/checkBoxFiveString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.powerCheck(checked)}"
                 />
@@ -314,9 +378,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/checkBoxSixString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.hotTubCheck(checked)}"
                 />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                />
+
 
             <LinearLayout
                 android:layout_width="match_parent"

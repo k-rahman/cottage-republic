@@ -24,22 +24,25 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val amountOfGuests = MutableLiveData(listOf("1 Guest","2 Guests", "3 Guests","4 Guests", "5 Guests", "6+ Guests"))
     val numberOfGuests = MutableLiveData("")
 
+
     val newCottageTitle = MutableLiveData<String>()
     val newCottageLocation = MutableLiveData<String>()
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
-    var newCottagePrice = MutableLiveData<String>("0")
+    var newCottagePrice = MutableLiveData("0")
     var cottageCoordinates = hashMapOf<String,Double>()
 
     var newCottageImages = arrayListOf<Uri>()
     var newCottageImageNames = arrayListOf<String>()
+
+    var fillInBoxes = MutableLiveData<List<String>>()
 
     private var _navigateToMap = MutableLiveData<Boolean>()
     val navigateToMap: LiveData<Boolean>
         get() = _navigateToMap
 
 
-    val newCottageAmenities: MutableList<String> = mutableListOf()
+    val newCottageAmenities = mutableListOf<String>()
 
 
     //create cottage function, sends cottage object to db through cottagerepo
@@ -59,13 +62,59 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.coordinates = cottageCoordinates
         newCottage.images =  newCottageImageNames
         //create new cottage
+        if (checkFields().isEmpty())
         cottageDataSource.createNewCottage(newCottage,newCottageImages)
+        else
+           fillInBoxes.value=checkFields()
+
 
 
     }
 
     //check if user has filled in all the required fields
+    fun checkFields():MutableList<String>
+    {
+        var checkTheseFields = mutableListOf<String>()
 
+        if(!checkTitle())
+            checkTheseFields.add("Title")
+        if(!checkPrice())
+            checkTheseFields.add("Price")
+        if(!checkLocations())
+            checkTheseFields.add("Location")
+        if(!checkCoordinates())
+            checkTheseFields.add("Coordinates")
+        if(!checkImages())
+            checkTheseFields.add("Images")
+
+        return checkTheseFields
+    }
+
+    private fun checkTitle(): Boolean
+    {
+        return !newCottageTitle.value.isNullOrBlank()
+    }
+
+    private fun checkPrice(): Boolean
+    {
+        return !newCottagePrice.value.isNullOrBlank()
+    }
+
+    private fun checkLocations(): Boolean
+    {
+        return !newCottageLocation.value.isNullOrBlank()
+    }
+
+    private fun checkCoordinates(): Boolean
+    {
+        return !cottageCoordinates.isNullOrEmpty()
+
+    }
+
+    private fun checkImages(): Boolean
+    {
+        return! newCottageImageNames.isNullOrEmpty()
+    }
 
 
 
@@ -78,7 +127,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("sauna")
 
-     //   newCottageAmenityList["sauna"]= checked
     }
     fun waterCheck(checked : Boolean)
     {
@@ -88,7 +136,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("water")
 
-    //    newCottageAmenityList["water"] = checked
     }
     fun powerCheck(checked : Boolean)
     {
@@ -97,7 +144,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("power")
 
-       // newCottageAmenityList["power"] = checked
     }
     fun petsCheck(checked : Boolean)
     {
@@ -107,7 +153,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("pets")
 
-    //    newCottageAmenityList["pets"] = checked
     }
     fun smokingCheck(checked : Boolean)
     {
@@ -117,7 +162,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("smoking")
 
-   //     newCottageAmenityList["smoking"] = checked
     }
     fun hotTubCheck(checked : Boolean)
     {
@@ -127,7 +171,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("hottub")
 
-   //     newCottageAmenityList["hottub"] = checked
     }
 
     fun onMapClicked() {

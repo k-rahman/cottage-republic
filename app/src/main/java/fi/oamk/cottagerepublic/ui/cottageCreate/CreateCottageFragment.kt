@@ -26,7 +26,7 @@ class CreateCottageFragment : Fragment() {
     private lateinit var binding: FragmentCreateCottageBinding
     private lateinit var viewModel: CreateCottageViewModel
     private var images: ArrayList<Uri> = arrayListOf()
-    private var position = 0
+    private var missingString = ""
     private val PICK_IMAGES_CODE = 0
 
     override fun onCreateView(
@@ -53,6 +53,15 @@ class CreateCottageFragment : Fragment() {
                 viewModel.onMapNavigated()
             }
         })
+
+        viewModel.fillInBoxes.observe(viewLifecycleOwner,{
+            for(missingField in it)
+            {
+                missingString = missingString + " $missingField "
+            }
+            binding.errorTextView.text = missingString
+        }
+        )
 
         images = ArrayList()
 

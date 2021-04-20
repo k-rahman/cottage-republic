@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +24,7 @@ import fi.oamk.cottagerepublic.util.MapUtils
 class CreateCottageFragment : Fragment() {
     private lateinit var binding: FragmentCreateCottageBinding
     private lateinit var viewModel: CreateCottageViewModel
-    private var images: ArrayList<Uri> = arrayListOf()
+    private var images: ArrayList<String> = arrayListOf()
     private var position = 0
     private val PICK_IMAGES_CODE = 0
 
@@ -54,29 +55,29 @@ class CreateCottageFragment : Fragment() {
 
         images = ArrayList()
 
-        binding.imageSwitcher.setFactory { ImageView(this.context) }
+       // binding.imageSwitcher.setFactory { ImageView(this.context) }
 
         binding.pickImageButton.setOnClickListener{
             pickImagesIntent()
         }
 
-        binding.nextButton.setOnClickListener(){
-            if(position < images!!.size-1){
-                position++
-                binding.imageSwitcher.setImageURI(images!![position])
-            }
-            else
-                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
-        }
+//        binding.nextButton.setOnClickListener(){
+//            if(position < images!!.size-1){
+//                position++
+//                binding.imageSwitcher.setImageURI(images!![position].toUri())
+//            }
+//            else
+//                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
+//        }
 
-        binding.previousButton.setOnClickListener(){
-            if(position > 0){
-                position--
-                binding.imageSwitcher.setImageURI(images!![position])
-            }
-            else
-                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
-        }
+//        binding.previousButton.setOnClickListener(){
+//            if(position > 0){
+//                position--
+//                binding.imageSwitcher.setImageURI(images!![position].toUri())
+//            }
+//            else
+//                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
+//        }
 
         binding.createViewModel = viewModel
         binding.lifecycleOwner = this
@@ -104,7 +105,7 @@ class CreateCottageFragment : Fragment() {
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent,"select images"), PICK_IMAGES_CODE)
     }
-    //(intent, "Select Images"), PICK_IMAGES_CODE)
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -119,10 +120,30 @@ class CreateCottageFragment : Fragment() {
                     for(i in 0 until count){
                         val imageUri = data.clipData!!.getItemAt(i).uri
                         //add image to list
-                        images!!.add(imageUri)
+                        images.add(imageUri.toString())
                     }
                     //set first image from list to image switcher
-                    binding.imageSwitcher.setImageURI(this!!.images[0])
+                   // binding.imageSwitcher.setImageURI(this!!.images[0].toUri())
+                    binding.mainImage.setImageURI(this.images[0].toUri())
+                    if(this.images[1].isNotEmpty()){
+                        binding.extraImage1.setImageURI(this?.images[1]?.toUri())
+                    }
+                    if(this.images[2].isNotEmpty()){
+                        binding.extraImage2.setImageURI(this?.images[2]?.toUri())
+                    }
+                    if(this.images[3].isNotEmpty()){
+                        binding.extraImage3.setImageURI(this?.images[3]?.toUri())
+                    }
+                    if(this.images[3].isNotEmpty()){
+                        binding.extraImage4.setImageURI(this?.images[4]?.toUri())
+                    }
+
+
+
+
+
+
+
                     position = 0
                 }
                 else
@@ -130,7 +151,8 @@ class CreateCottageFragment : Fragment() {
                     //picked single image
                     val imageUri = data.data
                     //set image to iamge switcher
-                    binding.imageSwitcher.setImageURI(imageUri)
+                   // binding.imageSwitcher.setImageURI(imageUri)
+                    binding.mainImage.setImageURI(imageUri)
                     position = 0
                 }
             }

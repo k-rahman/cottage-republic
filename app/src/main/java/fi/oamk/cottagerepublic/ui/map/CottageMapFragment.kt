@@ -41,9 +41,10 @@ class CottageMapFragment : Fragment() {
     }
 
     private fun initMap(savedInstanceState: Bundle?) {
-        val locationsList = arrayListOf<HashMap<String, Double>>()
         val singleLocation = CottageMapFragmentArgs.fromBundle(requireArguments()).selectedCottageCoordinate.coordinates
-        locationsList.add(singleLocation)
-       // MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, true)
+        val mapUtils = MapUtils(savedInstanceState, requireContext(), binding.cottageMap, true)
+        mapUtils.mapboxMap.observe(viewLifecycleOwner, {
+            mapUtils.updateMapStyle(singleLocation)
+        })
     }
 }

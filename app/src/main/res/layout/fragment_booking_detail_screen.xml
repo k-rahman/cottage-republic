@@ -83,12 +83,11 @@
                         android:layout_marginStart="16dp"
                         app:cardElevation="5dp" app:cardPreventCornerOverlap="true">
                     <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="250dp"
-                            android:layout_height="150dp"
-                            app:srcCompat="@drawable/cottage_image_sample"
-                            app:image="@{bookingViewModel.selectedCottage}"
-                            android:scaleType="fitXY"
-                    />
+                        android:layout_width="250dp"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"
+                        app:image="@{bookingViewModel.selectedCottage}"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic[5]"/>
                 </com.google.android.material.card.MaterialCardView>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/cottage_price"

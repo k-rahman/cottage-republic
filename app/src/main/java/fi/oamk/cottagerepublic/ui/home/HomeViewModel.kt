@@ -35,7 +35,7 @@ class HomeViewModel : ViewModel() {
             val popularCottagesList = cottageDataSource.getPopularCottages(3)
             emit(popularCottagesList)
         } catch (e: Exception) {
-            emit(Resource.Failure<Exception>(e.cause!!))
+            emit(Resource.Failure<Exception>(e.message!!))
         }
     }
 
@@ -45,7 +45,7 @@ class HomeViewModel : ViewModel() {
             val popularDestinations = destinationDataSource.getPopularDestinations()
             emit(popularDestinations)
         } catch (e: Exception) {
-            emit(Resource.Failure<Exception>(e.cause!!))
+            emit(Resource.Failure<Exception>(e.message!!))
         }
     }
 

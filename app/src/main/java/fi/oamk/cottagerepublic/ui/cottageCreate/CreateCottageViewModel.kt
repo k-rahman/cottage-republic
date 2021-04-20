@@ -13,14 +13,15 @@ import fi.oamk.cottagerepublic.repository.CottageRepository
 
 class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
 
-
+    //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(
             Firebase.database.getReference("cottages"),
             Firebase.storage.getReference("cottages")
         )
 
-    val amountOfGuests = MutableLiveData(listOf("1 Guest","2 Guests", "3 Guests","4 Guests", "5 Guests", "6 Guests"))
+    //all the values that get pushed to new cottage
+    val amountOfGuests = MutableLiveData(listOf("1 Guest","2 Guests", "3 Guests","4 Guests", "5 Guests", "6+ Guests"))
     val numberOfGuests = MutableLiveData("")
 
     val newCottageTitle = MutableLiveData<String>()
@@ -41,6 +42,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageAmenities: MutableList<String> = mutableListOf()
 
 
+    //create cottage function, sends cottage object to db through cottagerepo
     fun createCottage()
     {
         val newCottage = Cottage()
@@ -61,6 +63,8 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
 
 
     }
+
+    //check if user has filled in all the required fields
 
 
 

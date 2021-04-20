@@ -95,43 +95,46 @@ class CreateCottageFragment : Fragment() {
 
         if (requestCode == PICK_IMAGES_CODE){
             if(resultCode == Activity.RESULT_OK){
-                if(data!!.clipData != null)
-                {
+                if(data!!.clipData != null) {
                     //picked multiple images
                     //get number of picker images
-                    val count = data.clipData!!.itemCount
-                    for(i in 0 until count){
+                    var count = data.clipData!!.itemCount
+                    Log.v("count: ", count.toString())
+                    if (count > 5)
+                        count = 5
+                    for (i in 0 until count) {
                         val imageUri = data.clipData!!.getItemAt(i).uri
                         //add image to list
-                        images.add(imageUri)
+
+                        this.images.add(imageUri)
+
+                        Log.v("imageuri ",imageUri.toString() )
                         viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
 
                     }
-                    //set first image from list to image switcher
-                   // binding.imageSwitcher.setImageURI(this!!.images[0].toUri())
+
+
                     binding.mainImage.setImageURI(this.images[0])
-                    if(this.images[1].toString().isNotEmpty()){
+
+                    if(count >= 2){
                         binding.extraImage1.setImageURI(this.images[1])
                     }
-                    if(this.images[2].toString().isNotEmpty()){
+                    if(count >= 3){
                         binding.extraImage2.setImageURI(this.images[2])
                     }
-                    if(this.images[3].toString().isNotEmpty()){
+                    if(count >= 4){
                         binding.extraImage3.setImageURI(this.images[3])
                     }
-                    if(this.images[3].toString().isNotEmpty()){
+                    if(count >= 5){
                         binding.extraImage4.setImageURI(this.images[4])
                     }
-                    position = 0
+
                 }
                 else
                 {
                     //picked single image
                     val imageUri = data.data
-                    //set image to iamge switcher
-                   // binding.imageSwitcher.setImageURI(imageUri)
                     binding.mainImage.setImageURI(imageUri)
-                    position = 0
                 }
             }
             viewModel.newCottageImages = images

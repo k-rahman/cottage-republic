@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.mapbox.mapboxsdk.Mapbox
@@ -24,7 +25,7 @@ import fi.oamk.cottagerepublic.util.MapUtils
 class CreateCottageFragment : Fragment() {
     private lateinit var binding: FragmentCreateCottageBinding
     private lateinit var viewModel: CreateCottageViewModel
-    private var images: ArrayList<String> = arrayListOf()
+    private var images: ArrayList<Uri> = arrayListOf()
     private var position = 0
     private val PICK_IMAGES_CODE = 0
 
@@ -55,29 +56,11 @@ class CreateCottageFragment : Fragment() {
 
         images = ArrayList()
 
-       // binding.imageSwitcher.setFactory { ImageView(this.context) }
 
         binding.pickImageButton.setOnClickListener{
             pickImagesIntent()
         }
 
-//        binding.nextButton.setOnClickListener(){
-//            if(position < images!!.size-1){
-//                position++
-//                binding.imageSwitcher.setImageURI(images!![position].toUri())
-//            }
-//            else
-//                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
-//        }
-
-//        binding.previousButton.setOnClickListener(){
-//            if(position > 0){
-//                position--
-//                binding.imageSwitcher.setImageURI(images!![position].toUri())
-//            }
-//            else
-//                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
-//        }
 
         binding.createViewModel = viewModel
         binding.lifecycleOwner = this
@@ -120,30 +103,25 @@ class CreateCottageFragment : Fragment() {
                     for(i in 0 until count){
                         val imageUri = data.clipData!!.getItemAt(i).uri
                         //add image to list
-                        images.add(imageUri.toString())
+                        images.add(imageUri)
+                        viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
+
                     }
                     //set first image from list to image switcher
                    // binding.imageSwitcher.setImageURI(this!!.images[0].toUri())
-                    binding.mainImage.setImageURI(this.images[0].toUri())
-                    if(this.images[1].isNotEmpty()){
-                        binding.extraImage1.setImageURI(this?.images[1]?.toUri())
+                    binding.mainImage.setImageURI(this.images[0])
+                    if(this.images[1].toString().isNotEmpty()){
+                        binding.extraImage1.setImageURI(this.images[1])
                     }
-                    if(this.images[2].isNotEmpty()){
-                        binding.extraImage2.setImageURI(this?.images[2]?.toUri())
+                    if(this.images[2].toString().isNotEmpty()){
+                        binding.extraImage2.setImageURI(this.images[2])
                     }
-                    if(this.images[3].isNotEmpty()){
-                        binding.extraImage3.setImageURI(this?.images[3]?.toUri())
+                    if(this.images[3].toString().isNotEmpty()){
+                        binding.extraImage3.setImageURI(this.images[3])
                     }
-                    if(this.images[3].isNotEmpty()){
-                        binding.extraImage4.setImageURI(this?.images[4]?.toUri())
+                    if(this.images[3].toString().isNotEmpty()){
+                        binding.extraImage4.setImageURI(this.images[4])
                     }
-
-
-
-
-
-
-
                     position = 0
                 }
                 else

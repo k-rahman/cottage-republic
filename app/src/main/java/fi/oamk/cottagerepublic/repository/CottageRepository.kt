@@ -39,28 +39,30 @@ class CottageRepository(
         }
     }
 
-    fun createNewCottage(cottage: Cottage){
+    fun createNewCottage(cottage: Cottage, images: ArrayList<Uri>){
 
         var key = databaseReference.child("cottages").push().key
         key = "cottage$key"
-        uploadImages(cottage.images,key)
+        uploadImages(images,key)
         cottage.cottageId = key.toString()
         databaseReference.child(key).setValue(cottage)
 
     }
 
-    fun uploadImages(images: MutableList<String>, key: String){
-        var counter = 0
+    private fun uploadImages(images: ArrayList<Uri>, key: String){
+      //  var counter = 0
         for(image in images)
         {
-            val file = Uri.fromFile(File(image))
-
+            Log.v("imageurl:" , image.toString())
+           // val file = image
+            //Log.v("File", file.toString())
             val metadata = storageMetadata {
                 contentType = "image/jpeg"
             }
 
-            val uploadTask = storageReference.child("images/${counter.toString() + key + file.lastPathSegment}").putFile(file, metadata)
-            counter++
+            //val uploadTask = storageReference.putFile(file, metadata)
+            val uploadTask = storageReference.child("${image.lastPathSegment}").putFile(image, metadata)
+          //  counter++
             uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
                 val progress = (100.0 * bytesTransferred) / totalByteCount
                 Log.d(TAG, "Upload is $progress% done")

@@ -29,7 +29,9 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     val newCottageDescription = MutableLiveData<String>()
     var newCottagePrice = MutableLiveData<String>("0")
     var cottageCoordinates = hashMapOf<String,Double>()
-    var newCottageImages = arrayListOf<String>()
+
+    var newCottageImages = arrayListOf<Uri>()
+    var newCottageImageNames = arrayListOf<String>()
 
     private var _navigateToMap = MutableLiveData<Boolean>()
     val navigateToMap: LiveData<Boolean>
@@ -53,10 +55,9 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottage.price = 0
         newCottage.coordinates = cottageCoordinates
-        newCottage.images = newCottageImages
-
+        newCottage.images =  newCottageImageNames
         //create new cottage
-        cottageDataSource.createNewCottage(newCottage)
+        cottageDataSource.createNewCottage(newCottage,newCottageImages)
 
 
     }

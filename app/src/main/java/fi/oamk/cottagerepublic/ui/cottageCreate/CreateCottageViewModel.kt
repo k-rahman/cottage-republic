@@ -53,13 +53,11 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottage.price = 0
         newCottage.coordinates = cottageCoordinates
+        newCottage.images = newCottageImages
 
         //create new cottage
         cottageDataSource.createNewCottage(newCottage)
 
-    //debug
-//        Log.v("Cottage: ",newCottage.toString())
-//        Log.v("Amenities: ",newCottageAmenityList.toString())
 
     }
 

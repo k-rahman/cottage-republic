@@ -3,6 +3,8 @@ package fi.oamk.cottagerepublic.repository
 import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
+import com.google.android.gms.tasks.Tasks.await
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -44,20 +46,21 @@ class CottageRepository(
         uploadImages(cottage.images,key)
         cottage.cottageId = key.toString()
         databaseReference.child(key).setValue(cottage)
+
     }
 
-    fun uploadImages(images: MutableList<String>, key: String)
-    {
-        for(uri in images)
+    fun uploadImages(images: MutableList<String>, key: String){
+        var counter = 0
+        for(image in images)
         {
-            val file = Uri.fromFile(File("path/to/mountains.jpg"))
+            val file = Uri.fromFile(File(image))
 
             val metadata = storageMetadata {
                 contentType = "image/jpeg"
             }
 
-            val uploadTask = storageReference.child("images/${file.lastPathSegment}").putFile(file, metadata)
-
+            val uploadTask = storageReference.child("images/${counter.toString() + key + file.lastPathSegment}").putFile(file, metadata)
+            counter++
             uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
                 val progress = (100.0 * bytesTransferred) / totalByteCount
                 Log.d(TAG, "Upload is $progress% done")
@@ -65,8 +68,10 @@ class CottageRepository(
                 Log.d(TAG, "Upload is paused")
             }.addOnFailureListener {
                 // Handle unsuccessful uploads
+                Log.d(TAG, "Upload failed")
             }.addOnSuccessListener {
                 // Handle successful uploads on complete
+                Log.d(TAG, "Upload Succes!")
                 // ...
             }
 

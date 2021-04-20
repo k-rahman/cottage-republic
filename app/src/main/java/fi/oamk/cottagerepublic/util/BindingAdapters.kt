@@ -133,8 +133,7 @@ fun TextView.setPrice(Price: String) {
 //        text = Price.replaceFirst("^0+".toRegex(), "")
     if(Price.startsWith("0"))
     {
-        text = Price.replaceFirst("^0+".toRegex(), "")
-
+        text = Price.replaceFirst("^0".toRegex(), "")
     }
 }
 

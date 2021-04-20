@@ -1,10 +1,16 @@
 package fi.oamk.cottagerepublic.ui.cottageCreate
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +23,9 @@ import fi.oamk.cottagerepublic.util.MapUtils
 class CreateCottageFragment : Fragment() {
     private lateinit var binding: FragmentCreateCottageBinding
     private lateinit var viewModel: CreateCottageViewModel
+    private var images: ArrayList<Uri> = arrayListOf()
+    private var position = 0
+    private val PICK_IMAGES_CODE = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +52,32 @@ class CreateCottageFragment : Fragment() {
             }
         })
 
+        images = ArrayList()
+
+        binding.imageSwitcher.setFactory { ImageView(this.context) }
+
+        binding.pickImageButton.setOnClickListener{
+            pickImagesIntent()
+        }
+
+        binding.nextButton.setOnClickListener(){
+            if(position < images!!.size-1){
+                position++
+                binding.imageSwitcher.setImageURI(images!![position])
+            }
+            else
+                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.previousButton.setOnClickListener(){
+            if(position > 0){
+                position--
+                binding.imageSwitcher.setImageURI(images!![position])
+            }
+            else
+                Toast.makeText(this.context,"no more images", Toast.LENGTH_SHORT).show()
+        }
+
         binding.createViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -57,4 +92,51 @@ class CreateCottageFragment : Fragment() {
 
         return binding.root
     }
+
+    //images
+
+
+
+    private fun pickImagesIntent(){
+        val intent = Intent()
+        intent.type = "image/+"
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent,"select images"), PICK_IMAGES_CODE)
+    }
+    //(intent, "Select Images"), PICK_IMAGES_CODE)
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGES_CODE){
+            if(resultCode == Activity.RESULT_OK){
+                if(data!!.clipData != null)
+                {
+                    //picked multiple images
+                    //get number of picker images
+                    val count = data.clipData!!.itemCount
+                    for(i in 0 until count){
+                        val imageUri = data.clipData!!.getItemAt(i).uri
+                        //add image to list
+                        images!!.add(imageUri)
+                    }
+                    //set first image from list to image switcher
+                    binding.imageSwitcher.setImageURI(this!!.images[0])
+                    position = 0
+                }
+                else
+                {
+                    //picked single image
+                    val imageUri = data.data
+                    //set image to iamge switcher
+                    binding.imageSwitcher.setImageURI(imageUri)
+                    position = 0
+                }
+            }
+            viewModel.newCottageImages = images
+        }
+    }
+
+
 }

@@ -1,12 +1,19 @@
 package fi.oamk.cottagerepublic.repository
 
+import android.content.ContentValues.TAG
+import android.net.Uri
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storageMetadata
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.tasks.await
+import java.io.File
+import com.google.firebase.storage.ktx.component1
+import com.google.firebase.storage.ktx.component2
 
 @Suppress("UNCHECKED_CAST")
 class CottageRepository(
@@ -31,10 +38,41 @@ class CottageRepository(
     }
 
     fun createNewCottage(cottage: Cottage){
+
         var key = databaseReference.child("cottages").push().key
         key = "cottage$key"
+        uploadImages(cottage.images,key)
         cottage.cottageId = key.toString()
         databaseReference.child(key).setValue(cottage)
+    }
+
+    fun uploadImages(images: MutableList<String>, key: String)
+    {
+        for(uri in images)
+        {
+            val file = Uri.fromFile(File("path/to/mountains.jpg"))
+
+            val metadata = storageMetadata {
+                contentType = "image/jpeg"
+            }
+
+            val uploadTask = storageReference.child("images/${file.lastPathSegment}").putFile(file, metadata)
+
+            uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
+                val progress = (100.0 * bytesTransferred) / totalByteCount
+                Log.d(TAG, "Upload is $progress% done")
+            }.addOnPausedListener {
+                Log.d(TAG, "Upload is paused")
+            }.addOnFailureListener {
+                // Handle unsuccessful uploads
+            }.addOnSuccessListener {
+                // Handle successful uploads on complete
+                // ...
+            }
+
+        }
+
+
     }
 
 

@@ -1,6 +1,7 @@
 package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,37 +20,27 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
             Firebase.storage.getReference("cottages")
         )
 
-    val amountOfGuests = MutableLiveData(listOf("1 Guest","2 Guests", "3 Guests","4 Guests"))
+    val amountOfGuests = MutableLiveData(listOf("1 Guest","2 Guests", "3 Guests","4 Guests", "5 Guests", "6 Guests"))
     val numberOfGuests = MutableLiveData("")
 
     val newCottageTitle = MutableLiveData<String>()
     val newCottageLocation = MutableLiveData<String>()
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
-    val newCottagePrice = MutableLiveData<String>("0")
-    val newCottageLocationLat = MutableLiveData<String>()
+    var newCottagePrice = MutableLiveData<String>("0")
     var cottageCoordinates = hashMapOf<String,Double>()
+    var newCottageImages = arrayListOf<Uri>()
 
     private var _navigateToMap = MutableLiveData<Boolean>()
     val navigateToMap: LiveData<Boolean>
         get() = _navigateToMap
 
-//    val newCottageAmenityList: MutableMap<String,Boolean> =  mutableMapOf<String,Boolean>(
-//        "sauna" to false,
-//        "pets" to false,
-//        "power" to false,
-//        "hottub" to false,
-//        "smoking" to false,
-//        "water" to false
-//        )
 
     val newCottageAmenities: MutableList<String> = mutableListOf()
 
 
     fun createCottage()
     {
-//        createAmenitiesList()
-
         val newCottage = Cottage()
         newCottage.guests = numberOfGuests.value!!.toInt()
         newCottage.rating = ((0..5).random()).toFloat()
@@ -57,8 +48,11 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.description = newCottageDescription.value.toString()
         newCottage.location[newCottageCountry.value.toString()]=newCottageLocation.value.toString()
         newCottage.amenities=newCottageAmenities
-        newCottage.price = newCottagePrice.value!!.toInt()
-
+        if (newCottagePrice.value != "")
+             newCottage.price = newCottagePrice.value!!.toInt()
+        else
+            newCottage.price = 0
+        newCottage.coordinates = cottageCoordinates
 
         //create new cottage
         cottageDataSource.createNewCottage(newCottage)
@@ -69,18 +63,8 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
-//    fun createAmenitiesList()
-//    {
-//
-//        for(amenity in newCottageAmenityList)
-//        {
-//            Log.v("Amenity: ", amenity.toString())
-//            if(amenity.value)
-//            {
-//                newCottageAmenities.add(amenity.key)
-//            }
-//        }
-//    }
+
+
 
     fun saunaCheck(checked : Boolean)
     {

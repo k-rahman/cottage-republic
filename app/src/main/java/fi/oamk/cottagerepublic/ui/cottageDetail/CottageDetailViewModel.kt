@@ -1,5 +1,6 @@
 package fi.oamk.cottagerepublic.ui.cottageDetail
 
+import android.location.Address
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,7 +23,7 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
             val reservationList = reservationDataSource.getReservationsByCottageId(selectedCottage.value!!.cottageId)
             emit(reservationList)
         } catch (e: Exception) {
-            emit(Resource.Failure<Exception>(e.cause!!))
+            emit(Resource.Failure<Exception>(e.message!!))
         }
     }
 
@@ -49,6 +50,9 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     var selectedDates = ObservableField<List<Date>>()
     var numberOfNights = ObservableField(0)
 
+    val address  = ObservableField<Address?>()
+
+
     init {
         _selectedCottage.value = cottage
     }
@@ -59,6 +63,10 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
 
     fun calendarHide() {
         _showCalendar.value = false
+    }
+
+    fun setAddress(address: Address) {
+        this.address.set(address)
     }
 
     fun onMapClicked() {

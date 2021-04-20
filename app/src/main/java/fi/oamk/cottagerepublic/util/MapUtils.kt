@@ -1,6 +1,8 @@
 package fi.oamk.cottagerepublic.util
 
 import android.content.Context
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import com.mapbox.geojson.Feature
@@ -61,6 +63,7 @@ class MapUtils(
                 uiSettings.setAllGesturesEnabled(isAllGesturesEnabled)
                 uiSettings.isCompassEnabled = false
                 uiSettings.isAttributionEnabled = false
+                uiSettings.isLogoEnabled = false
                 uiSettings.isQuickZoomGesturesEnabled = false
 
                 // add click listener to the map
@@ -89,5 +92,9 @@ class MapUtils(
                 .target(LatLng(point["lat"]!!, point["long"]!!))
                 .zoom(15.0)
                 .build()
+    }
+
+    fun getPointAddress(point: HashMap<String, Double>): Address {
+        return Geocoder(context).getFromLocation(point["lat"]!!, point["long"]!!, 1)[0]
     }
 }

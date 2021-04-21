@@ -19,11 +19,22 @@ import fi.oamk.cottagerepublic.databinding.FragmentSearchScreenBinding
 import fi.oamk.cottagerepublic.util.Resource
 import fi.oamk.cottagerepublic.util.VerticalItemDecoration
 
+@Suppress("UNCHECKED_CAST")
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchScreenBinding
     private lateinit var viewModel: SearchViewModel
     private lateinit var viewModelFactory: SearchViewModelFactory
     private lateinit var searchAdapter: SearchAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        initViewModel()
+
+        // if popular cottage clicked go directly to cottage details
+        if (viewModel.cottage != null)
+            navigateToCottageDetail(viewModel.cottage!!)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +51,6 @@ class SearchFragment : Fragment() {
         )
 
         initToolbar()
-        initViewModel()
 
         // show navbar
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
@@ -96,9 +106,10 @@ class SearchFragment : Fragment() {
                 binding.progressIndicator.show()
             }
             is Resource.Success -> {
+                // if no args passed, show all cottages
                 populateAdapters(queryResult.data as List<Cottage>)
 
-                // if no args passed focus search and show keyboard
+                // focus search and show keyboard
                 if (!viewModel.checkForPassedArgs()) {
                     binding.searchView.requestFocus()
                     viewModel.showKeyboard()
@@ -117,8 +128,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun populateAdapters(result: List<Cottage>) {
-        searchAdapter.submitList(result.toList()) // pass a copy of the list to be diffed
-        searchAdapter.fullList = result.toList()
+        // taking copy of the list to be filtered, submitting filtered list to the adapter in Filter
+        // *searchQuery* value will be changed in any case
+        searchAdapter.fullList = result.toList().sortedByDescending { it.rating }
     }
 
     private fun navigateToCottageDetail(selectedCottage: Cottage) {

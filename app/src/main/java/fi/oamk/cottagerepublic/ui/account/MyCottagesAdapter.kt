@@ -19,19 +19,9 @@ import fi.oamk.cottagerepublic.databinding.ListItemMyCottagesBinding
 import fi.oamk.cottagerepublic.util.CottageDiffCallBack
 
 
- // Data
-//data class NewCottage(
-////    val image: Int = R.drawable.ic_launcher_background,
-//    val cottageName: String = "testLabel"
-//)
-
 class MyCottagesAdapter(private val clickListener: MyCottageListener) :
     ListAdapter<Cottage, MyCottagesAdapter.ViewHolder>(CottageDiffCallBack()) {
 
-//    val data = listOf(Cottage(), Cottage(), Cottage())
-
-    // used by RecycleView to get the number of items it will render
-//    override fun getItemCount(): Int = data.size
 
     // used by RecycleView to get the ViewHolder (Wrapper around list item)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,7 +30,6 @@ class MyCottagesAdapter(private val clickListener: MyCottageListener) :
 
     // used by RecycleView to get access each list item and bind it with its data
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val item = data[position]
         val item = getItem(position)
         holder.bind(item, clickListener)
     }
@@ -54,6 +43,7 @@ class MyCottagesAdapter(private val clickListener: MyCottageListener) :
         fun bind(item: Cottage, clickListener: MyCottageListener) {
             binding.cottage = item
             binding.myCottageListener = clickListener
+
 
             // it's always a good idea to call executePendingBindings() when you use binding adapters in a RecyclerView,
             // because it can slightly speed up sizing the views.

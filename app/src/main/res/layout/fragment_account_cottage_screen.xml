@@ -30,12 +30,27 @@
                         tools:text="Screen Title" />
             </com.google.android.material.appbar.AppBarLayout>
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progress_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:contentDescription="@string/loading"
+                    app:showAnimationBehavior="inward"
+                    app:hideAnimationBehavior="inward"
+                    app:indicatorColor="@color/colorPrimaryDark"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toBottomOf="@+id/my_cottages_app_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/owners_cottage_list"
+                    app:layout_constraintHorizontal_bias="1.0"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/owners_cottage_list"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/my_cottages_app_bar"
+                    app:layout_constraintTop_toBottomOf="@+id/progress_indicator"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

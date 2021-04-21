@@ -45,6 +45,7 @@ class AccountCottageScreenFragment : Fragment() {
         // Specify the current activity as the lifecycle owner of the binding.
         // This is necessary so that the binding can observe LiveData updates.
         binding.lifecycleOwner = viewLifecycleOwner
+        
 
 
         // Open form to upload new cottage
@@ -70,11 +71,11 @@ class AccountCottageScreenFragment : Fragment() {
 
     private fun setObservers() {
 
-        viewModel.myCottages.observe(viewLifecycleOwner) {
+        viewModel.myCottages.observe(viewLifecycleOwner, {
             when (it) {
-//                is Resource.Loading -> {
-//                    binding.progressIndicator.show()
-//                }
+                is Resource.Loading -> {
+                    binding.progressIndicator.show()
+                }
                 is Resource.Success -> {
 
                     // ListAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
@@ -83,7 +84,7 @@ class AccountCottageScreenFragment : Fragment() {
                         cottageList.toList().reversed()
                     ) // pass a copy of the list to be diffed
 
-//                    binding.progressIndicator.hide()
+                    binding.progressIndicator.hide()
                 }
                 is Resource.Failure -> {
                     Toast.makeText(
@@ -93,7 +94,7 @@ class AccountCottageScreenFragment : Fragment() {
                     ).show()
                 }
             }
-        }
+        })
     }
 
 }

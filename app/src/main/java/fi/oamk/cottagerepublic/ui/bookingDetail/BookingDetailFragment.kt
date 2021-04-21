@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentBookingDetailScreenBinding
 import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
@@ -49,6 +50,7 @@ class BookingDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking_detail_screen, container, false)
 
+        initToolbar()
         initViewModel()
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -62,6 +64,12 @@ class BookingDetailFragment : Fragment() {
         return binding.root
     }
 
+    private fun initToolbar() {
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
+    }
+
     private fun initViewModel() {
         val selectedCottage = BookingDetailFragmentArgs.fromBundle(requireArguments()).selectedCottage
         val selectedDates =
@@ -72,23 +80,27 @@ class BookingDetailFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.navigateToCottageDetail.observe(viewLifecycleOwner, {
-            if (it) {
-                findNavController().navigateUp()
-                viewModel.onCottageDetailNavigated()
-            }
-        })
-
         viewModel.navigateToSuccess.observe(viewLifecycleOwner, {
         })
 
         authViewModel.user.observe(viewLifecycleOwner, { user ->
-            if (user == null) {
-//                findNavController().navigate(R.id.loginScreenFragment)
-                requireActivity().let {
-                    AlertDialog.Builder(it).setMessage("Please log in first").setTitle("Login").create().show()
-                }
+            if (user != null) {
+                binding.confirmButton.isEnabled = true
+            } else {
+                binding.confirmButton.isEnabled = false
+                binding.signupButtonWrapper.visibility = View.VISIBLE
+            }
+        })
 
+        viewModel.navigateToLogin.observe(viewLifecycleOwner, {
+            if (it) {
+                val navOptions = NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_right)
+                    .setExitAnim(R.anim.slide_out_left)
+                    .build()
+
+                findNavController().navigate(R.id.loginScreenFragment, null, navOptions)
+                viewModel.onLoginNavigated()
             }
         })
     }

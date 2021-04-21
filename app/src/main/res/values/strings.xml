@@ -123,5 +123,7 @@
     <string name="confirm">Confirm and Pay</string>
     <string name="your_trip">Your trip</string>
     <string name="price_details">Price details</string>
+    <string name="register_to_book">Register to book</string>
+    <string name="already_have_an_account">Already have an account? <u><b>Login</b></u></string>
 
 </resources>

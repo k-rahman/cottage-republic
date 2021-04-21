@@ -29,9 +29,9 @@ class BookingDetailViewModel(
     val navigateToSuccess: LiveData<Boolean>
         get() = _navigateToSuccess
 
-    private val _navigateToCottageDetail = MutableLiveData<Boolean>()
-    val navigateToCottageDetail: LiveData<Boolean>
-        get() = _navigateToCottageDetail
+    private val _navigateToLogin = MutableLiveData<Boolean>()
+    val navigateToLogin: LiveData<Boolean>
+        get() = _navigateToLogin
 
     private val taxesPercentage = 21
 
@@ -66,7 +66,7 @@ class BookingDetailViewModel(
         taxesAmount = (total * taxesPercentage) / 100
     }
 
-    fun onContinueClicked() {
+    fun onConfirmClicked() {
         // if user doesn't have an id
         // redirect to login
 
@@ -75,15 +75,15 @@ class BookingDetailViewModel(
         _navigateToSuccess.value = true
     }
 
+    fun onLoginClicked() {
+        _navigateToLogin.value = true
+    }
+
+    fun onLoginNavigated() {
+        _navigateToLogin.value = false
+    }
+
     fun onSucessNavigated() {
         _navigateToSuccess.value = false
-    }
-
-    fun onCancelClicked() {
-        _navigateToCottageDetail.value = true
-    }
-
-    fun onCottageDetailNavigated() {
-        _navigateToCottageDetail.value = false
     }
 }

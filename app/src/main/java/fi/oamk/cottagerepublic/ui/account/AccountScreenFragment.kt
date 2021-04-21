@@ -18,7 +18,7 @@ class AccountScreenFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Get a reference to the binding object and inflate the fragment views.
         binding = DataBindingUtil.inflate(
             inflater,
@@ -28,7 +28,7 @@ class AccountScreenFragment : Fragment() {
         )
         // Open User Settings
         binding.userSettingsLayout.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountSettingScreenFragment)
+            view.findNavController().navigate(R.id.action_accountScreenFragment_to_acccountUserSettingsScreenFragment)
         }
         // Open My Cottages
         binding.cottagesLayout.setOnClickListener { view : View ->

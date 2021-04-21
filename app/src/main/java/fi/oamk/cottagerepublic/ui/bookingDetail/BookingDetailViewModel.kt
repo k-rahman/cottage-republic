@@ -35,10 +35,7 @@ class BookingDetailViewModel(
 
     private val taxesPercentage = 21
 
-    var totalBeforeTaxes = 0
-        private set
-
-    var totalAfterTaxes = 0
+    var total= 0
         private set
 
     var taxesAmount = 0
@@ -46,9 +43,8 @@ class BookingDetailViewModel(
 
     init {
         formatDates()
-        calculateTotalBeforeTaxes()
+        calculateTotal()
         calculateTaxesAmount()
-        calculateTotalAfterTaxes()
     }
 
     private fun formatDates() {
@@ -62,16 +58,12 @@ class BookingDetailViewModel(
         checkOut = formatDates.format(parsedCheckOut!!)
     }
 
-    private fun calculateTotalBeforeTaxes() {
-        totalBeforeTaxes = selectedCottage.price * numberOfNights
+    private fun calculateTotal() {
+        total = selectedCottage.price * numberOfNights
     }
 
     private fun calculateTaxesAmount() {
-        taxesAmount = (totalBeforeTaxes * taxesPercentage) / 100
-    }
-
-    private fun calculateTotalAfterTaxes() {
-        totalAfterTaxes = totalBeforeTaxes + taxesAmount
+        taxesAmount = (total * taxesPercentage) / 100
     }
 
     fun onContinueClicked() {

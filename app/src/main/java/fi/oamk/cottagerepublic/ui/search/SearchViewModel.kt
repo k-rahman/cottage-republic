@@ -27,7 +27,7 @@ class SearchViewModel(val cottage: Cottage?, val destination: Destination?) : Vi
             val cottages = dataSource.getAllCottages()
             emit(cottages)
         } catch (e: Exception) {
-            emit(Resource.Failure<Exception>(e.cause!!))
+            emit(Resource.Failure<Exception>(e.message!!))
         }
     }
 

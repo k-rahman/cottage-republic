@@ -159,7 +159,7 @@
                         android:onClick="@{() -> cottageDetailViewModel.onBookClicked()}"
                         app:moreThanOneNight="@{cottageDetailViewModel.numberOfNights}"
                 />
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nights_number_title"
                         android:text="@string/you_have_selected"
                         android:layout_width="wrap_content"
@@ -172,7 +172,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/nights_number"
                         app:layout_constraintVertical_chainStyle="packed"
                 />
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nights_number"
                         app:numberOfNights="@{cottageDetailViewModel.numberOfNights}"
                         android:layout_width="165dp"

@@ -5,6 +5,7 @@ import androidx.lifecycle.liveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers
@@ -29,4 +30,16 @@ class MyCottagesViewModel : ViewModel() {
             emit(Resource.Failure<Exception>(e.cause!!))
         }
     }
+
+    // When this variable value change, it will trigger navigation to MyCottage Edit Screen
+
+
+    // my cottage item clickHandler
+    fun onMyCottageClicked(cottage: Cottage) {
+
+    }
+
+
+
+
 }

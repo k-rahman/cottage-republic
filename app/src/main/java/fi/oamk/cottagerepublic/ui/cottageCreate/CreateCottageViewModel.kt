@@ -1,4 +1,4 @@
-package fi.oamk.cottagerepublic.ui.cottageCreate
+ package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Application
 import android.net.Uri
@@ -36,6 +36,14 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     var newCottageImageNames = arrayListOf<String>()
 
     var fillInBoxes = MutableLiveData<List<String>>()
+
+    private var _navigateCancel = MutableLiveData<Boolean>()
+    val navigateCancel: LiveData<Boolean>
+        get() = _navigateCancel
+
+    private var _navigateContinue = MutableLiveData<Boolean>()
+    val navigateContinue: LiveData<Boolean>
+        get() = _navigateContinue
 
     private var _navigateToMap = MutableLiveData<Boolean>()
     val navigateToMap: LiveData<Boolean>
@@ -180,6 +188,25 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     fun onMapNavigated() {
         _navigateToMap.value = false
     }
+
+    fun onContinueClicked()
+    {
+        _navigateContinue.value = true
+    }
+    fun onContinueNavigated()
+    {
+        _navigateContinue.value = false
+    }
+    fun onCancelClicked()
+    {
+        _navigateCancel.value = true
+    }
+    fun onCancelNavigated()
+    {
+        _navigateCancel.value = false
+    }
+
+
 }
 
 

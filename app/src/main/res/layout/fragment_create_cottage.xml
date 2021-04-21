@@ -194,10 +194,11 @@
 <!--                />-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/imagesView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                >
+                tools:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mainImage"
@@ -205,44 +206,58 @@
                     android:layout_height="175dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="3dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage1"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
                     app:layout_constraintStart_toEndOf="@+id/mainImage"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage2"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/extraImage1"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage3"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginTop="13dp"
-                    app:layout_constraintStart_toEndOf="@+id/mainImage"
-                    app:layout_constraintTop_toBottomOf="@+id/extraImage1" />
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/mainImage" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage4"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginTop="13dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/extraImage2" />
+                    app:layout_constraintStart_toEndOf="@+id/extraImage3" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -262,10 +277,9 @@
 <!--                />-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/pickImageButton"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Pick Images"
-                />
+                android:text="Pick Images" />
 <!--            <androidx.appcompat.widget.AppCompatButton-->
 <!--                android:id="@+id/nextButton"-->
 <!--                android:layout_width="100dp"-->

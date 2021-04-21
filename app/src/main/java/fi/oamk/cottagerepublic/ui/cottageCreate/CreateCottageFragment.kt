@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -34,16 +35,19 @@ class CreateCottageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        //mapbox key
         Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token))
 
-        Log.v("createTest: ", "im created")
+        //set binding to xml
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_cottage, container, false)
 
+        //set context for shared viewmodel
         val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
 
         viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
 
+        //navigation
         viewModel.navigateToMap.observe(viewLifecycleOwner, {
             if (it) {
                 findNavController().navigate(
@@ -54,23 +58,31 @@ class CreateCottageFragment : Fragment() {
             }
         })
 
+        //display error if not all required fields were filled in
         viewModel.fillInBoxes.observe(viewLifecycleOwner,{
+            missingString = "The following are required: "
             for(missingField in it)
             {
-                missingString = missingString + " $missingField "
+                missingString = missingString + "$missingField "
             }
             binding.errorTextView.text = missingString
         }
         )
 
+        //create an image arraylist, check if it already exists in viewmodel
         images = ArrayList()
+        if (viewModel.newCottageImages != emptyList<String>())
+        {
+            images = viewModel.newCottageImages
+            displayImages()
+        }
 
-
+        //image upload button
         binding.pickImageButton.setOnClickListener{
             pickImagesIntent()
         }
 
-
+        //binding for viewmodel
         binding.createViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -86,9 +98,7 @@ class CreateCottageFragment : Fragment() {
         return binding.root
     }
 
-    //images
-
-
+    //images functions
 
     private fun pickImagesIntent(){
         val intent = Intent()
@@ -102,6 +112,10 @@ class CreateCottageFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        //clear the arrays if previous images were picked
+        viewModel.newCottageImageNames.clear()
+        this.images.clear()
+
         if (requestCode == PICK_IMAGES_CODE){
             if(resultCode == Activity.RESULT_OK){
                 if(data!!.clipData != null) {
@@ -114,40 +128,79 @@ class CreateCottageFragment : Fragment() {
                     for (i in 0 until count) {
                         val imageUri = data.clipData!!.getItemAt(i).uri
                         //add image to list
-
                         this.images.add(imageUri)
-
-                        Log.v("imageuri ",imageUri.toString() )
+                        //Log.v("imageuri ",imageUri.toString() )
                         viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
 
                     }
 
-
-                    binding.mainImage.setImageURI(this.images[0])
-
-                    if(count >= 2){
-                        binding.extraImage1.setImageURI(this.images[1])
-                    }
-                    if(count >= 3){
-                        binding.extraImage2.setImageURI(this.images[2])
-                    }
-                    if(count >= 4){
-                        binding.extraImage3.setImageURI(this.images[3])
-                    }
-                    if(count >= 5){
-                        binding.extraImage4.setImageURI(this.images[4])
-                    }
+                    //display image function
+                    displayImages()
+//                    binding.mainImage.setImageURI(this.images[0])
+//
+//                    //set images depending on the count
+//
+//                    if(count >= 2){
+//                        binding.extraImage1.setImageURI(this.images[1])
+//                    }
+//                    if(count >= 3){
+//                        binding.extraImage2.setImageURI(this.images[2])
+//                    }
+//                    if(count >= 4){
+//                        binding.extraImage3.setImageURI(this.images[3])
+//                    }
+//                    if(count >= 5){
+//                        binding.extraImage4.setImageURI(this.images[4])
+//                    }
 
                 }
                 else
                 {
                     //picked single image
-                    val imageUri = data.data
+                    val imageUri = data.data!!
+                    this.images.add(imageUri)
+                    Log.v("imageuri ",imageUri.toString() )
+                    viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
                     binding.mainImage.setImageURI(imageUri)
                 }
             }
+            //set viewmodel var to imagesarray
             viewModel.newCottageImages = images
         }
+    }
+
+    //the display image function
+    fun displayImages()
+
+    {
+        val count = this.images.size
+
+        binding.imagesView.isVisible = true
+
+        binding.mainImage.setImageURI(this.images[0])
+
+        //set images depending on the count
+
+        if(count >= 2){
+            binding.extraImage1.setImageURI(this.images[1])
+        }
+        else
+         binding.extraImage1.setImageURI(null)
+        if(count >= 3){
+            binding.extraImage2.setImageURI(this.images[2])
+        }
+        else
+            binding.extraImage2.setImageURI(null)
+        if(count >= 4){
+            binding.extraImage3.setImageURI(this.images[3])
+        }
+        else
+            binding.extraImage3.setImageURI(null)
+        if(count >= 5){
+            binding.extraImage4.setImageURI(this.images[4])
+        }
+        else
+            binding.extraImage4.setImageURI(null)
     }
 
 

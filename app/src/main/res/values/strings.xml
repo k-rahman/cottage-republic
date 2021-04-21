@@ -79,4 +79,8 @@
     <string name="calendar_subtitle">Please select check-in and check-out dates</string>
     <string name="loading">Loading</string>
     <string name="select_at_least_1_night">Select at least 1 night</string>
+    <string name="lname" />
+    <string name="fname" />
+    <string name="Save" />
+    <string name="save">Save</string>
 </resources>

@@ -1,8 +1,8 @@
 package fi.oamk.cottagerepublic.ui.auth
 
-import android.app.Application
-import android.content.Context
+
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.snackbar.Snackbar
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
@@ -45,20 +45,25 @@ class RegisterFragmentEnd : Fragment() {
         val message2 = "The password for $password"
         view.findViewById<TextView>(R.id.newUserConfirmPassword).text = message2
 
-        view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener { register() }
+        view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener{
+            register()
+        }
     }
 
     private fun register() {
-        val application: Application = context?.applicationContext as Application
-        val authRepository = AuthRepository(application)
-        authRepository.register(email, password)
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        val authRepository = AuthRepository()
+        authRepository.register(email, password, ::registerNav).toString()
+    }
+     private fun registerNav(boolean: Boolean) {
+         Log.v("registerNav = ", "$boolean")
+        if (boolean) {
             UserRepository().createUser(email)
-             navController.navigate(R.id.action_registerFragmentEnd_to_accountSettingScreenFragment)
-            }
-        else {
-                navController.navigate(R.id.action_registerFragmentEnd_to_loginScreenFragment)
-            }
+            navController.navigate(R.id.accountScreenFragment)
+        }
+        if (!boolean){
+            Snackbar.make(requireView(),"Registration failed",Snackbar.LENGTH_LONG)
+            navController.navigate(R.id.loginScreenFragment)
         }
     }
 }
+

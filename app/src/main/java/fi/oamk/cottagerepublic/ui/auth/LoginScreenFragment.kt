@@ -22,13 +22,18 @@ class LoginScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
+       // Log.v("test: ", "i'm created")
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login_screen, container, false)
 
         val viewModel = ViewModelProvider(this).get(LoginScreenViewModel::class.java)
 
-
+//        viewModel.username.observe(viewLifecycleOwner, {
+//        })
+//
+//        viewModel.navigate.observe(viewLifecycleOwner,{
+//        })
+        //Gets the action from navchart and is used to naviagte
 
         viewModel.navigateToRegister.observe(viewLifecycleOwner,{
             if(it){

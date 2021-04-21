@@ -1,23 +1,30 @@
 package fi.oamk.cottagerepublic.repository
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import fi.oamk.cottagerepublic.data.Destination
+import fi.oamk.cottagerepublic.util.Resource
+import kotlinx.coroutines.tasks.await
 
 @Suppress("UNCHECKED_CAST")
-class DestinationRepository(private val databaseReference: DatabaseReference) {
+class DestinationRepository(
+    private val databaseReference: DatabaseReference,
+    private val storageReference: StorageReference
+) {
 
     // Singleton
     companion object {
         @Volatile
         private var INSTANCE: DestinationRepository? = null
-        fun getInstance(databaseReference: DatabaseReference): DestinationRepository {
+        fun getInstance(
+            databaseReference: DatabaseReference,
+            storageReference: StorageReference
+        ): DestinationRepository {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
-                    instance = DestinationRepository(databaseReference)
+                    instance = DestinationRepository(databaseReference, storageReference)
                     INSTANCE = instance
                 }
                 return instance
@@ -25,25 +32,19 @@ class DestinationRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
-    fun getPopularDestinations(): MutableLiveData<MutableList<Destination>> {
-        val destination = MutableLiveData<MutableList<Destination>>()
-        val list = mutableListOf<Destination>()
+    suspend fun getPopularDestinations(): Resource<MutableList<Destination>> {
+        val dataSnapshot = databaseReference.get().await()
 
-        databaseReference
-            .get()
-            .addOnSuccessListener { dataSnapshot ->
-                destination.value = createDestinationList(list, dataSnapshot)
-            }
-            .addOnFailureListener {
-                Log.e("firebase", "Error getting data", it)
-            }
-        return destination
+        val destinations = createDestinationList(dataSnapshot)
+
+        return Resource.Success(destinations)
     }
 
-    private fun createDestinationList(
-        list: MutableList<Destination>,
+    private suspend fun createDestinationList(
         dataSnapshot: DataSnapshot
     ): MutableList<Destination> {
+        val destinations = mutableListOf<Destination>()
+
         for (snapShot in dataSnapshot.children) {
             val values = snapShot.value as HashMap<*, *>
             val newDestination = Destination()
@@ -52,11 +53,12 @@ class DestinationRepository(private val databaseReference: DatabaseReference) {
                     for (spot in values["location"] as HashMap<String, String>)
                         location[spot.key] = spot.value
 
-                if (values["image"] != null)
-                    image = values["image"].toString()
+                if (values["images"] != null)
+                    for (image in values["images"] as ArrayList<String>)
+                        images.add(storageReference.child(image).downloadUrl.await().toString())
             }
-            list.add(newDestination)
+            destinations.add(newDestination)
         }
-        return list
+        return destinations
     }
 }

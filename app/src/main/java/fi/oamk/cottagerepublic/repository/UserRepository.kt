@@ -19,13 +19,16 @@ class UserRepository {
         databaseReference.child("users").child(userid!!.uid).child("email").setValue(email).addOnSuccessListener {
             return@addOnSuccessListener
         }.addOnFailureListener { return@addOnFailureListener }
+
+    fun createUser(email: String) {
+        databaseReference.child("users").child(userid!!.uid).child("email").setValue(email)
     }
 
-    fun getCurrentUserId() : String {
+    fun getCurrentUserId(): String {
         if (userid != null)
             return userid?.uid.toString()
 
-        throw Exception("User isn't logged in")
+        return "User isn't logged in"
     }
     fun getCurrentUserData(email: MutableLiveData<String>, fname: MutableLiveData<String>, lname: MutableLiveData<String>, phone: MutableLiveData<String>): Boolean {
 

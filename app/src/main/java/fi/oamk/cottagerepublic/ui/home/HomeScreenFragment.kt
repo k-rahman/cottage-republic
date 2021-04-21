@@ -11,11 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.data.Destination
 import fi.oamk.cottagerepublic.databinding.FragmentHomeScreenBinding
 import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
 import fi.oamk.cottagerepublic.util.Resource
+import java.util.*
 
 class HomeScreenFragment : Fragment() {
     private lateinit var binding: FragmentHomeScreenBinding
@@ -34,9 +37,7 @@ class HomeScreenFragment : Fragment() {
             inflater, R.layout.fragment_home_screen, container, false
         )
 
-        // toolbar configuration
-        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
-        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
+        initToolbar()
 
         // Get a reference to the ViewModel associated with this fragment.
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -50,13 +51,22 @@ class HomeScreenFragment : Fragment() {
         // This is necessary so that the binding can observe LiveData updates.
         binding.lifecycleOwner = viewLifecycleOwner
 
-        setHomeAdapters()
+        initHomeAdapters()
         setObservers()
+
+        // show navbar
+        requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
 
         return binding.root
     }
 
-    private fun setHomeAdapters() {
+    private fun initToolbar() {
+        // toolbar configuration
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
+    }
+
+    private fun initHomeAdapters() {
         popularDestinationsAdapter = PopularDestinationAdapter(DestinationListener {
             viewModel.onPopularDestinationClicked(it)
 //            Toast.makeText(context, destinationName, Toast.LENGTH_LONG).show()
@@ -80,63 +90,98 @@ class HomeScreenFragment : Fragment() {
     private fun setObservers() {
 
         viewModel.popularCottages.observe(viewLifecycleOwner, {
-            when (it) {
-                is Resource.Loading -> {
-                        binding.progressIndicator.show()
-                }
-                is Resource.Success -> {
-
-                    // ListAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
-                    var cottageList = it.data as MutableList<Cottage>
-                    popularCottagesAdapter.submitList(
-                        cottageList.toList().reversed()
-                    ) // pass a copy of the list to be diffed
-
-                    binding.progressIndicator.hide()
-                }
-                is Resource.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "An error has occurred:${it.throwable.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            setPopularCottages(it)
         })
 
         viewModel.popularDestinations.observe(viewLifecycleOwner, {
             it?.let {
-                popularDestinationsAdapter.submitList(it.toList())
+                setPopularDestinations(it)
             }
         })
 
         // When popular cottage is clicked navigate to cottage detail fragment
-        viewModel.navigateToCottageDetail.observe(viewLifecycleOwner, {
+        viewModel.navigateToSearchCottage.observe(viewLifecycleOwner, {
             it?.let {
-                findNavController().navigate(
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToCottageDetailFragment(it)
-                )
-                viewModel.onCottageDetailNavigated()
+                navigateToSearchCottage(it)
             }
         })
 
         viewModel.navigateToSearchDestination.observe(viewLifecycleOwner, {
             it?.let {
-                findNavController().navigate(
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(it)
-                )
-                viewModel.onSearchDestinationNavigated()
+                navigateToSearchDestination(it)
             }
         })
 
         // When search is clicked navigate to search fragment
         viewModel.navigateToSearch.observe(viewLifecycleOwner, {
             if (it) {
-                findNavController().navigate(
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null)
-                )
-                viewModel.onSearchNavigated()
+                navigateToSearch()
             }
         })
+    }
+
+    private fun setPopularCottages(queryResult: Resource<Any>) {
+        setData(
+            queryResult,
+            popularCottagesAdapter as androidx.recyclerview.widget.ListAdapter<Objects, RecyclerView.ViewHolder>
+        )
+    }
+
+    private fun setPopularDestinations(queryResult: Resource<Any>) {
+        setData(
+            queryResult,
+            popularDestinationsAdapter as androidx.recyclerview.widget.ListAdapter<Objects, RecyclerView.ViewHolder>
+        )
+    }
+
+    private fun setData(
+        queryResult: Resource<Any>,
+        adapter: androidx.recyclerview.widget.ListAdapter<Objects, RecyclerView.ViewHolder>
+    ) {
+        when (queryResult) {
+            is Resource.Loading -> {
+                binding.progressIndicator.show()
+            }
+            is Resource.Success -> {
+
+                // ListAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
+                val data = queryResult.data as MutableList<Objects>
+                adapter.submitList(
+                    data.toList().reversed()
+                ) // pass a copy of the list to be diffed
+
+                binding.progressIndicator.hide()
+            }
+            is Resource.Failure -> {
+                Toast.makeText(
+                    requireContext(),
+                    "An error has occurred:${queryResult.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+
+    }
+
+    private fun navigateToSearch() {
+        findNavController().navigate(
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, null)
+        )
+        viewModel.onSearchNavigated()
+    }
+
+    private fun navigateToSearchCottage(cottage: Cottage) {
+        findNavController().navigate(
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, cottage)
+        )
+        viewModel.onSearchNavigated()
+    }
+
+    private fun navigateToSearchDestination(destination: Destination) {
+        findNavController().navigate(
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(destination)
+        )
+        viewModel.onSearchNavigated()
     }
 }

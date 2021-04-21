@@ -6,7 +6,7 @@
     <color name="colorAccent">#c35367</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorBackground">#ebebeb</color>
+    <color name="colorBackground">#f8f8f8</color>
     <color name="gray">#E0E0E0</color>
 
 <!--     calendar colors -->

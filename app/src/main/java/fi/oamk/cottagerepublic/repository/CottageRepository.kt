@@ -2,6 +2,7 @@ package fi.oamk.cottagerepublic.repository
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.StorageReference
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.util.Resource
@@ -29,6 +30,14 @@ class CottageRepository(
         }
     }
 
+    fun createNewCottage(cottage: Cottage){
+        var key = databaseReference.child("cottages").push().key
+        key = "cottage$key"
+        cottage.cottageId = key.toString()
+        databaseReference.child(key).setValue(cottage)
+    }
+
+
     suspend fun getAllCottages(): Resource<MutableList<Cottage>> {
         val dataSnapshot = databaseReference.get().await()
 
@@ -43,13 +52,13 @@ class CottageRepository(
             .limitToLast(limit)
             .get().await()
 
-        val cottagesList = createCottageList(dataSnapshot)
+        val cottages = createCottageList(dataSnapshot)
 
-        return Resource.Success(cottagesList)
+        return Resource.Success(cottages)
     }
 
     private suspend fun createCottageList(dataSnapshot: DataSnapshot): MutableList<Cottage> {
-        val cottagesList = mutableListOf<Cottage>()
+        val cottages = mutableListOf<Cottage>()
 
         for (cottage in dataSnapshot.children) {
             val values = cottage.value as HashMap<*, *>
@@ -91,8 +100,8 @@ class CottageRepository(
                     for (image in values["images"] as ArrayList<String>)
                         images.add(storageReference.child(image).downloadUrl.await().toString())
             }
-            cottagesList.add(newCottage)
+            cottages.add(newCottage)
         }
-        return cottagesList
+        return cottages
     }
 }

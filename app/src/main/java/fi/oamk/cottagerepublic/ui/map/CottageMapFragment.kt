@@ -13,7 +13,7 @@ import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentMapBinding
 import fi.oamk.cottagerepublic.util.MapUtils
 
-class MapFragment : Fragment() {
+class CottageMapFragment : Fragment() {
     private lateinit var binding: FragmentMapBinding
 
     override fun onCreateView(
@@ -22,21 +22,29 @@ class MapFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        // toolbar configuration
-        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
-        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
-        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
+        initToolbar()
+        initMap(savedInstanceState)
 
         // hide bottom navigation
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
 
-        val locationsList = arrayListOf<HashMap<String, Double>>()
-        val singleLocation = MapFragmentArgs.fromBundle(requireArguments()).selectedCottageCoordinate.coordinates
-        locationsList.add(singleLocation)
-        MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, locationsList, true)
-
         return binding.root
+    }
+
+    private fun initToolbar() {
+        // toolbar configuration
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
+    }
+
+    private fun initMap(savedInstanceState: Bundle?) {
+        val singleLocation = CottageMapFragmentArgs.fromBundle(requireArguments()).selectedCottageCoordinate.coordinates
+        val mapUtils = MapUtils(savedInstanceState, requireContext(), binding.cottageMap, true)
+        mapUtils.mapboxMap.observe(viewLifecycleOwner, {
+            mapUtils.updateMapStyle(singleLocation)
+        })
     }
 }

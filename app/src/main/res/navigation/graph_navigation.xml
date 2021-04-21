@@ -144,7 +144,8 @@
                 android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
                 app:destination="@id/registerFragmentEmail" />
         <action android:id="@+id/action_loginScreenFragment_to_accountScreenFragment"
-                app:destination="@id/accountScreenFragment"/>
+                app:destination="@id/accountScreenFragment"
+                />
     </fragment>
 
     <fragment
@@ -175,5 +176,19 @@
                 app:destination="@id/loginScreenFragment"
                 app:popUpToInclusive="true" />
     </fragment>
+    <action
+            android:id="@+id/action_global_loginScreenFragment"
+            app:destination="@id/loginScreenFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"
+            />
+    <action
+            android:id="@+id/action_global_homeScreenFragment"
+            app:destination="@id/homeScreenFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"
+    />
 
 </navigation>

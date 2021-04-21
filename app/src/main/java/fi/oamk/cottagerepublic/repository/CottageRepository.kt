@@ -45,6 +45,7 @@ class CottageRepository(
 
         val cottagesList = createCottageList(dataSnapshot)
 
+
         return Resource.Success(cottagesList)
     }
 

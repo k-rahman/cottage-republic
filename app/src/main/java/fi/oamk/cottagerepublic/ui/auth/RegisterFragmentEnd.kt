@@ -48,7 +48,7 @@ class RegisterFragmentEnd : Fragment() {
 
     private fun register (){
         val application: Application = context?.applicationContext as Application
-        val authRepository = AuthRepository(application)
+        val authRepository = AuthRepository()
         authRepository.register(email,password)
         if (FirebaseAuth.getInstance().currentUser != null) UserRepository().createUser(email)
     }

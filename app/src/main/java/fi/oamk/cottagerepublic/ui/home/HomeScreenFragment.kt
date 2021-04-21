@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.FragmentHomeScreenBinding
+import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
 import fi.oamk.cottagerepublic.util.Resource
 
@@ -23,11 +24,15 @@ class HomeScreenFragment : Fragment() {
     private lateinit var popularCottagesAdapter: PopularCottagesAdapter
     private lateinit var popularDestinationsAdapter: PopularDestinationAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+//        val authRepository = AuthRepository()
+//        authRepository.logOut()
+
 
         // Get a reference to the binding object and inflate the fragment views.
         binding = DataBindingUtil.inflate(
@@ -63,7 +68,7 @@ class HomeScreenFragment : Fragment() {
         })
 
         popularCottagesAdapter = PopularCottagesAdapter(CottageListener {
-//            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
+//
             // handle popular cottage click
             viewModel.onPopularCottageClicked(it)
         })

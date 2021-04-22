@@ -82,4 +82,10 @@
     <string name="add_new_cottage_form">Add new cottage form</string>
     <string name="edit_cottage_icon">Edit cottage icon</string>
     <string name="delete_button">DELETE</string>
+
+    <!--  Alert Dialog  -->
+    <string name="title">CONFIRM DELETE</string>
+    <string name="supporting_text">This cottage will be deleted from system. You cannot undo this action.</string>
+    <string name="decline">Decline</string>
+    <string name="accept">Confirm</string>
 </resources>

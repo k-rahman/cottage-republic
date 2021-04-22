@@ -136,15 +136,9 @@ fun TextView.setTotalBeforeTaxes(total: Int) {
 fun TextView.setPrice(Price: String) {
 //    if (Price != text.toString())
 //        text = Price.replaceFirst("^0+".toRegex(), "")
-<<<<<<< HEAD
     if(Price.startsWith("0"))
     {
         text = Price.replaceFirst("^0".toRegex(), "")
-=======
-    if (Price.startsWith("0")) {
-        text = Price.replaceFirst("^0+".toRegex(), "")
-
->>>>>>> f9be5b180fd27d75d47a34cd73aad036ff8ad578
     }
 }
 

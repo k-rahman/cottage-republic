@@ -11,8 +11,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.repository.AuthRepository
 
@@ -53,11 +54,13 @@ class RegisterFragmentEnd : Fragment() {
     private fun register() {
         Log.v("test", "Registering..")
         val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        val database = Firebase.database.getReference("users")
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful) {
                     if (firebaseAuth.currentUser != null) {
                         AuthRepository().setUserLiveData(firebaseAuth.currentUser)
+                        database.child(firebaseAuth.currentUser!!.uid).child("email").setValue(email)
                         Log.v("Test2", "register success")
                         navController.navigate(R.id.accountScreenFragment)
                     }

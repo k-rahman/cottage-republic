@@ -99,14 +99,9 @@
                 app:launchSingleTop="true"/>
         <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
                 app:destination="@id/homeScreenFragment"/>
-        <action android:id="@+id/action_accountScreenFragment_to_accountSettingScreenFragment"
-                app:destination="@id/accountSettingScreenFragment" app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"/>
-    </fragment>
-    <fragment
-            android:id="@+id/accountSettingScreenFragment"
-            android:name="fi.oamk.cottagerepublic.ui.account.AccountSettingsScreenFragment"
-            tools:layout="@layout/fragment_account_settings_screen">
+        <action
+            android:id="@+id/action_accountScreenFragment_to_acccountUserSettingsScreenFragment"
+            app:destination="@id/acccountUserSettingsScreenFragment" />
     </fragment>
 
     <fragment
@@ -157,12 +152,13 @@
             android:id="@+id/registerFragmentEnd"
             android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
             android:label="fragment_register_end"
-            tools:layout="@layout/fragment_register_end" >
-        <action
-                android:id="@+id/action_registerFragmentEnd_to_loginScreenFragment"
-                app:destination="@id/loginScreenFragment"
-                app:popUpToInclusive="true" />
-    </fragment>
+            tools:layout="@layout/fragment_register_end" />
+    <fragment
+        android:id="@+id/acccountUserSettingsScreenFragment"
+        android:name="fi.oamk.cottagerepublic.ui.account.AccountUserSettingsScreenFragment"
+        android:label="acccount_user_settings_screen_fragment"
+        tools:layout="@layout/fragment_account_settings_screen" />
+
     <fragment
         android:id="@+id/createCottageMapFragment"
         android:name="fi.oamk.cottagerepublic.ui.map.CreateCottageMapFragment"

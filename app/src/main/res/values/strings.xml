@@ -126,4 +126,8 @@
     <string name="register_to_book">Register to book</string>
     <string name="already_have_an_account">Already have an account? <u><b>Login</b></u></string>
 
+    <string name="lname" />
+    <string name="fname" />
+    <string name="Save" />
+    <string name="save">Save</string>
 </resources>

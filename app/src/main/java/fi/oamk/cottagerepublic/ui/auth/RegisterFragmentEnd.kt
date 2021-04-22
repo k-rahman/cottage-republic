@@ -12,9 +12,9 @@ import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.repository.AuthRepository
-import fi.oamk.cottagerepublic.repository.UserRepository
 
 
 class RegisterFragmentEnd : Fragment() {
@@ -31,8 +31,8 @@ class RegisterFragmentEnd : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_register_end, container, false)
     }
@@ -45,25 +45,27 @@ class RegisterFragmentEnd : Fragment() {
         val message2 = "The password for $password"
         view.findViewById<TextView>(R.id.newUserConfirmPassword).text = message2
 
-        view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener{
+        view.findViewById<Button>(R.id.navigate_button_end).setOnClickListener {
             register()
         }
     }
 
     private fun register() {
-        val authRepository = AuthRepository()
-        authRepository.register(email, password, ::registerNav).toString()
-    }
-     private fun registerNav(boolean: Boolean) {
-         Log.v("registerNav = ", "$boolean")
-        if (boolean) {
-            UserRepository().createUser(email)
-            navController.navigate(R.id.accountScreenFragment)
-        }
-        if (!boolean){
-            Snackbar.make(requireView(),"Registration failed",Snackbar.LENGTH_LONG)
-            navController.navigate(R.id.loginScreenFragment)
+        Log.v("test", "Registering..")
+        val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    if (firebaseAuth.currentUser != null) {
+                        AuthRepository().setUserLiveData(firebaseAuth.currentUser)
+                        Log.v("Test2", "register success")
+                        navController.navigate(R.id.accountScreenFragment)
+                    }
+                } else {
+                    Log.v("Test2", "register fail")
+                    navController.navigate(R.id.loginScreenFragment)
+                }
+            }
         }
     }
 }
-

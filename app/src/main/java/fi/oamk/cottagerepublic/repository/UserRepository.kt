@@ -6,26 +6,42 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 
-class UserRepository {
-    private val databaseReference: DatabaseReference = Firebase.database.reference
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+class UserRepository( private val databaseReference: DatabaseReference )
+{
+    companion object {
+        @Volatile
+        private var INSTANCE: UserRepository? = null
+        fun getInstance(databaseReference: DatabaseReference): UserRepository {
+            synchronized(this) {
+                var instance = INSTANCE
+                if (instance == null) {
+                    instance = UserRepository(databaseReference)
+                    INSTANCE = instance
+                }
+                return instance
+            }
+        }
+    }
+
+    private val auth = FirebaseAuth.getInstance()
     private lateinit var userProfile: DataSnapshot
-    private var userid = firebaseAuth.currentUser
-
+    private var userid = auth.currentUser
 
         fun getCurrentUserId(): String {
             if (userid != null)
                 return userid?.uid.toString()
             return "User isn't logged in"
         }
+    fun saveEmailOnRegister (email: String){
+        if (auth.currentUser != null)
+            databaseReference.child(userid!!.uid).setValue(email)
+    }
 
         fun getCurrentUserData(email: MutableLiveData<String>, fname: MutableLiveData<String>, lname: MutableLiveData<String>, phone: MutableLiveData<String>): Boolean {
-            if (firebaseAuth.currentUser != null) {
-                databaseReference.child("users").child(userid!!.uid).get().addOnSuccessListener {
+            if (auth.currentUser != null) {
+                databaseReference.child(userid!!.uid).get().addOnSuccessListener {
                     if (it.child("email").value != null) email.postValue(it.child("email").value.toString())
                     if (it.child("phone").value != null) phone.postValue(it.child("phone").value.toString())
                     if (it.child("fname").value != null) fname.postValue(it.child("fname").value.toString())
@@ -45,13 +61,13 @@ class UserRepository {
             //if not dont have logged in user will return false
             if (userid != null) {
                 if (fname != userProfile.child("fname").value.toString()) {
-                    databaseReference.child("users").child(userid!!.uid).child("fname").setValue(fname)
+                    databaseReference.child(userid!!.uid).child("fname").setValue(fname)
                 }
                 if (lname != userProfile.child("lname").value.toString()) {
-                    databaseReference.child("users").child(userid!!.uid).child("lname").setValue(lname)
+                    databaseReference.child(userid!!.uid).child("lname").setValue(lname)
                 }
                 if (phone != userProfile.child("phone").value.toString()) {
-                    databaseReference.child("users").child(userid!!.uid).child("phone").setValue(phone)
+                    databaseReference.child(userid!!.uid).child("phone").setValue(phone)
                 }
                 Log.i("data update", "data saved")
                 // if there is a logged in user to save data

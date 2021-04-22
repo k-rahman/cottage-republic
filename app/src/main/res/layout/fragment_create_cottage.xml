@@ -412,6 +412,14 @@
                 </com.mapbox.mapboxsdk.maps.MapView>
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:id="@+id/addessBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:textSize="16sp" />
 
             <View
                 android:id="@+id/divider4"

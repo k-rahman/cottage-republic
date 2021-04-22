@@ -1,6 +1,7 @@
  package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Application
+import android.location.Address
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -10,9 +11,11 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
+ import fi.oamk.cottagerepublic.repository.UserRepository
 
 class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val userDataSource = UserRepository()
     //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(
@@ -32,14 +35,12 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     var newCottagePrice = MutableLiveData("0")
     var cottageCoordinates = hashMapOf<String,Double>()
 
+    var newCottageAddress = MutableLiveData<String>()
+
     var newCottageImages = arrayListOf<Uri>()
     var newCottageImageNames = arrayListOf<String>()
 
     var fillInBoxes = MutableLiveData<List<String>>()
-
-    private var _navigateCancel = MutableLiveData<Boolean>()
-    val navigateCancel: LiveData<Boolean>
-        get() = _navigateCancel
 
     private var _navigateContinue = MutableLiveData<Boolean>()
     val navigateContinue: LiveData<Boolean>
@@ -64,6 +65,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.location["city"]=newCottageLocation.value.toString()
         newCottage.location["country"]=newCottageCountry.value.toString()
         newCottage.amenities=newCottageAmenities
+        newCottage.hostId = userDataSource.getCurrentUserId()
         if (newCottagePrice.value != "")
              newCottage.price = newCottagePrice.value!!.toInt()
         else
@@ -208,13 +210,11 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     {
         _navigateContinue.value = false
     }
-    fun onCancelClicked()
+
+
+    fun setAddress(newAddress: String)
     {
-        _navigateCancel.value = true
-    }
-    fun onCancelNavigated()
-    {
-        _navigateCancel.value = false
+        newCottageAddress.value = newAddress
     }
 
 

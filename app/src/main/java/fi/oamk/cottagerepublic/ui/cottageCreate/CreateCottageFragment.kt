@@ -77,6 +77,12 @@ class CreateCottageFragment : Fragment() {
         }
         )
 
+        //display address
+        viewModel.newCottageAddress.observe(viewLifecycleOwner,{
+            binding.addessBox.text = it
+        }
+        )
+
         //create an image arraylist, check if it already exists in viewmodel
         images = ArrayList()
         if (viewModel.newCottageImages != emptyList<String>())
@@ -99,8 +105,10 @@ class CreateCottageFragment : Fragment() {
         mapUtils.mapboxMap.observe(viewLifecycleOwner, {
             if (viewModel.cottageCoordinates.isNullOrEmpty())
                 mapUtils.initCameraPosition(hashMapOf("lat" to 65.142455, "long" to 27.078449))
-            else
+            else {
                 mapUtils.updateMapStyle(viewModel.cottageCoordinates)
+                viewModel.setAddress(mapUtils.getPointAddress(viewModel.cottageCoordinates).getAddressLine(0).toString())
+            }
         })
 
         return binding.root
@@ -178,7 +186,7 @@ class CreateCottageFragment : Fragment() {
     }
 
     //the display image function
-    fun displayImages()
+    private fun displayImages()
 
     {
         val count = this.images.size

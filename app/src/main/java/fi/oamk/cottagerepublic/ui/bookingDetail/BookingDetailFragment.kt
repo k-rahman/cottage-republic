@@ -15,33 +15,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentBookingDetailScreenBinding
-import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
+//import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
 import fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment
 
 class BookingDetailFragment : Fragment() {
     private lateinit var binding: FragmentBookingDetailScreenBinding
     private lateinit var viewModel: BookingDetailViewModel
     private lateinit var viewModelFactory: BookingDetailViewModelFactory
-    private val authViewModel: AuthViewModel by activityViewModels()
+    //private val authViewModel: AuthViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val navController = findNavController()
-        val currentBackStackEntry = navController.currentBackStackEntry!!
-        val savedStateHandle = currentBackStackEntry.savedStateHandle
-
-        savedStateHandle.getLiveData<Boolean>(LoginScreenFragment.LOGIN_SUCCESSFUL)
-            .observe(currentBackStackEntry, { success ->
-                if (!success) {
-                    val startDestination = navController.graph.startDestination
-                    val navOptions = NavOptions.Builder()
-                        .setPopUpTo(startDestination, true)
-                        .build()
-                    navController.navigate(startDestination, null, navOptions)
-                }
-            })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,14 +65,14 @@ class BookingDetailFragment : Fragment() {
         viewModel.navigateToSuccess.observe(viewLifecycleOwner, {
         })
 
-        authViewModel.user.observe(viewLifecycleOwner, { user ->
-            if (user != null) {
-                binding.confirmButton.isEnabled = true
-            } else {
-                binding.confirmButton.isEnabled = false
-                binding.signupButtonWrapper.visibility = View.VISIBLE
-            }
-        })
+//        authViewModel.user.observe(viewLifecycleOwner, { user ->
+//            if (user != null) {
+//                binding.confirmButton.isEnabled = true
+//            } else {
+//                binding.confirmButton.isEnabled = false
+//                binding.signupButtonWrapper.visibility = View.VISIBLE
+//            }
+//        })
 
         viewModel.navigateToLogin.observe(viewLifecycleOwner, {
             if (it) {

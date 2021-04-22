@@ -15,6 +15,7 @@ data class Cottage (
     var guests: Int = 0,
     var amenities: MutableList<String> = mutableListOf(),
     var description: String = "Cottage for rent",
-    var coordinates: HashMap<String, Double> = hashMapOf()
+    var coordinates: HashMap<String, Double> = hashMapOf(),
+    var hostId: String = ""
 ) : Parcelable {
 }

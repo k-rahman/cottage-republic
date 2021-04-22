@@ -188,7 +188,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     {
 
         if(checked)
-            newCottageAmenities.add("huttub")
+            newCottageAmenities.add("hottub")
         else
             newCottageAmenities.remove("hottub")
 

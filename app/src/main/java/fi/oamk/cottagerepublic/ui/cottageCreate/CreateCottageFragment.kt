@@ -85,7 +85,7 @@ class CreateCottageFragment : Fragment() {
 
         //create an image arraylist, check if it already exists in viewmodel
         images = ArrayList()
-        if (viewModel.newCottageImages != emptyList<String>())
+        if (viewModel.newCottageImages != emptyList<Uri>())
         {
             images = viewModel.newCottageImages
             displayImages()

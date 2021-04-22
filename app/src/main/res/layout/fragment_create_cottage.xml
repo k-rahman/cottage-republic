@@ -235,7 +235,9 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"
+                    />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage1"
@@ -246,7 +248,9 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toEndOf="@+id/mainImage"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"
+                    />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage2"
@@ -259,7 +263,9 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/extraImage1"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"
+                    />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage3"
@@ -270,7 +276,9 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/mainImage" />
+                    app:layout_constraintStart_toEndOf="@+id/mainImage"
+                    tools:visibility="gone"
+                    />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/extraImage4"
@@ -283,7 +291,9 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/extraImage3" />
+                    app:layout_constraintStart_toEndOf="@+id/extraImage3"
+                    tools:visibility="gone"
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

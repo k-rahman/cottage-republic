@@ -86,6 +86,9 @@ fun ImageView.setAmenityIcon(item: String) {
         "hottub" -> setImageResource(R.drawable.icon_hottub_32)
         "kitchen" -> setImageResource(R.drawable.icon_kitchen_32)
         "pets" -> setImageResource(R.drawable.icon_pets_32)
+        "smoking" -> setImageResource(R.drawable.icon_smoking_24)
+        "power"-> setImageResource(R.drawable.icon_power_24)
+        "water"-> setImageResource(R.drawable.icon_water_drop_24)
     }
 }
 
@@ -136,9 +139,9 @@ fun TextView.setTotalBeforeTaxes(total: Int) {
 fun TextView.setPrice(Price: String) {
 //    if (Price != text.toString())
 //        text = Price.replaceFirst("^0+".toRegex(), "")
-    if (Price.startsWith("0")) {
-        text = Price.replaceFirst("^0+".toRegex(), "")
-
+    if(Price.startsWith("0"))
+    {
+        text = Price.replaceFirst("^0".toRegex(), "")
     }
 }
 

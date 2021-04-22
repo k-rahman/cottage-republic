@@ -19,7 +19,9 @@ import fi.oamk.cottagerepublic.databinding.ListItemMyCottagesBinding
 import fi.oamk.cottagerepublic.util.CottageDiffCallBack
 
 
-class MyCottagesAdapter(private val clickListener: MyCottageListener) :
+
+
+class MyCottagesAdapter(private val clickListener: MyCottageListener, private val clickListenerDeleteCottageListener: DeleteCottageListener) :
     ListAdapter<Cottage, MyCottagesAdapter.ViewHolder>(CottageDiffCallBack()) {
 
 
@@ -31,7 +33,7 @@ class MyCottagesAdapter(private val clickListener: MyCottageListener) :
     // used by RecycleView to get access each list item and bind it with its data
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, clickListener, clickListenerDeleteCottageListener)
     }
 
 
@@ -40,15 +42,20 @@ class MyCottagesAdapter(private val clickListener: MyCottageListener) :
     class ViewHolder private constructor(val binding: ListItemMyCottagesBinding) : RecyclerView.ViewHolder(binding.root) {
 
         // binding data in ViewHolder is a better practice
-        fun bind(item: Cottage, clickListener: MyCottageListener) {
+        fun bind(
+            item: Cottage,
+            clickListener: MyCottageListener,
+            clickListenerDeleteCottageListener: DeleteCottageListener
+        ) {
             binding.cottage = item
             binding.myCottageListener = clickListener
-
+            binding.clickListener = clickListenerDeleteCottageListener
 
             // it's always a good idea to call executePendingBindings() when you use binding adapters in a RecyclerView,
             // because it can slightly speed up sizing the views.
             binding.executePendingBindings()
         }
+
 
         // companion object is the same as static keyword in Java
         companion object {
@@ -62,9 +69,23 @@ class MyCottagesAdapter(private val clickListener: MyCottageListener) :
             }
         }
     }
+
+
+
+
+
+
 }
 
 // handles click on recycleView item
 class MyCottageListener(val clickListener: (cottage: Cottage) -> Unit) {
     fun onClick(cottage: Cottage) = clickListener(cottage)
 }
+
+ class DeleteCottageListener(val clickListener: (cottageId: String) -> Unit) {
+     fun onClick(cottage: Cottage) = clickListener(cottage.cottageId)
+ }
+
+
+
+

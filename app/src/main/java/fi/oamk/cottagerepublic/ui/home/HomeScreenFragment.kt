@@ -145,7 +145,7 @@ class HomeScreenFragment : Fragment() {
             is Resource.Success -> {
 
                 // ListAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
-                var data = queryResult.data as MutableList<Objects>
+                val data = queryResult.data as MutableList<Objects>
                 adapter.submitList(
                     data.toList().reversed()
                 ) // pass a copy of the list to be diffed
@@ -155,7 +155,7 @@ class HomeScreenFragment : Fragment() {
             is Resource.Failure -> {
                 Toast.makeText(
                     requireContext(),
-                    "An error has occurred:${queryResult.throwable.message}",
+                    "An error has occurred:${queryResult.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

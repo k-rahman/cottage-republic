@@ -125,12 +125,14 @@ class CottageDetailFragment : Fragment() {
     }
 
     private fun initMap(savedInstanceState: Bundle?, cottage: Cottage) {
-        val coordinatesList = arrayListOf<HashMap<String, Double>>()
-
         if (!cottage.coordinates.isNullOrEmpty()) {
-            // initialize the map
-            coordinatesList.add(cottage.coordinates)
-           // MapUtils.initializeMap(savedInstanceState, resources, binding.cottageMap, coordinatesList, false)
+
+            val mapUtils = MapUtils(savedInstanceState, requireContext(), binding.cottageMap, false)
+
+            mapUtils.mapboxMap.observe(viewLifecycleOwner, {
+                mapUtils.updateMapStyle(cottage.coordinates)
+                viewModel.setAddress(mapUtils.getPointAddress(cottage.coordinates))
+            })
         }
     }
 

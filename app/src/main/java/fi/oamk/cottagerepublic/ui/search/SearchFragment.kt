@@ -109,7 +109,7 @@ class SearchFragment : Fragment() {
             is Resource.Failure -> {
                 Toast.makeText(
                     requireContext(),
-                    "An error has occurred:${queryResult.throwable.message}",
+                    "An error has occurred:${queryResult.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

@@ -16,32 +16,58 @@
     android:focusable="auto"
     android:textAlignment="center">
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-
-
-        <TextView
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/cottage_create_title"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="Screen Title" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_height="?attr/actionBarSize"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Create Cottage"
+                android:textColor="@color/colorWhite"
+                android:layout_marginEnd="36dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="Screen Title"
+                android:textAlignment="center"/>
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+<!--    <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--        android:id="@+id/linearLayoutCompat"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="10dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        >-->
+
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:text="@string/cottage_create_title"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:text="Screen Title" />-->
+<!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
 
     <androidx.core.widget.NestedScrollView
 
@@ -277,9 +303,11 @@
 <!--                />-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/pickImageButton"
+                android:background="@drawable/shape_continue_border"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Pick Images" />
+                android:textColor="@color/colorWhite"
+                android:text="Pick Image(s)*" />
 <!--            <androidx.appcompat.widget.AppCompatButton-->
 <!--                android:id="@+id/nextButton"-->
 <!--                android:layout_width="100dp"-->

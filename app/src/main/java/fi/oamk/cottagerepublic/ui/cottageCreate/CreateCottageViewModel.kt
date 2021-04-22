@@ -61,7 +61,8 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.rating = ((0..5).random()).toFloat()
         newCottage.cottageLabel = newCottageTitle.value.toString()
         newCottage.description = newCottageDescription.value.toString()
-        newCottage.location[newCottageCountry.value.toString()]=newCottageLocation.value.toString()
+        newCottage.location["city"]=newCottageLocation.value.toString()
+        newCottage.location["country"]=newCottageCountry.value.toString()
         newCottage.amenities=newCottageAmenities
         if (newCottagePrice.value != "")
              newCottage.price = newCottagePrice.value!!.toInt()
@@ -71,7 +72,10 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         newCottage.images =  newCottageImageNames
         //create new cottage
         if (checkFields().isEmpty())
+        {
         cottageDataSource.createNewCottage(newCottage,newCottageImages)
+        onContinueClicked()
+        }
         else
            fillInBoxes.value=checkFields()
 
@@ -80,7 +84,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     }
 
     //check if user has filled in all the required fields
-    fun checkFields():MutableList<String>
+    private fun checkFields():MutableList<String>
     {
         var checkTheseFields = mutableListOf<String>()
 
@@ -94,6 +98,8 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
             checkTheseFields.add("Coordinates")
         if(!checkImages())
             checkTheseFields.add("Images")
+        if(!checkCountry())
+            checkTheseFields.add("Country")
 
         return checkTheseFields
     }
@@ -111,6 +117,11 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     private fun checkLocations(): Boolean
     {
         return !newCottageLocation.value.isNullOrBlank()
+    }
+
+    private fun checkCountry(): Boolean
+    {
+        return !newCottageCountry.value.isNullOrBlank()
     }
 
     private fun checkCoordinates(): Boolean

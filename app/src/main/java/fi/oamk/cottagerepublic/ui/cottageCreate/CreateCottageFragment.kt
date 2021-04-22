@@ -58,12 +58,20 @@ class CreateCottageFragment : Fragment() {
             }
         })
 
+        viewModel.navigateContinue.observe(viewLifecycleOwner, {
+            if (it) {
+                findNavController().navigateUp()
+
+                viewModel.onMapNavigated()
+            }
+        })
+
         //display error if not all required fields were filled in
         viewModel.fillInBoxes.observe(viewLifecycleOwner,{
             missingString = "The following are required: "
             for(missingField in it)
             {
-                missingString = missingString + "$missingField "
+                missingString = "$missingString$missingField "
             }
             binding.errorTextView.text = missingString
         }

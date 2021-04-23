@@ -32,6 +32,25 @@ class AccountScreenFragment : Fragment() {
     // When navigating to AccountScreenFragment, the app shows the AccountScreen if the
     // user data is present. If the user data is null, you are navigated to LoginFragment,
     // user needs to authenticate before seeing their account.
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val navController = findNavController()
+
+        val currentBackStackEntry = navController.currentBackStackEntry!!
+        val savedStateHandle = currentBackStackEntry.savedStateHandle
+        savedStateHandle.getLiveData<Boolean>(LoginScreenFragment.LOGIN_SUCCESSFUL)
+            .observe(currentBackStackEntry, Observer { success ->
+                if (!success) {
+                    val startDestination = navController.graph.startDestination
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(startDestination, true)
+                        .build()
+                    navController.navigate(startDestination, null, navOptions)
+                }
+            })
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,16 +74,16 @@ class AccountScreenFragment : Fragment() {
         }
         // Open User Settings
         binding.userSettingsLayout.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.accountSettingScreenFragment)
+            view.findNavController().navigate(R.id.acccountUserSettingsScreenFragment)
         }
         // Open My Cottages
         binding.cottagesLayout.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountCottageScreenFragment)
         }
         // Open My Reservations
-        binding.reservationLayout.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.reservation_layout)
-        }
+//        binding.reservationLayout.setOnClickListener { view: View ->
+//            view.findNavController().navigate(R.id.reservation_layout)
+//        }
         // Logout of system
         binding.logoutLayout.setOnClickListener {
             // Sign user out of firebase here

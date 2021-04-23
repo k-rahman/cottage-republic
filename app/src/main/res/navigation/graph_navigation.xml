@@ -97,34 +97,7 @@
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
         />
-        <action android:id="@+id/action_accountScreenFragment_to_accountReservationsScreenFragment"
-                app:destination="@id/accountReservationsScreenFragment"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-        />
-        <action android:id="@+id/action_accountScreenFragment_to_accountSettingScreenFragment"
-                app:destination="@id/accountSettingScreenFragment"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-        />
-        <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
-                app:destination="@id/homeScreenFragment"
-        />
-                app:destination="@id/homeScreenFragment"/>
-        <action
-            android:id="@+id/action_accountScreenFragment_to_acccountUserSettingsScreenFragment"
-            app:destination="@id/acccountUserSettingsScreenFragment" />
     </fragment>
-    <fragment
-            android:id="@+id/accountSettingScreenFragment"
-            android:name="fi.oamk.cottagerepublic.ui.account.AccountSettingsScreenFragment"
-            tools:layout="@layout/fragment_account_settings_screen">
-    </fragment>
-
     <fragment
             android:id="@+id/accountCottageScreenFragment"
             android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
@@ -138,15 +111,6 @@
                 app:exitAnim="@anim/slide_out_left"
         />
     </fragment>
-
-
-    <fragment
-            android:id="@+id/accountReservationsScreenFragment"
-            android:name="fi.oamk.cottagerepublic.ui.account.AccountReservationsScreenFragment"
-            tools:layout="@layout/fragment_account_reservations_screen">
-
-    </fragment>
-
     <!-- login and register -->
     <fragment
             android:id="@+id/loginScreenFragment"

@@ -95,7 +95,7 @@ class AccountCottageScreenFragment : Fragment() {
                 is Resource.Failure -> {
                     Toast.makeText(
                         requireContext(),
-                        "An error has occurred:${it.throwable.message}",
+                        "An error has occurred:${it.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -114,7 +114,7 @@ class AccountCottageScreenFragment : Fragment() {
     }
 
 
-    fun confirmDelete() {
+    private fun confirmDelete() {
         context?.let {
             MaterialAlertDialogBuilder(it)
                 .setTitle(resources.getString(R.string.title))

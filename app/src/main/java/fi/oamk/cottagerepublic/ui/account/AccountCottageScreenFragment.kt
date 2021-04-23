@@ -47,8 +47,8 @@ class AccountCottageScreenFragment : Fragment() {
         setObservers()
 
         // Open form to upload new cottage
-        binding.fabAddCottage.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_accountCottageScreenFragment_to_CreateCottageFragment)
+        binding.fabAddCottage.setOnClickListener {
+            findNavController().navigate(R.id.action_accountCottageScreenFragment_to_CreateCottageFragment)
         }
 
         return binding.root
@@ -137,7 +137,7 @@ class AccountCottageScreenFragment : Fragment() {
         // pass the cottage as an argument to the edit form screen
         // receive the argument inside the AddCottageFormFragment
         findNavController().navigate(
-            AccountCottageScreenFragmentDirections.actionAccountCottageScreenFragmentToAddCottageFormFragment(cottage)
+            AccountCottageScreenFragmentDirections.actionAccountCottageScreenFragmentToCreateCottageFragment(cottage)
         )
         viewModel.onCottageNavigated()
     }

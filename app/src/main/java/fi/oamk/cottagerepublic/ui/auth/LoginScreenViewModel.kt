@@ -9,7 +9,8 @@ import fi.oamk.cottagerepublic.repository.AuthRepository
 
 
 class LoginScreenViewModel(application: Application) : AndroidViewModel(application) {
-    private val authRepository: AuthRepository = AuthRepository(application)
+    private val authRepository: AuthRepository = AuthRepository(
+    )
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     private var _navigate = MutableLiveData<Boolean>()
@@ -20,7 +21,7 @@ class LoginScreenViewModel(application: Application) : AndroidViewModel(applicat
 
     fun onLoginClick(username: String?, password: String?) {
         if(username.isNullOrBlank() || password.isNullOrBlank()) {
-            authRepository.fillInBoxes()
+        //    authRepository.fillInBoxes()
         }
         else
         {

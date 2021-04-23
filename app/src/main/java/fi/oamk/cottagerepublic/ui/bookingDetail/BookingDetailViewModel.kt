@@ -18,7 +18,7 @@ class BookingDetailViewModel(
 ) :
     AndroidViewModel(application) {
     private val reservationDataSource = ReservationRepository(Firebase.database.reference)
-    private val userDataSource = UserRepository()
+    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
 
     lateinit var checkIn: String
     lateinit var checkOut: String

@@ -23,6 +23,7 @@ import fi.oamk.cottagerepublic.util.Resource
 
 
 class AccountScreenFragment : Fragment() {
+
     private lateinit var binding: FragmentAccountScreenBinding
     private val authViewModel: AuthViewModel by activityViewModels()
 

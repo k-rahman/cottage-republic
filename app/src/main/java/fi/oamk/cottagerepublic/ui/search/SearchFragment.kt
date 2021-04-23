@@ -1,15 +1,12 @@
 package fi.oamk.cottagerepublic.ui.search
 
 import android.app.Activity
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +25,6 @@ class SearchFragment : Fragment() {
     private lateinit var viewModelFactory: SearchViewModelFactory
     private lateinit var searchAdapter: SearchAdapter
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,15 +39,12 @@ class SearchFragment : Fragment() {
             false
         )
 
-        // toolbar configurations
-        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
-        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
-        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
+        initToolbar()
+        initViewModel()
 
-        // ViewModelProvider returns an existing ViewModel if one exists,
-        // or it creates a new one if it does not already exist.
-        viewModelFactory = SearchViewModelFactory(this)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
+        // show navbar
+        requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+
         binding.searchViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -61,33 +54,25 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
+    private fun initToolbar() {
+        // toolbar configurations
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
+    }
+
+    private fun initViewModel() {
+        // ViewModelProvider returns an existing ViewModel if one exists,
+        // or it creates a new one if it does not already exist.
+        val destination = SearchFragmentArgs.fromBundle(requireArguments()).destination
+        val cottage = SearchFragmentArgs.fromBundle(requireArguments()).cottage
+        viewModelFactory = SearchViewModelFactory(cottage, destination)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
+    }
+
     private fun setObservers() {
         viewModel.cottagesList.observe(viewLifecycleOwner, {
-            Log.i("Search", "OutSide ${it}")
-            when (it) {
-                is Resource.Loading -> {
-                    binding.progressIndicator.show()
-                }
-                is Resource.Success -> {
-                    val cottagesList = it.data as MutableList<Cottage>
-                    searchAdapter.submitList(cottagesList.toList()) // pass a copy of the list to be diffed
-                    searchAdapter.fullList = cottagesList.toList()
-
-                    if (!viewModel.checkForPassedArgs()) {
-                        binding.searchView.requestFocus()
-                        viewModel.showKeyboard()
-                    }
-
-                    binding.progressIndicator.hide()
-                }
-                is Resource.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "An error has occurred:${it.throwable.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            setCottages(it)
         })
 
         viewModel.searchQuery.observe(viewLifecycleOwner, {
@@ -96,22 +81,61 @@ class SearchFragment : Fragment() {
 
         viewModel.navigateToCottageDetail.observe(viewLifecycleOwner, { cottage ->
             cottage?.let {
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToCottageDetailFragment(cottage)
-                )
-                viewModel.onCottageDetailNavigated()
-                viewModel.closeKeyboard()
+                navigateToCottageDetail(it)
             }
         })
 
         viewModel.isSearchBarFocused.observe(viewLifecycleOwner, {
-            val keyboard = context
-                ?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            if (it)
-                keyboard.showSoftInput(binding.searchView, 1)
-            else
-                keyboard.hideSoftInputFromWindow(view?.windowToken, 0)
+            toggleKeyboard(it)
         })
+    }
+
+    private fun setCottages(queryResult: Resource<Any>) {
+        when (queryResult) {
+            is Resource.Loading -> {
+                binding.progressIndicator.show()
+            }
+            is Resource.Success -> {
+                populateAdapters(queryResult.data as List<Cottage>)
+
+                // if no args passed focus search and show keyboard
+                if (!viewModel.checkForPassedArgs()) {
+                    binding.searchView.requestFocus()
+                    viewModel.showKeyboard()
+                }
+
+                binding.progressIndicator.hide()
+            }
+            is Resource.Failure -> {
+                Toast.makeText(
+                    requireContext(),
+                    "An error has occurred:${queryResult.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun populateAdapters(result: List<Cottage>) {
+        searchAdapter.submitList(result.toList()) // pass a copy of the list to be diffed
+        searchAdapter.fullList = result.toList()
+    }
+
+    private fun navigateToCottageDetail(selectedCottage: Cottage) {
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToCottageDetailFragment(selectedCottage)
+        )
+        viewModel.onCottageDetailNavigated()
+        viewModel.closeKeyboard()
+    }
+
+    private fun toggleKeyboard(searchFocused: Boolean) {
+        val keyboard = context
+            ?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (searchFocused)
+            keyboard.showSoftInput(binding.searchView, 1)
+        else
+            keyboard.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     private fun setSearchAdapter() {

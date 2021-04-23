@@ -1,6 +1,5 @@
 package fi.oamk.cottagerepublic.ui.account
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +21,6 @@ class AccountCottageScreenFragment : Fragment() {
     private lateinit var binding: FragmentAccountCottageScreenBinding
     private lateinit var viewModel: MyCottagesViewModel
     private lateinit var myCottagesAdapter: MyCottagesAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,15 +45,14 @@ class AccountCottageScreenFragment : Fragment() {
 
         setMyCottagesAdapters()
         setObservers()
-        
+
         // Open form to upload new cottage
-        binding.fabAddCottage.setOnClickListener {
-            findNavController().navigate(R.id.addCottageFormFragment)
+        binding.fabAddCottage.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_accountCottageScreenFragment_to_CreateCottageFragment)
         }
 
         return binding.root
     }
-
 
     private fun setMyCottagesAdapters() {
         myCottagesAdapter = MyCottagesAdapter(MyCottageListener {

@@ -1,5 +1,6 @@
 package fi.oamk.cottagerepublic.ui.cottageDetail
 
+import android.location.Address
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.ReservationRepository
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers
+import java.util.*
 
 class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     private val reservationDataSource = ReservationRepository.getInstance(Firebase.database.reference)
@@ -21,7 +23,7 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
             val reservationList = reservationDataSource.getReservationsByCottageId(selectedCottage.value!!.cottageId)
             emit(reservationList)
         } catch (e: Exception) {
-            emit(Resource.Failure<Exception>(e.cause!!))
+            emit(Resource.Failure<Exception>(e.message!!))
         }
     }
 
@@ -45,7 +47,11 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     val launchEmail: LiveData<Boolean>
         get() = _launchEmail
 
+    var selectedDates = ObservableField<List<Date>>()
     var numberOfNights = ObservableField(0)
+
+    val address  = ObservableField<Address?>()
+
 
     init {
         _selectedCottage.value = cottage
@@ -59,6 +65,10 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
         _showCalendar.value = false
     }
 
+    fun setAddress(address: Address) {
+        this.address.set(address)
+    }
+
     fun onMapClicked() {
         _navigateToMap.value = true
     }
@@ -68,8 +78,6 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     }
 
     fun onBookClicked() {
-
-        calendarHide()
         _navigateToBookingDetail.value = true
     }
 

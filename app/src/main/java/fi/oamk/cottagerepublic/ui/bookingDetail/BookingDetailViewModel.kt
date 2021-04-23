@@ -29,16 +29,13 @@ class BookingDetailViewModel(
     val navigateToSuccess: LiveData<Boolean>
         get() = _navigateToSuccess
 
-    private val _navigateToSearch = MutableLiveData<Boolean>()
-    val navigateToSearch: LiveData<Boolean>
-        get() = _navigateToSearch
+    private val _navigateToLogin = MutableLiveData<Boolean>()
+    val navigateToLogin: LiveData<Boolean>
+        get() = _navigateToLogin
 
     private val taxesPercentage = 21
 
-    var totalBeforeTaxes = 0
-        private set
-
-    var totalAfterTaxes = 0
+    var total= 0
         private set
 
     var taxesAmount = 0
@@ -46,9 +43,8 @@ class BookingDetailViewModel(
 
     init {
         formatDates()
-        calculateTotalBeforeTaxes()
+        calculateTotal()
         calculateTaxesAmount()
-        calculateTotalAfterTaxes()
     }
 
     private fun formatDates() {
@@ -62,33 +58,32 @@ class BookingDetailViewModel(
         checkOut = formatDates.format(parsedCheckOut!!)
     }
 
-    private fun calculateTotalBeforeTaxes() {
-        totalBeforeTaxes = selectedCottage.price * numberOfNights
+    private fun calculateTotal() {
+        total = selectedCottage.price * numberOfNights
     }
 
     private fun calculateTaxesAmount() {
-        taxesAmount = (totalBeforeTaxes * taxesPercentage) / 100
+        taxesAmount = (total * taxesPercentage) / 100
     }
 
-    private fun calculateTotalAfterTaxes() {
-        totalAfterTaxes = totalBeforeTaxes + taxesAmount
-    }
+    fun onConfirmClicked() {
+        // if user doesn't have an id
+        // redirect to login
 
-    fun onContinueClicked() {
         val userId = userDataSource.getCurrentUserId()
         reservationDataSource.createReservation(userId, selectedCottage.cottageId, selectedDates)
         _navigateToSuccess.value = true
     }
 
+    fun onLoginClicked() {
+        _navigateToLogin.value = true
+    }
+
+    fun onLoginNavigated() {
+        _navigateToLogin.value = false
+    }
+
     fun onSucessNavigated() {
         _navigateToSuccess.value = false
-    }
-
-    fun onCancelClicked() {
-        _navigateToSearch.value = true
-    }
-
-    fun onSearchNavigated() {
-        _navigateToSearch.value = false
     }
 }

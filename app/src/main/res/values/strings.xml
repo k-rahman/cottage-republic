@@ -1,4 +1,5 @@
 <resources>
+    <!-- home -->
     <string name="app_name">CottageRepublic</string>
     <string name="main_screen_title" color="#ffffff">Cottage Republic</string>
     <string name="search_screen_title" color="#ffffff">Search</string>
@@ -37,6 +38,38 @@
     <string name="name">Name</string>
     <string name="login">Login</string>
 
+    <!-- create cottage screen -->
+    <string name="cottage_create_title"> "New Cottage" </string>
+    <string name="editCottageTitleString">Cottage Title</string>
+    <string name="editCottageCityString">City</string>
+    <string name="editCottageCountryString">Country</string>
+    <string name="editCottagePriceString">Cottage Price</string>
+    <string name="editCottageDescriptionString">Cottage Description: </string>
+    <string name="textGuestAmountString">Amount of guests: </string>
+    <string name="stringPriceAppend"> € / night</string>
+    <string name="textPreciseLocationString">Precise cottage location: </string>
+    <string name="cancelButtonString">Cancel</string>
+    <string name="confirmButtonString">Create Cottage</string>
+    <string name="textAminities">Aminities</string>
+    <string name="checkBoxOneString"> Sauna </string>
+    <string name="checkBoxTwoString"> Pets </string>
+    <string name="checkBoxThreeString"> Smoking </string>
+    <string name="checkBoxFourString"> Running water </string>
+    <string name="checkBoxFiveString"> Power </string>
+    <string name="checkBoxSixString"> Hot Tub </string>
+    <string name="editCottageDescription">Enter cottage description..</string>
+
+    <string-array name="spinnerGuestAmount">
+        <item>1 Guest</item>
+        <item>2 Guests</item>
+        <item>3 Guests</item>
+        <item>4 Guests</item>
+        <item>5 Guests</item>
+        <item>6 Guests</item>
+        <item>7+ Guests</item>
+    </string-array>
+
+
     <!--  Settings page strings  -->
     <string name="my_account">My Account</string>
     <string name="john_doe">John Doe</string>
@@ -65,27 +98,39 @@
     <string name="mapbox_access_token">
         pk.eyJ1IjoiYWJhZGRkZGRvbiIsImEiOiJja244bTV5bzYwdGttMm9uejdlczJ0YzhjIn0.Q3ZDPttv7o-0U2WQg-1DkA
     </string>
-    <string name="taxes">Taxes 21%</string>
-    <string name="total">Total</string>
-    <string name="cancel">Cancel</string>
-    <string name="continue_">Continue</string>
     <string name="ask_the_host">Ask the host</string>
     <string name="do_you_have_any_questions">Do you have any questions?</string>
-    <string name="book">Book</string>
-    <string name="select_date">Select dates</string>
     <string name="cottage_location">Cottage Location</string>
-    <string name="you_have_selected">You have selected</string>
     <string name="close">close</string>
-    <string name="calendar_subtitle">Please select check-in and check-out dates</string>
+    <string name="please_fill_required_fields">Please fill in required fields</string>
+    <string name="specific_address_is_given_after_reservation">Specific address is given after reservation</string>
     <string name="loading">Loading</string>
+
+    <!-- calendar -->
     <string name="select_at_least_1_night">Select at least 1 night</string>
     <string name="add_new_cottage_form">Add new cottage form</string>
     <string name="edit_cottage_icon">Edit cottage icon</string>
     <string name="delete_button">DELETE</string>
+    <string name="calendar_subtitle">Please select check-in and check-out dates</string>
+    <string name="you_have_selected">You have selected</string>
+    <string name="select_date">Select dates</string>
+    <string name="book">Book</string>
 
     <!--  Alert Dialog  -->
     <string name="title">CONFIRM DELETE</string>
     <string name="supporting_text">This cottage will be deleted from system. You cannot undo this action.</string>
     <string name="decline">Decline</string>
     <string name="accept">Confirm</string>
+
+
+    <!-- booking detail -->
+    <string name="taxes">Taxes 21%</string>
+    <string name="total">Total</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm and Pay</string>
+    <string name="your_trip">Your trip</string>
+    <string name="price_details">Price details</string>
+    <string name="register_to_book">Register to book</string>
+    <string name="already_have_an_account">Already have an account? <u><b>Login</b></u></string>
+    <string name="save">Save</string>
 </resources>

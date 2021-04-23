@@ -15,11 +15,22 @@
         <action
                 android:id="@+id/action_homeScreenFragment_to_searchFragment"
                 app:destination="@id/searchFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:popEnterAnim="@android:anim/slide_in_left" app:popExitAnim="@android:anim/slide_out_right"
+                app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/CreateCottageFragment"
+        android:name="fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageFragment"
+        android:label="CreateCottageFragment"
+        tools:layout="@layout/fragment_create_cottage">
+        <argument android:name="cottage"
+                  app:argType="fi.oamk.cottagerepublic.data.Cottage"
         />
         <action
-                android:id="@+id/action_homeScreenFragment_to_cottageDetailFragment"
-                app:destination="@id/cottageDetailFragment"
-        />
+            android:id="@+id/action_CreateCottageFragment_to_createCottageMapFragment"
+            app:destination="@id/createCottageMapFragment" />
     </fragment>
 
     <fragment
@@ -29,8 +40,11 @@
     >
         <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
                 app:destination="@id/cottageDetailFragment"
-        />
+                app:exitAnim="@anim/slide_out_top" app:enterAnim="@anim/slide_in_bottom"
+                app:popEnterAnim="@anim/slide_in_top" app:popExitAnim="@anim/slide_out_bottom"/>
         <argument android:name="destination" app:argType="fi.oamk.cottagerepublic.data.Destination" app:nullable="true"
+                  android:defaultValue="@null"/>
+        <argument android:name="cottage" app:argType="fi.oamk.cottagerepublic.data.Cottage" app:nullable="true"
                   android:defaultValue="@null"/>
     </fragment>
 
@@ -44,10 +58,12 @@
         />
         <action android:id="@+id/action_cottageDetailFragment_to_mapFragment"
                 app:destination="@id/mapFragment"
-        />
+                app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@android:anim/slide_in_left" app:popExitAnim="@android:anim/slide_out_right"/>
         <action android:id="@+id/action_cottageDetailFragment_to_bookingDetailFragment"
                 app:destination="@id/bookingDetailFragment"
-                app:popUpTo="@id/searchFragment"/>
+                app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@android:anim/slide_in_left" app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/bookingDetailFragment"
@@ -56,19 +72,16 @@
               tools:layout="@layout/fragment_booking_detail_screen"
     >
         <argument android:name="selectedCottage" app:argType="fi.oamk.cottagerepublic.data.Cottage"/>
-        <action android:id="@+id/action_bookingDetailFragment_to_searchFragment" app:destination="@id/searchFragment"
-        />
         <argument android:name="selectedDates" app:argType="string[]"/>
     </fragment>
 
     <fragment
             android:id="@+id/mapFragment"
-            android:name="fi.oamk.cottagerepublic.ui.map.MapFragment"
+            android:name="fi.oamk.cottagerepublic.ui.map.CottageMapFragment"
             tools:layout="@layout/fragment_map"
     >
         <argument android:name="selectedCottageCoordinate"
-                  app:argType="fi.oamk.cottagerepublic.data.Cottage"
-        />
+                  app:argType="fi.oamk.cottagerepublic.data.Cottage" />
     </fragment>
 
     <!-- Account Screens -->
@@ -101,6 +114,10 @@
         <action android:id="@+id/action_accountScreenFragment_to_homeScreenFragment"
                 app:destination="@id/homeScreenFragment"
         />
+                app:destination="@id/homeScreenFragment"/>
+        <action
+            android:id="@+id/action_accountScreenFragment_to_acccountUserSettingsScreenFragment"
+            app:destination="@id/acccountUserSettingsScreenFragment" />
     </fragment>
     <fragment
             android:id="@+id/accountSettingScreenFragment"
@@ -113,8 +130,8 @@
             android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
             tools:layout="@layout/fragment_account_cottage_screen">
 
-        <action android:id="@+id/action_accountCottageScreenFragment_to_addCottageFormFragment"
-                app:destination="@id/addCottageFormFragment"
+        <action android:id="@+id/action_accountCottageScreenFragment_to_CreateCottageFragment"
+                app:destination="@id/CreateCottageFragment"
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"
                 app:enterAnim="@anim/slide_in_right"
@@ -122,15 +139,6 @@
         />
     </fragment>
 
-    <fragment
-            android:id="@+id/addCottageFormFragment"
-            android:name="fi.oamk.cottagerepublic.ui.account.AddCottageFormFragment"
-            tools:layout="@layout/fragment_add_cottage_form"
-            android:label="@string/new_cottage_form">
-        <argument android:name="cottage"
-                  app:argType="fi.oamk.cottagerepublic.data.Cottage"
-        />
-    </fragment>
 
     <fragment
             android:id="@+id/accountReservationsScreenFragment"
@@ -147,9 +155,6 @@
         <action
                 android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
                 app:destination="@id/registerFragmentEmail" />
-        <action android:id="@+id/action_loginScreenFragment_to_accountScreenFragment"
-                app:destination="@id/accountScreenFragment"
-                />
     </fragment>
 
     <fragment
@@ -174,25 +179,16 @@
             android:id="@+id/registerFragmentEnd"
             android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
             android:label="fragment_register_end"
-            tools:layout="@layout/fragment_register_end" >
-        <action
-                android:id="@+id/action_registerFragmentEnd_to_loginScreenFragment"
-                app:destination="@id/loginScreenFragment"
-                app:popUpToInclusive="true" />
-    </fragment>
-    <action
-            android:id="@+id/action_global_loginScreenFragment"
-            app:destination="@id/loginScreenFragment"
-            app:launchSingleTop="false"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true"
-            />
-    <action
-            android:id="@+id/action_global_homeScreenFragment"
-            app:destination="@id/homeScreenFragment"
-            app:launchSingleTop="false"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true"
-    />
+            tools:layout="@layout/fragment_register_end" />
+    <fragment
+        android:id="@+id/acccountUserSettingsScreenFragment"
+        android:name="fi.oamk.cottagerepublic.ui.account.AccountUserSettingsScreenFragment"
+        android:label="acccount_user_settings_screen_fragment"
+        tools:layout="@layout/fragment_account_settings_screen" />
+
+    <fragment
+        android:id="@+id/createCottageMapFragment"
+        android:name="fi.oamk.cottagerepublic.ui.map.CreateCottageMapFragment"
+        android:label="CreateCottageMapFragment" />
 
 </navigation>

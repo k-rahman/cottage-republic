@@ -52,25 +52,7 @@ class  AuthRepository(private val firebaseAuth: FirebaseAuth) {
 
 
 
-//    fun register(username: String?, password: String?) {
-//        Log.v("Test1", "Registering..")
-//        Log.v("Password and username = ", "$username $password")
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-//            firebaseAuth.createUserWithEmailAndPassword(username, password)
-//                .addOnCompleteListener(
-//                ) { task ->
-//                    if (task.isSuccessful) {
-//                        userLiveData.postValue(firebaseAuth.currentUser)
-//                        Log.v("Test2", "register success")
-//
-//                    } else {
-//                        userLiveData.postValue(null)
-//                        Log.v("Test2", "register fail")
-//
-//                    }
-//                }
-//        }
-//    }
+
 
 }
 

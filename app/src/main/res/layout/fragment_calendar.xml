@@ -13,13 +13,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/calendar_fragment_background"
     >
 
         <com.google.android.material.card.MaterialCardView
                 android:id="@+id/calendar_wrapper"
                 android:layout_width="0dp"
-                android:layout_height="600dp"
+                android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +32,7 @@
                 app:cardElevation="5dp"
                 app:cardCornerRadius="25dp"
                 app:cardUseCompatPadding="false"
-        >
+                app:cardBackgroundColor="@color/colorBackground">
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -130,7 +129,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/divider2"
                         app:layout_constraintTop_toBottomOf="@+id/divider1"
                         android:padding="16dp"
-                />
+                        android:background="@color/colorBackground"/>
                 <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
@@ -160,7 +159,7 @@
                         android:onClick="@{() -> cottageDetailViewModel.onBookClicked()}"
                         app:moreThanOneNight="@{cottageDetailViewModel.numberOfNights}"
                 />
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nights_number_title"
                         android:text="@string/you_have_selected"
                         android:layout_width="wrap_content"
@@ -173,7 +172,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/nights_number"
                         app:layout_constraintVertical_chainStyle="packed"
                 />
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nights_number"
                         app:numberOfNights="@{cottageDetailViewModel.numberOfNights}"
                         android:layout_width="165dp"

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="fi.oamk.cottagerepublic.ui.auth.LoginScreenViewModel" />
+            type="fi.oamk.cottagerepublic.ui.auth.AuthViewModel" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                 android:layout_marginEnd="101dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="@string/name"
+                android:hint="@string/email"
                 android:textColorHint="#DDDDDD"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#FFFFFF"

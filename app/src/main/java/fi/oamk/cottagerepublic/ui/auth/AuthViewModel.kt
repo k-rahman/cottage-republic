@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
 import fi.oamk.cottagerepublic.util.Resource
@@ -18,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
     private val authRepository = AuthRepository.getInstance(FirebaseAuth.getInstance())
-    private val userRepository: UserRepository = UserRepository()
+    private val userRepository: UserRepository = UserRepository(Firebase.database.getReference("users"))
 
     // The current username and password
     var username = ""

@@ -30,7 +30,7 @@ class MyCottagesViewModel: ViewModel() {
             val ownersCottages = dataSource.getAllCottages()
             emit(ownersCottages)
         } catch (e: Exception) {
-            emit(Resource.Failure<Exception>(e.cause!!))
+            emit(Resource.Failure<Exception>(e.message!!))
         }
     }
 

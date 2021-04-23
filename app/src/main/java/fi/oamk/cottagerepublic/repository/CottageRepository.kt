@@ -51,13 +51,10 @@ class CottageRepository(
         key = "cottage$key"
         uploadImages(images,key)
         cottage.cottageId = key.toString()
-      //  databaseReference.child("cottages").child(key).setValue(cottage)
-      //  databaseReference.child("users").child(cottage.hostId).child("cottages").push().key
 
         val childUpdates = hashMapOf<String, Any>(
             "$key" to cottage,
         )
-
 
         databaseReference.updateChildren(childUpdates)
 
@@ -65,19 +62,16 @@ class CottageRepository(
     }
 
     private fun uploadImages(images: ArrayList<Uri>, key: String){
-      //  var counter = 0
+
         for(image in images)
         {
             Log.v("imageurl:" , image.toString())
-           // val file = image
-            //Log.v("File", file.toString())
+
             val metadata = storageMetadata {
                 contentType = "image/jpeg"
             }
 
-            //val uploadTask = storageReference.putFile(file, metadata)
-            val uploadTask = storageReference.child("cottages").child("${image.lastPathSegment}").putFile(image, metadata)
-          //  counter++
+            val uploadTask = storageReference.child("${image.lastPathSegment}").putFile(image, metadata)
             uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
                 val progress = (100.0 * bytesTransferred) / totalByteCount
                 Log.d(TAG, "Upload is $progress% done")

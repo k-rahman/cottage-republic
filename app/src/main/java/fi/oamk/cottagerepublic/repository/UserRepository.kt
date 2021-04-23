@@ -16,6 +16,16 @@ class UserRepository() {
         databaseReference.child("users").child(userid!!.uid).child("email").setValue(email)
     }
 
+    fun pushCottageToUser( userKey : String, cottageKey : String)
+    {
+        val childUpdates = hashMapOf<String, Any>(
+            "users/${userKey}/cottages/$cottageKey" to true
+        )
+
+
+        databaseReference.updateChildren(childUpdates)
+    }
+
     fun getCurrentUserId(): String {
         if (userid != null)
             return userid.uid

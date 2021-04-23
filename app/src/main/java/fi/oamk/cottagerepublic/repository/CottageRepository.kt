@@ -8,6 +8,8 @@ import com.google.android.gms.tasks.Tasks.await
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storageMetadata
 import fi.oamk.cottagerepublic.data.Cottage
@@ -39,14 +41,27 @@ class CottageRepository(
         }
     }
 
-    fun createNewCottage(cottage: Cottage, images: ArrayList<Uri>){
+    fun createNewCottage(cottage: Cottage, images: ArrayList<Uri>)
+    : String
+    {
 
-        var key = databaseReference.child("cottages").push().key
+
+
+        var key = databaseReference.push().key
         key = "cottage$key"
         uploadImages(images,key)
         cottage.cottageId = key.toString()
-        databaseReference.child(key).setValue(cottage)
+      //  databaseReference.child("cottages").child(key).setValue(cottage)
+      //  databaseReference.child("users").child(cottage.hostId).child("cottages").push().key
 
+        val childUpdates = hashMapOf<String, Any>(
+            "$key" to cottage,
+        )
+
+
+        databaseReference.updateChildren(childUpdates)
+
+        return key
     }
 
     private fun uploadImages(images: ArrayList<Uri>, key: String){
@@ -61,7 +76,7 @@ class CottageRepository(
             }
 
             //val uploadTask = storageReference.putFile(file, metadata)
-            val uploadTask = storageReference.child("${image.lastPathSegment}").putFile(image, metadata)
+            val uploadTask = storageReference.child("cottages").child("${image.lastPathSegment}").putFile(image, metadata)
           //  counter++
             uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
                 val progress = (100.0 * bytesTransferred) / totalByteCount

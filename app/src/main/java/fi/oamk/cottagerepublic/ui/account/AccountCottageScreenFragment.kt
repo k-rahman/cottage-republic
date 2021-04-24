@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fi.oamk.cottagerepublic.R
@@ -38,7 +39,6 @@ class AccountCottageScreenFragment : Fragment() {
         // Get a reference to the ViewModel associated with this fragment.
         viewModel = ViewModelProvider(this).get(MyCottagesViewModel::class.java)
 
-
         // Specify the current activity as the lifecycle owner of the binding.
         // This is necessary so that the binding can observe LiveData updates.
         binding.lifecycleOwner = viewLifecycleOwner
@@ -48,7 +48,10 @@ class AccountCottageScreenFragment : Fragment() {
 
         // Open form to upload new cottage
         binding.fabAddCottage.setOnClickListener {
-            findNavController().navigate(R.id.action_accountCottageScreenFragment_to_CreateCottageFragment)
+//            findNavController().navigate(R.id.action_accountCottageScreenFragment_to_CreateCottageFragment)
+            findNavController().navigate(
+                AccountCottageScreenFragmentDirections.actionAccountCottageScreenFragmentToCreateCottageFragment(null)
+            )
         }
 
         return binding.root
@@ -65,8 +68,6 @@ class AccountCottageScreenFragment : Fragment() {
             // want to invoke the dialog here
             confirmDelete()
         })
-
-
 
         with(binding) {
             ownersCottageList.adapter = myCottagesAdapter
@@ -105,11 +106,8 @@ class AccountCottageScreenFragment : Fragment() {
             cottage?.let {
                 navigateToMyCottage(it)
             }
-
         })
-
     }
-
 
     private fun confirmDelete() {
         context?.let {
@@ -141,9 +139,4 @@ class AccountCottageScreenFragment : Fragment() {
         )
         viewModel.onCottageNavigated()
     }
-
-
-
-
-
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -60,15 +61,26 @@ class RegisterFragmentEnd : Fragment() {
                 if (it.isSuccessful) {
                     if (firebaseAuth.currentUser != null) {
                         AuthRepository().setUserLiveData(firebaseAuth.currentUser)
-                        database.child(firebaseAuth.currentUser!!.uid).child("email").setValue(email)
+                        database.child(firebaseAuth.currentUser!!.uid).child("email")
+                            .setValue(email)
                         Log.v("Test2", "register success")
-                        navController.navigate(R.id.accountScreenFragment)
+                        navController.navigate(R.id.accountScreenFragment, null, getNavOptions())
                     }
                 } else {
                     Log.v("Test2", "register fail")
-                    navController.navigate(R.id.loginScreenFragment)
+                    navController.navigate(R.id.loginScreenFragment,null,getNavOptions())
                 }
             }
         }
+    }
+
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
+            .setPopEnterAnim(android.R.anim.slide_in_left)
+            .setPopExitAnim(android.R.anim.slide_out_right)
+            .setPopUpTo(R.id.loginScreenFragment, false)
+            .build()
     }
 }

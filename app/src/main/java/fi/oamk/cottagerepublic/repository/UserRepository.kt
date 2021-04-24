@@ -104,6 +104,17 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
+    suspend fun getCottagesKeysByHostId(hostId: String): List<String> {
+        val cottageKeys = mutableListOf<String>()
+
+        val snapshot = databaseReference.child(hostId).child("cottages").get().await()
+        for (cottageKey in snapshot.children) {
+            cottageKeys.add(cottageKey.key.toString())
+        }
+        return cottageKeys
+
+    }
+
     private fun initUser(snapshot: DataSnapshot): User {
         val values = snapshot.value as HashMap<*, *>
         val user = User()
@@ -135,7 +146,7 @@ class UserRepository(private val databaseReference: DatabaseReference) {
 
     fun pushCottageToUser(userKey: String, cottageKey: String) {
         val childUpdates = hashMapOf<String, Any>(
-            "users/${userKey}/cottages/$cottageKey" to true
+            "${userKey}/cottages/$cottageKey" to true
         )
 
         databaseReference.updateChildren(childUpdates)

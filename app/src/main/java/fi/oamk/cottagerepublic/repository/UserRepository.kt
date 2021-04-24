@@ -4,11 +4,12 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import fi.oamk.cottagerepublic.data.User
+import fi.oamk.cottagerepublic.util.Resource
+import kotlinx.coroutines.tasks.await
 
 
 class UserRepository(private val databaseReference: DatabaseReference) {
@@ -34,13 +35,17 @@ class UserRepository(private val databaseReference: DatabaseReference) {
     private var userid = auth.currentUser
 
 
-
     fun saveEmailOnRegister(email: String) {
         if (auth.currentUser != null)
             databaseReference.child(userid!!.uid).setValue(email)
     }
 
-    fun getCurrentUserData(email: MutableLiveData<String>, fname: MutableLiveData<String>, lname: MutableLiveData<String>, phone: MutableLiveData<String>): Boolean {
+    fun getCurrentUserData(
+        email: MutableLiveData<String>,
+        fname: MutableLiveData<String>,
+        lname: MutableLiveData<String>,
+        phone: MutableLiveData<String>
+    ): Boolean {
         if (auth.currentUser != null) {
             databaseReference.child(getCurrentUserId()).get().addOnSuccessListener {
                 if (it.child("email").value != null) email.postValue(it.child("email").value.toString())
@@ -89,12 +94,49 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         return data
     }
 
-    fun pushCottageToUser( userKey : String, cottageKey : String)
-    {
+    suspend fun getHostDataById(hostId: String): Resource<Any> {
+        return try {
+            val snapshot = databaseReference.child(hostId).get().await()
+            val userData = initUser(snapshot)
+            Resource.Success(userData)
+        } catch (e: Exception) {
+            Resource.Failure(e.message!!)
+        }
+    }
+
+    private fun initUser(snapshot: DataSnapshot): User {
+        val values = snapshot.value as HashMap<*, *>
+        val user = User()
+        with(user) {
+            userId = snapshot.key.toString() // this need to be when creating the user
+
+            if (values["email"] != null)
+                email = values["email"].toString()
+
+            if (values["fname"] != null)
+                firstName = values["fname"].toString()
+
+            if (values["lname"] != null)
+                lastName = values["lname"].toString()
+
+            if (values["phone"] != null)
+                phone = values["phone"].toString()
+
+            if (values["cottages"] != null)
+                for (cottageId in values["cottages"] as HashMap<*, *>)
+                    cottages.add(cottageId.key.toString())
+
+            if (values["reservations"] != null)
+                for (reservationId in values["reservations"] as HashMap<*, *>)
+                    reservations.add(reservationId.key.toString())
+        }
+        return user
+    }
+
+    fun pushCottageToUser(userKey: String, cottageKey: String) {
         val childUpdates = hashMapOf<String, Any>(
             "users/${userKey}/cottages/$cottageKey" to true
         )
-
 
         databaseReference.updateChildren(childUpdates)
     }

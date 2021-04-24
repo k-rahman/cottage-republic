@@ -10,6 +10,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
+import fi.oamk.cottagerepublic.repository.UserRepository
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers
 
@@ -21,14 +22,17 @@ class MyCottagesViewModel: ViewModel() {
             Firebase.database.getReference("cottages"),
             Firebase.storage.getReference("cottages")
         )
+    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
 
     // populate myCottages live data when the getPopularCottage function return
     // using liveData builder https://developer.android.com/topic/libraries/architecture/coroutines#livedata
     val myCottagesList = liveData(Dispatchers.IO) {
         emit(Resource.Loading<Boolean>())
         try {
-            val ownersCottages = dataSource.getAllCottages()
-            emit(ownersCottages)
+            val userId = userDataSource.getCurrentUserId()
+            val cottageOwnersCottageKeys = userDataSource.getCottagesKeysByHostId(userId)
+            val cottages = dataSource.getAllCottagesByCottagesKeys(cottageOwnersCottageKeys)
+            emit(cottages)
         } catch (e: Exception) {
             emit(Resource.Failure<Exception>(e.message!!))
         }

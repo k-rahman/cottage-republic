@@ -174,22 +174,6 @@ class CreateCottageFragment : Fragment() {
 
                     //display image function
                     displayImages()
-//                    binding.mainImage.setImageURI(this.images[0])
-//
-//                    //set images depending on the count
-//
-//                    if(count >= 2){
-//                        binding.extraImage1.setImageURI(this.images[1])
-//                    }
-//                    if(count >= 3){
-//                        binding.extraImage2.setImageURI(this.images[2])
-//                    }
-//                    if(count >= 4){
-//                        binding.extraImage3.setImageURI(this.images[3])
-//                    }
-//                    if(count >= 5){
-//                        binding.extraImage4.setImageURI(this.images[4])
-//                    }
 
                 }
                 else

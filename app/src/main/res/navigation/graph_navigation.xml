@@ -9,7 +9,7 @@
 
     <fragment
             android:id="@+id/homeScreenFragment"
-            android:name="fi.oamk.cottagerepublic.ui.home.HomeScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.home.HomeFragment"
             tools:layout="@layout/fragment_home_screen"
     >
         <action
@@ -73,6 +73,11 @@
     >
         <argument android:name="selectedCottage" app:argType="fi.oamk.cottagerepublic.data.Cottage"/>
         <argument android:name="selectedDates" app:argType="string[]"/>
+        <action android:id="@+id/action_bookingDetailFragment_to_paymentFragment"
+                app:destination="@id/paymentFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@android:anim/slide_in_left"
+                app:popExitAnim="@android:anim/slide_out_right" app:popUpTo="@id/homeScreenFragment"
+        />
     </fragment>
 
     <fragment
@@ -115,7 +120,9 @@
     <fragment
             android:id="@+id/loginScreenFragment"
             android:name="fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment"
-            android:label="LoginScreenFragment" >
+            android:label="LoginScreenFragment"
+            tools:layout="@layout/fragment_login_screen"
+    >
         <action
                 android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
                 app:destination="@id/registerFragmentEmail" />
@@ -153,6 +160,15 @@
     <fragment
         android:id="@+id/createCottageMapFragment"
         android:name="fi.oamk.cottagerepublic.ui.map.CreateCottageMapFragment"
-        android:label="CreateCottageMapFragment" />
+        android:label="CreateCottageMapFragment"
+        tools:layout="@layout/fragment_map"
+    />
+    <fragment android:id="@+id/paymentFragment"
+              android:name="fi.oamk.cottagerepublic.ui.payment.PaymentFragment"
+              android:label="PaymentFragment"
+              tools:layout="@layout/fragment_payment_screen"
+    >
+        <argument android:name="total" app:argType="integer"/>
+    </fragment>
 
 </navigation>

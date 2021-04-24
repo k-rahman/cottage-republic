@@ -133,4 +133,9 @@
     <string name="register_to_book">Register to book</string>
     <string name="already_have_an_account">Already have an account? <u><b>Login</b></u></string>
     <string name="save">Save</string>
+    <string name="copyright">© 2021 Cottage Republic</string>
+    <string name="done">Done</string>
+    <string name="you_have_paid">You have paid</string>
+    <string name="payment_complete">Payment complete</string>
+    <string name="enjoy_your_trip">Enjoy your trip</string>
 </resources>

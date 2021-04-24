@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,9 +17,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.mapbox.mapboxsdk.Mapbox
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.data.User
 import fi.oamk.cottagerepublic.databinding.FragmentCottageDetailScreenBinding
 import fi.oamk.cottagerepublic.ui.calendar.CottageCalendarFragment
 import fi.oamk.cottagerepublic.util.MapUtils
+import fi.oamk.cottagerepublic.util.Resource
 import fi.oamk.cottagerepublic.util.VerticalItemDecoration
 
 class CottageDetailFragment : Fragment() {
@@ -105,6 +108,10 @@ class CottageDetailFragment : Fragment() {
             }
         })
 
+        viewModel.hostData.observe(viewLifecycleOwner, {
+            setHostData(it)
+        })
+
         viewModel.showCalendar.observe(viewLifecycleOwner, {
             // when back button pressed hide calendar, if calendar is hidden, navigate up
             navigateUp.isEnabled = !it
@@ -180,11 +187,24 @@ class CottageDetailFragment : Fragment() {
         viewModel.onMapNavigated()
     }
 
+    private fun setHostData(result: Resource<Any>) {
+        when (result) {
+            is Resource.Loading -> {
+            }
+            is Resource.Success -> {
+                viewModel.setHost(result.data as User)
+            }
+            is Resource.Failure -> {
+                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun askTheHost() {
         val email = Intent(Intent.ACTION_SEND)
-        email.putExtra(Intent.EXTRA_EMAIL, arrayOf("hostname@cottage-republic.com"))
-        email.putExtra(Intent.EXTRA_SUBJECT, "Cottage for rent")
-        email.putExtra(Intent.EXTRA_TEXT, "I have a question")
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf(viewModel.host.value!!.email))
+        email.putExtra(Intent.EXTRA_SUBJECT, viewModel.selectedCottage.value!!.cottageLabel)
+        email.putExtra(Intent.EXTRA_TEXT, "I have a question about your cottage listed on cottage republic.")
 
         //need this to prompts email client only
         email.type = "text/plain"

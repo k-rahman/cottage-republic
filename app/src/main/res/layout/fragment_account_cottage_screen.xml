@@ -11,34 +11,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <com.google.android.material.appbar.AppBarLayout
-                    android:id="@+id/my_cottages_app_bar"
-                    android:layout_width="0dp"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" >
+                android:id="@+id/my_cottages_app_bar"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/progress_indicator"
+                >
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/icon_back_arrow_24"
+                >
                 <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/my_cottages"
-                        android:textColor="@color/colorWhite"
-                        android:textAlignment="center"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:text="Screen Title" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/my_cottages"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Screen Title"
+                />
+            </com.google.android.material.appbar.MaterialToolbar>
             </com.google.android.material.appbar.AppBarLayout>
-
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progress_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:contentDescription="@string/loading"
+                    app:showAnimationBehavior="inward"
+                    app:hideAnimationBehavior="inward"
+                    app:indicatorColor="@color/colorPrimaryDark"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toBottomOf="@+id/my_cottages_app_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/owners_cottage_list"
+                    app:layout_constraintHorizontal_bias="1.0"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/owners_cottage_list"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/my_cottages_app_bar"
+                    app:layout_constraintTop_toBottomOf="@+id/progress_indicator"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+            />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -47,12 +73,13 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_baseline_post_add_24"
                     app:maxImageSize="42dp"
-                    android:tint="@color/colorWhite"
+                    app:tint="@color/colorWhite"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:layout_marginEnd="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="25dp"/>
+                    android:layout_marginBottom="25dp" app:rippleColor="@color/colorWhite"
+                    android:contentDescription="@string/add_new_cottage_form"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

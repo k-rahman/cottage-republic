@@ -9,27 +9,33 @@ import androidx.lifecycle.liveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.data.User
 import fi.oamk.cottagerepublic.repository.ReservationRepository
+import fi.oamk.cottagerepublic.repository.UserRepository
 import fi.oamk.cottagerepublic.util.Resource
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import java.util.*
 
 class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     private val reservationDataSource = ReservationRepository.getInstance(Firebase.database.reference)
-
-    val cottageReservations = liveData(Dispatchers.IO) {
-        emit(Resource.Loading<Boolean>())
-        try {
-            val reservationList = reservationDataSource.getReservationsByCottageId(selectedCottage.value!!.cottageId)
-            emit(reservationList)
-        } catch (e: Exception) {
-            emit(Resource.Failure<Exception>(e.message!!))
-        }
-    }
+    private val userDataSource = UserRepository.getInstance(Firebase.database.getReference("users"))
 
     private val _selectedCottage = MutableLiveData<Cottage>()
     val selectedCottage: LiveData<Cottage>
         get() = _selectedCottage
+
+    private var _host = MutableLiveData<User>()
+    val host: LiveData<User>
+        get() = _host
+
+    init {
+        _selectedCottage.value = cottage
+        _host.value = User() // initialize user to an empty object till data comes back from database
+    }
+
+    val hostData = liveData(IO) {
+        emit(userDataSource.getHostDataById(cottage.hostId))
+    }
 
     private var _showCalendar = MutableLiveData<Boolean>()
     val showCalendar: LiveData<Boolean>
@@ -50,11 +56,20 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
     var selectedDates = ObservableField<List<Date>>()
     var numberOfNights = ObservableField(0)
 
-    val address  = ObservableField<Address?>()
+    val address = ObservableField<Address?>()
 
+    val cottageReservations = liveData(IO) {
+        emit(Resource.Loading<Boolean>())
+        try {
+            val reservationList = reservationDataSource.getReservationsByCottageId(selectedCottage.value!!.cottageId)
+            emit(reservationList)
+        } catch (e: Exception) {
+            emit(Resource.Failure<Exception>(e.message!!))
+        }
+    }
 
-    init {
-        _selectedCottage.value = cottage
+    fun setHost(host: User) {
+        _host.value = host
     }
 
     fun calendarShow() {

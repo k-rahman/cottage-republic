@@ -61,8 +61,7 @@ class RegisterFragmentEnd : Fragment() {
                 if (it.isSuccessful) {
                     if (firebaseAuth.currentUser != null) {
                         AuthRepository().setUserLiveData(firebaseAuth.currentUser)
-                        database.child(firebaseAuth.currentUser!!.uid).child("email")
-                            .setValue(email)
+                        database.child(firebaseAuth.currentUser!!.uid).child("email") .setValue(email)
                         Log.v("Test2", "register success")
                         navController.navigate(R.id.accountScreenFragment, null, getNavOptions())
                     }

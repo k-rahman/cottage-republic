@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.mapbox.mapboxsdk.Mapbox
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentCreateCottageBinding
@@ -35,8 +37,15 @@ class CreateCottageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        // Is only passing args and showing the cottageLabel that has been passed to this screen
+        // Need to prefill all fields to edit cottage already created
+        val args = CreateCottageFragmentArgs.fromBundle(requireArguments())
+        Toast.makeText(context, "Cottage: ${args.cottage?.cottageLabel}", Toast.LENGTH_SHORT).show()
+
+
         //mapbox key
         Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token))
+
 
         //set binding to xml
         binding =
@@ -47,7 +56,11 @@ class CreateCottageFragment : Fragment() {
 
         viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
 
+
         //navigation
+
+        initToolbar()
+
         viewModel.navigateToMap.observe(viewLifecycleOwner, {
             if (it) {
                 findNavController().navigate(
@@ -68,10 +81,10 @@ class CreateCottageFragment : Fragment() {
 
         //display error if not all required fields were filled in
         viewModel.fillInBoxes.observe(viewLifecycleOwner,{
-            missingString = "The following are required: "
+            missingString = "The following are required:"
             for(missingField in it)
             {
-                missingString = "$missingString$missingField "
+                missingString = "$missingString $missingField*"
             }
             binding.errorTextView.text = missingString
         }
@@ -84,6 +97,7 @@ class CreateCottageFragment : Fragment() {
         )
 
         //create an image arraylist, check if it already exists in viewmodel
+        binding.imagesView.isVisible = false
         images = ArrayList()
         if (viewModel.newCottageImages != emptyList<Uri>())
         {
@@ -112,6 +126,14 @@ class CreateCottageFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    //init toolbar
+    private fun initToolbar() {
+        // toolbar configuration
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
     }
 
     //images functions
@@ -218,6 +240,8 @@ class CreateCottageFragment : Fragment() {
         else
             binding.extraImage4.setImageURI(null)
     }
+
+
 
 
 }

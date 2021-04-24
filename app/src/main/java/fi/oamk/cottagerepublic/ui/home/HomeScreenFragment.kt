@@ -20,7 +20,7 @@ import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
 import fi.oamk.cottagerepublic.util.Resource
 import java.util.*
 
-class HomeScreenFragment : Fragment() {
+class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var popularCottagesAdapter: PopularCottagesAdapter
@@ -73,7 +73,7 @@ class HomeScreenFragment : Fragment() {
         })
 
         popularCottagesAdapter = PopularCottagesAdapter(CottageListener {
-//            Toast.makeText(context, cottage.toString(), Toast.LENGTH_LONG).show()
+//
             // handle popular cottage click
             viewModel.onPopularCottageClicked(it)
         })
@@ -166,21 +166,21 @@ class HomeScreenFragment : Fragment() {
 
     private fun navigateToSearch() {
         findNavController().navigate(
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, null)
+            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, null)
         )
         viewModel.onSearchNavigated()
     }
 
     private fun navigateToSearchCottage(cottage: Cottage) {
         findNavController().navigate(
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, cottage)
+            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, cottage)
         )
         viewModel.onSearchNavigated()
     }
 
     private fun navigateToSearchDestination(destination: Destination) {
         findNavController().navigate(
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(destination)
+            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(destination)
         )
         viewModel.onSearchNavigated()
     }

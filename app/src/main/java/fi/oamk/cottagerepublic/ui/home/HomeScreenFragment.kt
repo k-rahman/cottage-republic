@@ -16,26 +16,21 @@ import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.data.Destination
 import fi.oamk.cottagerepublic.databinding.FragmentHomeScreenBinding
-import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.util.HorizontalItemDecoration
 import fi.oamk.cottagerepublic.util.Resource
 import java.util.*
 
-class HomeScreenFragment : Fragment() {
+class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var popularCottagesAdapter: PopularCottagesAdapter
     private lateinit var popularDestinationsAdapter: PopularDestinationAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val authRepository = AuthRepository()
-//        authRepository.logOut()
-
 
         // Get a reference to the binding object and inflate the fragment views.
         binding = DataBindingUtil.inflate(
@@ -171,21 +166,21 @@ class HomeScreenFragment : Fragment() {
 
     private fun navigateToSearch() {
         findNavController().navigate(
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, null)
+            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, null)
         )
         viewModel.onSearchNavigated()
     }
 
     private fun navigateToSearchCottage(cottage: Cottage) {
         findNavController().navigate(
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, cottage)
+            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, cottage)
         )
         viewModel.onSearchNavigated()
     }
 
     private fun navigateToSearchDestination(destination: Destination) {
         findNavController().navigate(
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchFragment(destination)
+            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(destination)
         )
         viewModel.onSearchNavigated()
     }

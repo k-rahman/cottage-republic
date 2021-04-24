@@ -19,7 +19,7 @@ object FAQ {
         FAQDataModel(
             "3",
             "Can I reserve for a weekend?",
-            "Yes, its is possible to reserve cabin for 1 night. 14.00 - 12.00 nex day."
+            "Yes, its is possible to reserve cabin for 1 night. 14.00 - 12.00 next day."
         ),
         FAQDataModel(
             "4",
@@ -48,8 +48,8 @@ object FAQ {
         ),
         FAQDataModel(
             "9",
-            "Does the cabin include a barbeque?",
-            "It is an addional feature, Please check you cabin information to know if your cabin has one."
+            "Does the cabin include a barbecue?",
+            "It is an additional feature, Please check you cabin information to know if your cabin has one."
         ),
         FAQDataModel(
             "10",

@@ -16,32 +16,55 @@
     android:focusable="auto"
     android:textAlignment="center">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:contentInsetStartWithNavigation="0dp"
+                android:background="@color/colorPrimary"
         >
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            >
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Create Cottage"
+                android:text="@string/cottage_create_title"
+                android:textAlignment="center"
                 android:textColor="@color/colorWhite"
-                android:layout_marginEnd="36dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:layout_marginEnd="32dp"
                 tools:text="Screen Title"
-                android:textAlignment="center"/>
+            />
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/appBar_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        >-->
+<!--        -->
+<!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            >-->
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:text="Create Cottage"-->
+<!--                android:textColor="@color/colorWhite"-->
+<!--                android:layout_marginEnd="36dp"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:text="Screen Title"-->
+<!--                android:textAlignment="center"/>-->
         </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
 <!--    <androidx.appcompat.widget.LinearLayoutCompat-->
 <!--        android:id="@+id/linearLayoutCompat"-->
@@ -315,6 +338,8 @@
                 android:id="@+id/pickImageButton"
                 android:background="@drawable/shape_continue_border"
                 android:layout_width="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:layout_height="50dp"
                 android:textColor="@color/colorWhite"
                 android:text="Pick Image(s)*" />
@@ -542,25 +567,14 @@
                 android:layout_marginBottom="32dp"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/cancelButtonCreateCottage"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_rounded_accent_color"
-                    android:text="@string/cancelButtonString"
-                    android:textColor="@color/colorWhite"
-                    app:rippleColor="@color/calendar_range_middle_deactivated_bg" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/confirmButtonCreateCottage"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_continue_border"
                     android:text="@string/confirmButtonString"

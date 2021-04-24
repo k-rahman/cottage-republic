@@ -72,6 +72,8 @@ class CreateCottageMapFragment : Fragment(), MapboxMap.OnMapClickListener {
         viewModel.cottageCoordinates =
             hashMapOf("long" to point.longitude, "lat" to point.latitude)
 
+
+        findNavController().popBackStack()
         return true
     }
 }

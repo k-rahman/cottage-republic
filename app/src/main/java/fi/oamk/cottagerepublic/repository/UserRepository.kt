@@ -37,7 +37,7 @@ class UserRepository(private val databaseReference: DatabaseReference) {
 
     fun saveEmailOnRegister(email: String) {
         if (auth.currentUser != null)
-            databaseReference.child(userid!!.uid).setValue(email)
+            databaseReference.child(getCurrentUserId()).setValue(email)
     }
 
     fun getCurrentUserData(
@@ -86,12 +86,6 @@ class UserRepository(private val databaseReference: DatabaseReference) {
 
     fun getUserData(): DataSnapshot {
         return userProfile
-    }
-
-    fun getUserReservations(): Task<DataSnapshot> {
-        val testid = "6EAP6t8B8wROG6OYsPwzaHBntjE2"
-        val data = databaseReference.child("users").child(testid).child("reservations").get()
-        return data
     }
 
     suspend fun getHostDataById(hostId: String): Resource<Any> {

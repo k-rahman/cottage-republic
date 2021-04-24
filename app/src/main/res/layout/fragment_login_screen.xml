@@ -6,7 +6,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="fi.oamk.cottagerepublic.ui.auth.LoginScreenViewModel" />
+            type="fi.oamk.cottagerepublic.ui.auth.AuthViewModel" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -17,8 +17,6 @@
         >
 
         <!-- https://developer.android.com/training/appbar/setting-up -->
-
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linearLayoutCompat"
             android:layout_width="match_parent"
@@ -81,7 +79,7 @@
                 android:layout_marginEnd="101dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="@string/name"
+                android:hint="@string/email"
                 android:textColorHint="#DDDDDD"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#FFFFFF"
@@ -116,8 +114,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="93dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="94dp"
-                android:layout_marginTop="16dp"
                 android:onClick="@{() -> loginViewModel.onLoginClick(loginViewModel.username, loginViewModel.password)}"
                 android:text="@string/login"
                 android:textAllCaps="false"
@@ -133,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="93dp"
-                android:layout_marginTop="68dp"
+                android:layout_marginTop="80dp"
                 android:layout_marginEnd="94dp"
                 android:onClick="@{() -> loginViewModel.onRegisterClick()}"
                 android:text="@string/register_button_text"

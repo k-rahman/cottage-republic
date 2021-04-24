@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.data.Destination
+import fi.oamk.cottagerepublic.data.User
 
 
 // destination bindings
@@ -28,7 +29,7 @@ fun setCottageImage(view: ImageView, item: Destination) {
 @SuppressLint("SetTextI18n")
 @BindingAdapter("location")
 fun TextView.setDestinationName(item: Destination) {
-    text = "${item.location["city"]}, ${item.location["country"]}"
+    text = "${item.location["city"] ?: "Unknown city"}, ${item.location["country"] ?: "Unknown country"}"
 }
 
 // cottage bindings
@@ -48,17 +49,21 @@ fun RatingBar.setCottageRating(item: Cottage) {
     rating = item.rating
 }
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("location")
 fun TextView.setCottageLocation(item: Cottage) {
-    text = "${item.location["city"]}, ${item.location["country"]}"
+    text = "${item.location["city"] ?: "Unknown city"}, ${item.location["country"] ?: "Unknown country"}"
 }
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("address")
 fun TextView.setCottageAddress(address: Address?) {
     if (address != null)
-        text = "${address.locality}, ${address.thoroughfare} , ${address.countryName}"
+        text =
+            "${address.locality ?: "Unknown city"}, ${address.thoroughfare ?: "Unknown area"} , ${address.countryName ?: "Unknown country"}"
 }
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("price")
 fun TextView.setCottagePrice(item: Cottage) {
     text = "${item.price} €/night"
@@ -87,14 +92,19 @@ fun ImageView.setAmenityIcon(item: String) {
         "kitchen" -> setImageResource(R.drawable.icon_kitchen_32)
         "pets" -> setImageResource(R.drawable.icon_pets_32)
         "smoking" -> setImageResource(R.drawable.icon_smoking_24)
-        "power"-> setImageResource(R.drawable.icon_power_24)
-        "water"-> setImageResource(R.drawable.icon_water_drop_24)
+        "power" -> setImageResource(R.drawable.icon_power_24)
+        "water" -> setImageResource(R.drawable.icon_water_drop_24)
     }
 }
 
 @BindingAdapter("description")
 fun TextView.setDescription(item: Cottage) {
     text = item.description
+}
+
+@BindingAdapter("hostName")
+fun TextView.setHostName(item: User) {
+    text = if (item.firstName.isBlank()) "Unknown host" else "${item.firstName} ${item.lastName}"
 }
 
 // calendar bindings
@@ -139,8 +149,7 @@ fun TextView.setTotalBeforeTaxes(total: Int) {
 fun TextView.setPrice(Price: String) {
 //    if (Price != text.toString())
 //        text = Price.replaceFirst("^0+".toRegex(), "")
-    if(Price.startsWith("0"))
-    {
+    if (Price.startsWith("0")) {
         text = Price.replaceFirst("^0".toRegex(), "")
     }
 }

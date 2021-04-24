@@ -1,6 +1,8 @@
-package fi.oamk.cottagerepublic.ui.cottageCreate
+ package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Application
+import android.location.Address
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,78 +11,133 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
+ import fi.oamk.cottagerepublic.repository.UserRepository
 
 class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
 
-
+    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
+    //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(
             Firebase.database.getReference("cottages"),
             Firebase.storage.getReference("cottages")
         )
 
-    val amountOfGuests = MutableLiveData(listOf("1 Guest","2 Guests", "3 Guests","4 Guests"))
+    //all the values that get pushed to new cottage
+    val amountOfGuests = MutableLiveData(listOf("1 Guest","2 Guests", "3 Guests","4 Guests", "5 Guests", "6+ Guests"))
     val numberOfGuests = MutableLiveData("")
+
 
     val newCottageTitle = MutableLiveData<String>()
     val newCottageLocation = MutableLiveData<String>()
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
-    val newCottagePrice = MutableLiveData<String>("0")
-    val newCottageLocationLat = MutableLiveData<String>()
+    var newCottagePrice = MutableLiveData("0")
     var cottageCoordinates = hashMapOf<String,Double>()
+
+    var newCottageAddress = MutableLiveData<String>()
+
+    var newCottageImages = arrayListOf<Uri>()
+    var newCottageImageNames = arrayListOf<String>()
+
+    var fillInBoxes = MutableLiveData<List<String>>()
+
+    private var _navigateContinue = MutableLiveData<Boolean>()
+    val navigateContinue: LiveData<Boolean>
+        get() = _navigateContinue
 
     private var _navigateToMap = MutableLiveData<Boolean>()
     val navigateToMap: LiveData<Boolean>
         get() = _navigateToMap
 
-//    val newCottageAmenityList: MutableMap<String,Boolean> =  mutableMapOf<String,Boolean>(
-//        "sauna" to false,
-//        "pets" to false,
-//        "power" to false,
-//        "hottub" to false,
-//        "smoking" to false,
-//        "water" to false
-//        )
 
-    val newCottageAmenities: MutableList<String> = mutableListOf()
+    val newCottageAmenities = mutableListOf<String>()
 
 
+    //create cottage function, sends cottage object to db through cottagerepo
     fun createCottage()
     {
-//        createAmenitiesList()
-
         val newCottage = Cottage()
         newCottage.guests = numberOfGuests.value!!.toInt()
         newCottage.rating = ((0..5).random()).toFloat()
         newCottage.cottageLabel = newCottageTitle.value.toString()
         newCottage.description = newCottageDescription.value.toString()
-        newCottage.location[newCottageCountry.value.toString()]=newCottageLocation.value.toString()
+        newCottage.location["city"]=newCottageLocation.value.toString()
+        newCottage.location["country"]=newCottageCountry.value.toString()
         newCottage.amenities=newCottageAmenities
-        newCottage.price = newCottagePrice.value!!.toInt()
-
-
+        newCottage.hostId = userDataSource.getCurrentUserId()
+        if (newCottagePrice.value != "")
+             newCottage.price = newCottagePrice.value!!.toInt()
+        else
+            newCottage.price = 0
+        newCottage.coordinates = cottageCoordinates
+        newCottage.images =  newCottageImageNames
         //create new cottage
-        cottageDataSource.createNewCottage(newCottage)
+        if (checkFields().isEmpty())
+        {
+        cottageDataSource.createNewCottage(newCottage,newCottageImages)
+        onContinueClicked()
+        }
+        else
+           fillInBoxes.value=checkFields()
 
-    //debug
-//        Log.v("Cottage: ",newCottage.toString())
-//        Log.v("Amenities: ",newCottageAmenityList.toString())
+
 
     }
 
-//    fun createAmenitiesList()
-//    {
-//
-//        for(amenity in newCottageAmenityList)
-//        {
-//            Log.v("Amenity: ", amenity.toString())
-//            if(amenity.value)
-//            {
-//                newCottageAmenities.add(amenity.key)
-//            }
-//        }
-//    }
+    //check if user has filled in all the required fields
+    private fun checkFields():MutableList<String>
+    {
+        var checkTheseFields = mutableListOf<String>()
+
+        if(!checkTitle())
+            checkTheseFields.add("Title")
+        if(!checkPrice())
+            checkTheseFields.add("Price")
+        if(!checkLocations())
+            checkTheseFields.add("Location")
+        if(!checkCoordinates())
+            checkTheseFields.add("Coordinates")
+        if(!checkImages())
+            checkTheseFields.add("Images")
+        if(!checkCountry())
+            checkTheseFields.add("Country")
+
+        return checkTheseFields
+    }
+
+    private fun checkTitle(): Boolean
+    {
+        return !newCottageTitle.value.isNullOrBlank()
+    }
+
+    private fun checkPrice(): Boolean
+    {
+        return !newCottagePrice.value.isNullOrBlank()
+    }
+
+    private fun checkLocations(): Boolean
+    {
+        return !newCottageLocation.value.isNullOrBlank()
+    }
+
+    private fun checkCountry(): Boolean
+    {
+        return !newCottageCountry.value.isNullOrBlank()
+    }
+
+    private fun checkCoordinates(): Boolean
+    {
+        return !cottageCoordinates.isNullOrEmpty()
+
+    }
+
+    private fun checkImages(): Boolean
+    {
+        return! newCottageImageNames.isNullOrEmpty()
+    }
+
+
 
     fun saunaCheck(checked : Boolean)
     {
@@ -91,7 +148,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("sauna")
 
-     //   newCottageAmenityList["sauna"]= checked
     }
     fun waterCheck(checked : Boolean)
     {
@@ -101,7 +157,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("water")
 
-    //    newCottageAmenityList["water"] = checked
     }
     fun powerCheck(checked : Boolean)
     {
@@ -110,7 +165,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("power")
 
-       // newCottageAmenityList["power"] = checked
     }
     fun petsCheck(checked : Boolean)
     {
@@ -120,7 +174,6 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("pets")
 
-    //    newCottageAmenityList["pets"] = checked
     }
     fun smokingCheck(checked : Boolean)
     {
@@ -130,17 +183,15 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         else
             newCottageAmenities.remove("smoking")
 
-   //     newCottageAmenityList["smoking"] = checked
     }
     fun hotTubCheck(checked : Boolean)
     {
 
         if(checked)
-            newCottageAmenities.add("huttub")
+            newCottageAmenities.add("hottub")
         else
             newCottageAmenities.remove("hottub")
 
-   //     newCottageAmenityList["hottub"] = checked
     }
 
     fun onMapClicked() {
@@ -150,6 +201,23 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     fun onMapNavigated() {
         _navigateToMap.value = false
     }
+
+    fun onContinueClicked()
+    {
+        _navigateContinue.value = true
+    }
+    fun onContinueNavigated()
+    {
+        _navigateContinue.value = false
+    }
+
+
+    fun setAddress(newAddress: String)
+    {
+        newCottageAddress.value = newAddress
+    }
+
+
 }
 
 

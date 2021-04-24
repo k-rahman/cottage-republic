@@ -26,5 +26,13 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/submit"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBar_register"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
 </LinearLayout>

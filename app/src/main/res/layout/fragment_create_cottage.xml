@@ -16,32 +16,58 @@
     android:focusable="auto"
     android:textAlignment="center">
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-
-
-        <TextView
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/cottage_create_title"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="Screen Title" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_height="?attr/actionBarSize"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Create Cottage"
+                android:textColor="@color/colorWhite"
+                android:layout_marginEnd="36dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="Screen Title"
+                android:textAlignment="center"/>
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+<!--    <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--        android:id="@+id/linearLayoutCompat"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="10dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        >-->
+
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:text="@string/cottage_create_title"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:text="Screen Title" />-->
+<!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
 
     <androidx.core.widget.NestedScrollView
 
@@ -176,28 +202,129 @@
 
 
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@{String.valueOf(CreateViewModel.numberOfGuests)}"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="16sp"-->
-
-<!--                />-->
-<!--&lt;!&ndash;            app:NumberOfGuests="@={CreateViewModel.amountOfGuests}"&ndash;&gt;-->
-<!--            android:entries="@array/spinnerGuestAmount"-->
-<!--            app:clicks="@={CreateViewModel.amountOfGuests}"-->
-<!--            app:entries="@{CreateViewModel.amountOfGuests}"-->
-<!--            app:onItemSelected="@{(NewValue) -> CreateViewModel.onItemSelected(NewValue) }"-->
-<!--            app:newValue="@={CreateViewModel.quantity}"-->
-
             <TextView
+                android:id="@+id/imagesTest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Images"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:text="Images"
                 android:textSize="16sp" />
+
+<!--            <ImageSwitcher-->
+<!--                android:id="@+id/imageSwitcher"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                />-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/imagesView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mainImage"
+                    android:layout_width="175dp"
+                    android:layout_height="175dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="3dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/extraImage1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toEndOf="@+id/mainImage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/extraImage2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/extraImage1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/extraImage3"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/mainImage"
+                    tools:visibility="gone"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/extraImage4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/extraImage3"
+                    tools:visibility="gone"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="horizontal"
+            >
+
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/previousButton"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:text="Previous"-->
+<!--                />-->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/pickImageButton"
+                android:background="@drawable/shape_continue_border"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="@color/colorWhite"
+                android:text="Pick Image(s)*" />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/nextButton"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:text="Next"-->
+<!--                />-->
+        </LinearLayout>
 
             <View
                 android:id="@+id/divider6"
@@ -295,6 +422,14 @@
                 </com.mapbox.mapboxsdk.maps.MapView>
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:id="@+id/addessBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:textSize="16sp" />
 
             <View
                 android:id="@+id/divider4"
@@ -392,6 +527,13 @@
                 android:layout_marginBottom="16dp"
                 />
 
+
+            <TextView
+                android:id="@+id/errorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"

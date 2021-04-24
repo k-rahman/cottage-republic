@@ -24,27 +24,8 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.bottomNavView.setupWithNavController(navController)
-        binding.bottomNavView.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.homeScreenFragment -> {
-                    navController.navigate(R.id.homeScreenFragment)
-                }
-                R.id.accountScreenFragment -> {
-                    // here will be the logic for navigating to user profile or navigating to login
 
-                    // Navigation to user profile
-                    navController.navigate(R.id.accountScreenFragment)
-                }
-                R.id.faqScreenFragment -> {
-                }
-            }
-
-            true
-        }
     }
 
-    fun addCottage(view: View) {
-        Toast.makeText(this, "Add new cottage", Toast.LENGTH_SHORT).show()
-    }
 
 }

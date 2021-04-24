@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Title and Location"
+                android:textColor="@color/colorBlack"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -155,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/textGuestAmountString"
+                android:textColor="@color/colorBlack"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -189,6 +191,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Images"
+                android:textColor="@color/colorBlack"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -323,6 +326,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/editCottageDescriptionString"
+                android:textColor="@color/colorBlack"
                 android:layout_marginStart="8dp"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
@@ -359,6 +363,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:textColor="@color/colorBlack"
                 android:text="@string/textPreciseLocationString"
                 android:layout_marginStart="8dp"
                 android:textSize="24sp"
@@ -433,6 +438,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/textAminities"
+                android:textColor="@color/colorBlack"
                 android:layout_marginStart="8dp"
                 android:textSize="24sp"
                 android:textStyle="bold" />

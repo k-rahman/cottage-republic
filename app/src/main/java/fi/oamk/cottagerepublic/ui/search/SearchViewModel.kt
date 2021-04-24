@@ -21,6 +21,15 @@ class SearchViewModel(val cottage: Cottage?, val destination: Destination?) : Vi
             Firebase.storage.getReference("cottages")
         )
 
+    private val _navigateToCottageDetail = MutableLiveData<Cottage?>()
+    val navigateToCottageDetail: LiveData<Cottage?>
+        get() = _navigateToCottageDetail
+
+    init {
+        if (cottage != null)
+            _navigateToCottageDetail.value = cottage
+    }
+
     var cottagesList = liveData(Dispatchers.IO) {
         emit(Resource.Loading<Boolean>())
         try {
@@ -32,11 +41,6 @@ class SearchViewModel(val cottage: Cottage?, val destination: Destination?) : Vi
     }
 
     val searchQuery = MutableLiveData<String>()
-
-    private val _navigateToCottageDetail = MutableLiveData<Cottage?>()
-    val navigateToCottageDetail: LiveData<Cottage?>
-        get() = _navigateToCottageDetail
-
 
     private val _isSearchBarFocused = MutableLiveData<Boolean>()
     val isSearchBarFocused: LiveData<Boolean>

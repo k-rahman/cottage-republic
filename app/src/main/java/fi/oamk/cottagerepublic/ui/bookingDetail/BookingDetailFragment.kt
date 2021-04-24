@@ -15,15 +15,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentBookingDetailScreenBinding
-//import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
-import fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment
+import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
 
 class BookingDetailFragment : Fragment() {
     private lateinit var binding: FragmentBookingDetailScreenBinding
     private lateinit var viewModel: BookingDetailViewModel
     private lateinit var viewModelFactory: BookingDetailViewModelFactory
-    //private val authViewModel: AuthViewModel by activityViewModels()
-
+    private val authViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,27 +61,42 @@ class BookingDetailFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.navigateToSuccess.observe(viewLifecycleOwner, {
+            if (it) {
+                findNavController().navigate(BookingDetailFragmentDirections.actionBookingDetailFragmentToPaymentFragment(viewModel.selectedCottage.price))
+                viewModel.onSucessNavigated()
+            }
         })
 
-//        authViewModel.user.observe(viewLifecycleOwner, { user ->
-//            if (user != null) {
-//                binding.confirmButton.isEnabled = true
-//            } else {
-//                binding.confirmButton.isEnabled = false
-//                binding.signupButtonWrapper.visibility = View.VISIBLE
-//            }
-//        })
+        authViewModel.user.observe(viewLifecycleOwner, { user ->
+            if (user != null) {
+                binding.confirmButton.isEnabled = true
+            } else {
+                binding.confirmButton.isEnabled = false
+                binding.signupButtonWrapper.visibility = View.VISIBLE
+            }
+        })
 
         viewModel.navigateToLogin.observe(viewLifecycleOwner, {
             if (it) {
-                val navOptions = NavOptions.Builder()
-                    .setEnterAnim(R.anim.slide_in_right)
-                    .setExitAnim(R.anim.slide_out_left)
-                    .build()
-
-                findNavController().navigate(R.id.loginScreenFragment, null, navOptions)
+                findNavController().navigate(R.id.loginScreenFragment, null, getNavOptions())
                 viewModel.onLoginNavigated()
             }
         })
+
+        viewModel.navigateToRegister.observe(viewLifecycleOwner, {
+            if (it) {
+                findNavController().navigate(R.id.registerFragmentEmail, null, getNavOptions())
+                viewModel.onRegisterNavigated()
+            }
+        })
+    }
+
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
+            .setPopEnterAnim(android.R.anim.slide_in_left)
+            .setPopExitAnim(android.R.anim.slide_out_right)
+            .build()
     }
 }

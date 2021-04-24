@@ -15,8 +15,7 @@ import fi.oamk.cottagerepublic.repository.UserRepository
 
 class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val userDataSource = UserRepository()
-
+    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
     //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(

@@ -1,9 +1,7 @@
 package fi.oamk.cottagerepublic.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -22,29 +20,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-
         binding.bottomNavView.setupWithNavController(navController)
-        binding.bottomNavView.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.homeScreenFragment -> {
-                    navController.navigate(R.id.homeScreenFragment)
-                }
-                R.id.accountScreenFragment -> {
-                    // here will be the logic for navigating to user profile or navigating to login
-
-                    // Navigation to user profile
-                    navController.navigate(R.id.accountScreenFragment)
-                }
-                R.id.faqScreenFragment -> {
-                }
-            }
-
-            true
-        }
     }
-
-    fun addCottage(view: View) {
-        Toast.makeText(this, "Add new cottage", Toast.LENGTH_SHORT).show()
-    }
-
 }

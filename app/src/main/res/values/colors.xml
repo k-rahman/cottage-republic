@@ -7,7 +7,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBackground">#f8f8f8</color>
-    <color name="gray">#E0E0E0</color>
+    <color name="colorGray">#E0E0E0</color>
 
 <!--     calendar colors -->
     <color name="calendar_fragment_background">#C0000000</color>

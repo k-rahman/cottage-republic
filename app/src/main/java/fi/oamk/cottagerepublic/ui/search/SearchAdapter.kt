@@ -20,6 +20,7 @@ import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.ListItemSearchBinding
 import fi.oamk.cottagerepublic.util.CottageDiffCallBack
 
+@Suppress("UNCHECKED_CAST")
 class SearchAdapter(private val clickListener: SearchListListener) :
     ListAdapter<Cottage, SearchAdapter.ViewHolder>(CottageDiffCallBack()), Filterable {
 
@@ -62,6 +63,7 @@ class SearchAdapter(private val clickListener: SearchListListener) :
 
                 // if query string is empty return the whole list
                 if (charSequence.isEmpty()) {
+                    results.count = fullList.size
                     results.values = fullList
                     return results
                 }
@@ -80,17 +82,20 @@ class SearchAdapter(private val clickListener: SearchListListener) :
                         filteredList.add(cottage)
                 }
 
+                results.count = filteredList.size
                 results.values = filteredList
                 return results
             }
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                submitList(filterResults.values as MutableList<Cottage>)
+                if (filterResults.count  == 0)
+                    submitList(mutableListOf())
+                else
+                    submitList(filterResults.values as MutableList<Cottage>)
             }
         }
     }
 }
-
 
 class SearchListListener(val clickListener: (cottage: Cottage) -> Unit) {
     fun onClick(cottage: Cottage) = clickListener(cottage)

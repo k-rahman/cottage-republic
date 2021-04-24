@@ -37,6 +37,12 @@ class CreateCottageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        // Is only passing args and showing the cottageLabel that has been passed to this screen
+        // Need to prefill all fields to edit cottage already created
+        val args = CreateCottageFragmentArgs.fromBundle(requireArguments())
+        Toast.makeText(context, "Cottage: ${args.cottage?.cottageLabel}", Toast.LENGTH_SHORT).show()
+
+
         //mapbox key
         Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token))
 

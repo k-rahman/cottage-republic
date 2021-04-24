@@ -18,7 +18,7 @@ class BookingDetailViewModel(
 ) :
     AndroidViewModel(application) {
     private val reservationDataSource = ReservationRepository(Firebase.database.reference)
-    private val userDataSource = UserRepository()
+    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
 
     lateinit var checkIn: String
     lateinit var checkOut: String
@@ -32,6 +32,10 @@ class BookingDetailViewModel(
     private val _navigateToLogin = MutableLiveData<Boolean>()
     val navigateToLogin: LiveData<Boolean>
         get() = _navigateToLogin
+
+    private val _navigateToRegister = MutableLiveData<Boolean>()
+    val navigateToRegister: LiveData<Boolean>
+        get() = _navigateToRegister
 
     private val taxesPercentage = 21
 
@@ -67,9 +71,6 @@ class BookingDetailViewModel(
     }
 
     fun onConfirmClicked() {
-        // if user doesn't have an id
-        // redirect to login
-
         val userId = userDataSource.getCurrentUserId()
         reservationDataSource.createReservation(userId, selectedCottage.cottageId, selectedDates)
         _navigateToSuccess.value = true
@@ -81,6 +82,14 @@ class BookingDetailViewModel(
 
     fun onLoginNavigated() {
         _navigateToLogin.value = false
+    }
+
+    fun onRegisterClicked() {
+        _navigateToRegister.value = true
+    }
+
+    fun onRegisterNavigated() {
+        _navigateToRegister.value = false
     }
 
     fun onSucessNavigated() {

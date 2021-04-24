@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
                     // Navigation to user profile
                     navController.navigate(R.id.accountScreenFragment)
                 }
-                R.id.faqScreenFragment -> {
+                R.id.accountFAQFragment -> {
+                    navController.navigate(R.id.accountFAQFragment)
                 }
             }
 

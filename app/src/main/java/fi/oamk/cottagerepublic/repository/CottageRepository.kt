@@ -102,6 +102,57 @@ class CottageRepository(
         return Resource.Success(cottages)
     }
 
+    suspend fun getAllCottagesByCottagesKeys(cottageKeys: List<String>): Resource<MutableList<Cottage>> {
+        val userCottages = mutableListOf<Cottage>()
+        cottageKeys.forEach {
+            val newCottage = Cottage()
+            val snapshot = databaseReference.child(it).get().await()
+            val values = snapshot.value as HashMap<Any, Any>
+            with(newCottage) {
+                if (values["cottageId"] != null)
+                    cottageId = values["cottageId"].toString()
+
+                if (values["hostId"] != null)
+                    hostId = values["hostId"].toString()
+
+                if (values["cottageLabel"] != null)
+                    cottageLabel = values["cottageLabel"].toString()
+
+                if (values["rating"] != null)
+                    rating = values["rating"].toString().toFloat()
+
+                if (values["location"] != null)
+                    for (spot in values["location"] as HashMap<String, String>)
+                        location[spot.key] = spot.value
+
+                if (values["price"] != null)
+                    price = values["price"].toString().toInt()
+
+                if (values["guests"] != null)
+                    guests = values["guests"].toString().toInt()
+
+                if (values["amenities"] != null) {
+                    amenities.clear()
+                    for (amenity in values["amenities"] as ArrayList<String>)
+                        amenities.add(amenity)
+                }
+
+                if (values["description"] != null)
+                    description = values["description"].toString()
+
+                if (values["coordinates"] != null)
+                    for (coordinate in values["coordinates"] as HashMap<String, Double>)
+                        coordinates[coordinate.key] = coordinate.value
+
+                if (values["images"] != null)
+                    for (image in values["images"] as ArrayList<String>)
+                        images.add(storageReference.child(image).downloadUrl.await().toString())
+            }
+            userCottages.add(newCottage)
+        }
+        return Resource.Success(userCottages)
+    }
+
     private suspend fun createCottageList(dataSnapshot: DataSnapshot): MutableList<Cottage> {
         val cottages = mutableListOf<Cottage>()
 

@@ -10,15 +10,16 @@
         android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_margin="16dp"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="20sp"
+        android:drawablePadding="4dp"
         app:drawableLeftCompat="@drawable/selector_for_faq_arrows" />
 
     <TextView
         android:id="@+id/answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="44dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 </LinearLayout>

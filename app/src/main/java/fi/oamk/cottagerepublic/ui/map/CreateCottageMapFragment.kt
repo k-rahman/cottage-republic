@@ -16,14 +16,14 @@ import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import fi.oamk.cottagerepublic.R
-import fi.oamk.cottagerepublic.databinding.FragmentMapBinding
+import fi.oamk.cottagerepublic.databinding.FragmentMapScreenBinding
 import fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageViewModel
 import fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageViewModelFactory
 import fi.oamk.cottagerepublic.util.MapUtils
 
 
 class CreateCottageMapFragment : Fragment(), MapboxMap.OnMapClickListener {
-    private lateinit var binding: FragmentMapBinding
+    private lateinit var binding: FragmentMapScreenBinding
     private lateinit var viewModel: CreateCottageViewModel
     private lateinit var mapUtils: MapUtils
     private lateinit var viewModelFactory: CreateCottageViewModelFactory
@@ -33,7 +33,7 @@ class CreateCottageMapFragment : Fragment(), MapboxMap.OnMapClickListener {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map_screen, container, false)
         binding.lifecycleOwner = this
 
         //init viewModel and binding

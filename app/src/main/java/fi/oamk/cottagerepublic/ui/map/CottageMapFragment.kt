@@ -10,18 +10,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import fi.oamk.cottagerepublic.R
-import fi.oamk.cottagerepublic.databinding.FragmentMapBinding
+import fi.oamk.cottagerepublic.databinding.FragmentMapScreenBinding
 import fi.oamk.cottagerepublic.util.MapUtils
 
 class CottageMapFragment : Fragment() {
-    private lateinit var binding: FragmentMapBinding
+    private lateinit var binding: FragmentMapScreenBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map_screen, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
         initToolbar()

@@ -74,6 +74,12 @@ fun setSliderImage(view: ImageView, item: String) {
     Picasso.get().load(item).into(view)
 }
 
+
+@BindingAdapter("imageCount", "imagePosition")
+fun TextView.setItemCount(count: Int, position: Int) {
+    text = "$position / $count"
+}
+
 @BindingAdapter("guestsNumber")
 fun TextView.setGuests(item: Cottage) {
     text = item.guests.toString()
@@ -94,6 +100,9 @@ fun ImageView.setAmenityIcon(item: String) {
         "smoking" -> setImageResource(R.drawable.icon_smoking_24)
         "power" -> setImageResource(R.drawable.icon_power_24)
         "water" -> setImageResource(R.drawable.icon_water_drop_24)
+        "boat" -> setImageResource(R.drawable.icon_rowing_24)
+        "fireplace" -> setImageResource(R.drawable.icon_fireplace_24)
+        "grill" -> setImageResource(R.drawable.icon_outdoor_grill_24)
     }
 }
 

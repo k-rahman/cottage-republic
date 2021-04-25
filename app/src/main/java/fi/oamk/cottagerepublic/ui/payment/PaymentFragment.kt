@@ -22,6 +22,9 @@ class PaymentFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_payment_screen, container, false)
 
+        // hide bottom navigation
+        requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
+
         initViewModel()
         setObservers()
 

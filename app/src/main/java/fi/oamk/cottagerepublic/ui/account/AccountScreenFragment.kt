@@ -1,25 +1,19 @@
 package fi.oamk.cottagerepublic.ui.account
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseUser
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentAccountScreenBinding
-import fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment
 import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
-import fi.oamk.cottagerepublic.util.Resource
+import fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment
 
 
 class AccountScreenFragment : Fragment() {
@@ -40,7 +34,7 @@ class AccountScreenFragment : Fragment() {
         val currentBackStackEntry = navController.currentBackStackEntry!!
         val savedStateHandle = currentBackStackEntry.savedStateHandle
         savedStateHandle.getLiveData<Boolean>(LoginScreenFragment.LOGIN_SUCCESSFUL)
-            .observe(currentBackStackEntry, Observer { success ->
+            .observe(currentBackStackEntry, { success ->
                 if (!success) {
                     val startDestination = navController.graph.startDestination
                     val navOptions = NavOptions.Builder()
@@ -93,7 +87,7 @@ class AccountScreenFragment : Fragment() {
         // observe navigate if true will return to homescreen when user logs out of system
         authViewModel.navigate.observe(viewLifecycleOwner) {
             if (it) {
-                findNavController().navigate(R.id.homeScreenFragment)
+                findNavController().navigate(R.id.homeFragment)
                 authViewModel.onNavigated()
             }
 

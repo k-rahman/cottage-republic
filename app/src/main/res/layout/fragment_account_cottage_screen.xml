@@ -27,7 +27,7 @@
                 app:navigationIcon="@drawable/icon_back_arrow_24"
                 >
                 <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"

@@ -234,6 +234,42 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
 
     }
 
+    fun kitchenCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("kitchen")
+        else
+            newCottageAmenities.remove("kitchen")
+
+    }
+
+    fun fireplaceCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("fireplace")
+        else
+            newCottageAmenities.remove("fireplace")
+
+    }
+
+    fun boatCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("boat")
+        else
+            newCottageAmenities.remove("boat")
+
+    }
+
+    fun grillCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("grill")
+        else
+            newCottageAmenities.remove("grill")
+
+    }
+
     fun onMapClicked() {
         _navigateToMap.value = true
     }

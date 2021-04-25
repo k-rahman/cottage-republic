@@ -31,9 +31,6 @@ class SearchFragment : Fragment() {
 
         initViewModel()
 
-        // if popular cottage clicked go directly to cottage details
-        if (viewModel.cottage != null)
-            navigateToCottageDetail(viewModel.cottage!!)
     }
 
     override fun onCreateView(

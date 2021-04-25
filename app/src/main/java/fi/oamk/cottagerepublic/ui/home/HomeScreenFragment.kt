@@ -166,21 +166,21 @@ class HomeFragment : Fragment() {
 
     private fun navigateToSearch() {
         findNavController().navigate(
-            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, null)
+            HomeFragmentDirections.actionHomeFragmentToSearchFragment(null, null)
         )
         viewModel.onSearchNavigated()
     }
 
     private fun navigateToSearchCottage(cottage: Cottage) {
         findNavController().navigate(
-            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(null, cottage)
+            HomeFragmentDirections.actionHomeFragmentToSearchFragment(null, cottage)
         )
         viewModel.onSearchNavigated()
     }
 
     private fun navigateToSearchDestination(destination: Destination) {
         findNavController().navigate(
-            HomeFragmentDirections.actionHomeScreenFragmentToSearchFragment(destination)
+            HomeFragmentDirections.actionHomeFragmentToSearchFragment(destination)
         )
         viewModel.onSearchNavigated()
     }

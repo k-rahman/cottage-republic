@@ -32,6 +32,8 @@
         <action
             android:id="@+id/action_CreateCottageFragment_to_createCottageMapFragment"
             app:destination="@id/createCottageMapFragment" />
+        <action android:id="@+id/action_CreateCottageFragment_to_accountCottageScreenFragment"
+                app:destination="@id/accountCottageScreenFragment"/>
     </fragment>
 
     <fragment
@@ -116,6 +118,8 @@
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
         />
+        <argument android:name="cottage" app:argType="fi.oamk.cottagerepublic.data.Cottage" app:nullable="true"
+                  android:defaultValue="@null"/>
     </fragment>
     <!-- login and register -->
     <fragment

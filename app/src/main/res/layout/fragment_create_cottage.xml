@@ -447,55 +447,111 @@
                     android:id="@+id/checkBox4"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.saunaCheck(checked)}"
                     android:text="@string/checkBoxOneString"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="82dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox6" />
 
                 <CheckBox
                     android:id="@+id/checkBox5"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.petsCheck(checked)}"
                     android:text="@string/checkBoxTwoString"
-                    tools:layout_editor_absoluteX="244dp"
-                    tools:layout_editor_absoluteY="82dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox10" />
 
                 <CheckBox
                     android:id="@+id/checkBox6"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.smokingCheck(checked)}"
                     android:text="@string/checkBoxThreeString"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="16dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
                     android:id="@+id/checkBox7"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.waterCheck(checked)}"
                     android:text="@string/checkBoxFourString"
-                    tools:layout_editor_absoluteX="244dp"
-                    tools:layout_editor_absoluteY="144dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox5" />
 
                 <CheckBox
                     android:id="@+id/checkBox8"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.powerCheck(checked)}"
                     android:text="@string/checkBoxFiveString"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="144dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
 
                 <CheckBox
                     android:id="@+id/checkBox10"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.hotTubCheck(checked)}"
                     android:text="@string/checkBoxSixString"
-                    tools:layout_editor_absoluteX="244dp"
-                    tools:layout_editor_absoluteY="16dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.fireplaceCheck(checked)}"
+                    android:text="@string/checkBoxTenString"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox8" />
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.kitchenCheck(checked)}"
+                    android:text="@string/checkBoxSevenString"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+                <CheckBox
+                    android:id="@+id/checkBox3"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.grillCheck(checked)}"
+                    android:text="@string/checkBoxEigthString"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox7" />
+
+                <CheckBox
+                    android:id="@+id/checkBox9"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.boatCheck(checked)}"
+                    android:text="@string/checkBoxNineString"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

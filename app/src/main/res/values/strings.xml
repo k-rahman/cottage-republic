@@ -56,7 +56,13 @@
     <string name="checkBoxThreeString"> Smoking </string>
     <string name="checkBoxFourString"> Running water </string>
     <string name="checkBoxFiveString"> Power </string>
+    <string name="checkBoxSevenString"> Kitchen </string>
+    <string name="checkBoxEigthString"> Grill </string>
+    <string name="checkBoxNineString"> Boat </string>
+    <string name="checkBoxTenString"> Fireplace </string>
     <string name="checkBoxSixString"> Hot Tub </string>
+
+
     <string name="editCottageDescription">Enter cottage description..</string>
 
     <string-array name="spinnerGuestAmount">

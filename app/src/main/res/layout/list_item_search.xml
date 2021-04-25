@@ -25,16 +25,16 @@
                 android:layout_height="match_parent"
         >
             <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/cottage_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="fitXY"
-                    app:image="@{cottageSearch}"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:contentDescription="@string/cottage_image"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic[11]"
+                android:id="@+id/cottage_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:contentDescription="@string/cottage_image"
+                android:scaleType="centerCrop"
+                app:image="@{cottageSearch}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic[11]"
             />
             <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/cottage_rating"

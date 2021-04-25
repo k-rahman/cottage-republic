@@ -16,6 +16,7 @@ import fi.oamk.cottagerepublic.repository.UserRepository
 class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
 
     private val userDataSource = UserRepository(Firebase.database.getReference("users"))
+
     //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(
@@ -190,6 +191,42 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
             newCottageAmenities.add("hottub")
         else
             newCottageAmenities.remove("hottub")
+
+    }
+
+    fun kitchenCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("kitchen")
+        else
+            newCottageAmenities.remove("kitchen")
+
+    }
+
+    fun fireplaceCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("fireplace")
+        else
+            newCottageAmenities.remove("fireplace")
+
+    }
+
+    fun boatCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("boat")
+        else
+            newCottageAmenities.remove("boat")
+
+    }
+
+    fun grillCheck(checked: Boolean) {
+
+        if (checked)
+            newCottageAmenities.add("grill")
+        else
+            newCottageAmenities.remove("grill")
 
     }
 

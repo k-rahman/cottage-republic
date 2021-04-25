@@ -1,5 +1,6 @@
 package fi.oamk.cottagerepublic.ui.account
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.Cottage
@@ -39,6 +42,8 @@ class AccountCottageScreenFragment : Fragment() {
         // Get a reference to the ViewModel associated with this fragment.
         viewModel = ViewModelProvider(this).get(MyCottagesViewModel::class.java)
 
+        initToolbar()
+
         // Specify the current activity as the lifecycle owner of the binding.
         // This is necessary so that the binding can observe LiveData updates.
         binding.lifecycleOwner = viewLifecycleOwner
@@ -55,6 +60,14 @@ class AccountCottageScreenFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    //init toolbar
+    private fun initToolbar() {
+        // toolbar configuration
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
     }
 
     private fun setMyCottagesAdapters() {

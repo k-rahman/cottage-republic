@@ -31,13 +31,13 @@
                   app:nullable="true" android:defaultValue="@null"/>
         <action
             android:id="@+id/action_CreateCottageFragment_to_createCottageMapFragment"
-            app:destination="@id/createCottageMapFragment"/>
+            app:destination="@id/createCottageMapFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="fi.oamk.cottagerepublic.ui.search.SearchFragment"
-        tools:layout="@layout/fragment_search_screen"
+            android:id="@+id/searchFragment"
+            android:name="fi.oamk.cottagerepublic.ui.search.SearchFragment"
+            tools:layout="@layout/fragment_search_screen"
     >
         <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
                 app:destination="@id/cottageDetailFragment"
@@ -55,8 +55,8 @@
               tools:layout="@layout/fragment_cottage_detail_screen"
     >
         <argument
-            android:name="selectedCottage"
-            app:argType="fi.oamk.cottagerepublic.data.Cottage"
+                android:name="selectedCottage"
+                app:argType="fi.oamk.cottagerepublic.data.Cottage"
         />
         <action android:id="@+id/action_cottageDetailFragment_to_mapFragment"
                 app:destination="@id/mapFragment"
@@ -88,14 +88,14 @@
         tools:layout="@layout/fragment_map_screen"
     >
         <argument android:name="selectedCottageCoordinate"
-                  app:argType="fi.oamk.cottagerepublic.data.Cottage"/>
+                  app:argType="fi.oamk.cottagerepublic.data.Cottage" />
     </fragment>
 
     <!-- Account Screens -->
     <fragment
-        android:id="@+id/accountScreenFragment"
-        android:name="fi.oamk.cottagerepublic.ui.account.AccountScreenFragment"
-        tools:layout="@layout/fragment_account_screen">
+            android:id="@+id/accountScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountScreenFragment"
+            tools:layout="@layout/fragment_account_screen">
 
         <action android:id="@+id/action_accountScreenFragment_to_accountCottageScreenFragment"
                 app:destination="@id/accountCottageScreenFragment"
@@ -106,9 +106,9 @@
         />
     </fragment>
     <fragment
-        android:id="@+id/accountCottageScreenFragment"
-        android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
-        tools:layout="@layout/fragment_account_cottage_screen">
+            android:id="@+id/accountCottageScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragment"
+            tools:layout="@layout/fragment_account_cottage_screen">
 
         <action android:id="@+id/action_accountCottageScreenFragment_to_CreateCottageFragment"
                 app:destination="@id/CreateCottageFragment"
@@ -120,44 +120,44 @@
     </fragment>
     <!-- login and register -->
     <fragment
-        android:id="@+id/loginScreenFragment"
-        android:name="fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment"
-        android:label="LoginScreenFragment"
-        tools:layout="@layout/fragment_login_screen"
+            android:id="@+id/loginScreenFragment"
+            android:name="fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment"
+            android:label="LoginScreenFragment"
+            tools:layout="@layout/fragment_login_screen"
     >
         <action
-            android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
-            app:destination="@id/registerFragmentEmail"/>
+                android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
+                app:destination="@id/registerFragmentEmail" />
     </fragment>
 
     <fragment
-        android:id="@+id/registerFragmentPassword"
-        android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentPassword"
-        android:label="fragment_register_password"
-        tools:layout="@layout/fragment_register_password">
+            android:id="@+id/registerFragmentPassword"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentPassword"
+            android:label="fragment_register_password"
+            tools:layout="@layout/fragment_register_password" >
         <action
-            android:id="@+id/action_registerFragmentPassword_to_registerFragmentEnd"
-            app:destination="@id/registerFragmentEnd"/>
+                android:id="@+id/action_registerFragmentPassword_to_registerFragmentEnd"
+                app:destination="@id/registerFragmentEnd" />
     </fragment>
     <fragment
-        android:id="@+id/registerFragmentEmail"
-        android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEmail"
-        android:label="fragment_register_email"
-        tools:layout="@layout/fragment_register_email">
+            android:id="@+id/registerFragmentEmail"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEmail"
+            android:label="fragment_register_email"
+            tools:layout="@layout/fragment_register_email" >
         <action
-            android:id="@+id/action_registerFragmentEmail_to_registerFragmentPassword"
-            app:destination="@id/registerFragmentPassword"/>
+                android:id="@+id/action_registerFragmentEmail_to_registerFragmentPassword"
+                app:destination="@id/registerFragmentPassword" />
     </fragment>
     <fragment
-        android:id="@+id/registerFragmentEnd"
-        android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
-        android:label="fragment_register_end"
-        tools:layout="@layout/fragment_register_end"/>
+            android:id="@+id/registerFragmentEnd"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
+            android:label="fragment_register_end"
+            tools:layout="@layout/fragment_register_end" />
     <fragment
         android:id="@+id/acccountUserSettingsScreenFragment"
         android:name="fi.oamk.cottagerepublic.ui.account.AccountUserSettingsScreenFragment"
         android:label="acccount_user_settings_screen_fragment"
-        tools:layout="@layout/fragment_account_settings_screen"/>
+        tools:layout="@layout/fragment_account_settings_screen" />
 
     <fragment
         android:id="@+id/createCottageMapFragment"
@@ -178,5 +178,11 @@
         android:label="ImageFragment"
         tools:layout="@layout/fragment_image_screen"
     />
+
+    <fragment
+        android:id="@+id/accountFAQFragment"
+        android:name="fi.oamk.cottagerepublic.ui.account.AccountFAQFragment"
+        android:label="fragment_account_faq"
+        tools:layout="@layout/fragment_account_faq" />
 
 </navigation>

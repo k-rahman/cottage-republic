@@ -37,7 +37,7 @@ class UserRepository(private val databaseReference: DatabaseReference) {
 
     fun saveEmailOnRegister(email: String) {
         if (auth.currentUser != null)
-            databaseReference.child(userid!!.uid).setValue(email)
+            databaseReference.child(getCurrentUserId()).setValue(email)
     }
 
     fun getCurrentUserData(
@@ -88,12 +88,6 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         return userProfile
     }
 
-    fun getUserReservations(): Task<DataSnapshot> {
-        val testid = "6EAP6t8B8wROG6OYsPwzaHBntjE2"
-        val data = databaseReference.child("users").child(testid).child("reservations").get()
-        return data
-    }
-
     suspend fun getHostDataById(hostId: String): Resource<Any> {
         return try {
             val snapshot = databaseReference.child(hostId).get().await()
@@ -102,6 +96,17 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         } catch (e: Exception) {
             Resource.Failure(e.message!!)
         }
+    }
+
+    suspend fun getCottagesKeysByHostId(hostId: String): List<String> {
+        val cottageKeys = mutableListOf<String>()
+
+        val snapshot = databaseReference.child(hostId).child("cottages").get().await()
+        for (cottageKey in snapshot.children) {
+            cottageKeys.add(cottageKey.key.toString())
+        }
+        return cottageKeys
+
     }
 
     private fun initUser(snapshot: DataSnapshot): User {
@@ -135,7 +140,7 @@ class UserRepository(private val databaseReference: DatabaseReference) {
 
     fun pushCottageToUser(userKey: String, cottageKey: String) {
         val childUpdates = hashMapOf<String, Any>(
-            "users/${userKey}/cottages/$cottageKey" to true
+            "${userKey}/cottages/$cottageKey" to true
         )
 
         databaseReference.updateChildren(childUpdates)

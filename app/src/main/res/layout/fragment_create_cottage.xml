@@ -134,7 +134,7 @@
                         android:id="@+id/editCottagePrice"
                         android:layout_width="135dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
+                        android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:autofillHints=""
                         android:ems="10"

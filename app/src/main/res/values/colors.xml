@@ -8,10 +8,11 @@
     <color name="colorBlack">#000000</color>
     <color name="colorBackground">#f8f8f8</color>
     <color name="colorGray">#E0E0E0</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorSemiTransparent">#4D000000</color>
 
 <!--     calendar colors -->
     <color name="calendar_fragment_background">#C0000000</color>
-    <color name="colorTransparent">#00000000</color>
     <color name="dividerColor">#e0e0e0</color>
     <color name="custom_header_text">#030303</color>
 

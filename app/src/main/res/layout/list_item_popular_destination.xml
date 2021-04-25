@@ -26,13 +26,13 @@
                 app:cardElevation="5dp"
         >
             <ImageView
-                    android:id="@+id/destination_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:srcCompat="@tools:sample/avatars[9]"
-                    app:image="@{destination}"
-                    android:contentDescription="@string/city_image"
-                    android:scaleType="fitXY"/>
+                android:id="@+id/destination_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/city_image"
+                android:scaleType="centerCrop"
+                app:image="@{destination}"
+                tools:srcCompat="@tools:sample/avatars[9]"/>
         </androidx.cardview.widget.CardView>
         <TextView
                 android:id="@+id/destination_name"

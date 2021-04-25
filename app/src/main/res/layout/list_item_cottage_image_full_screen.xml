@@ -8,17 +8,11 @@
             name="imageUrl"
             type="String"
         />
-        <variable
-            name="cottageImageListener"
-            type="fi.oamk.cottagerepublic.ui.cottageDetail.CottageImageListener"/>
     </data>
-
     <ImageView
         android:id="@+id/cottage_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/cottage_image"
-        android:onClick="@{() -> cottageImageListener.onClick(imageUrl)}"
-        android:scaleType="centerCrop"
         app:imageUrl="@{imageUrl}"/>
 </layout>

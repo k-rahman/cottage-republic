@@ -58,6 +58,8 @@ class CottageDetailViewModel(cottage: Cottage) : ViewModel() {
 
     val address = ObservableField<Address?>()
 
+    var currentImage = MutableLiveData<Int>()
+
     val cottageReservations = liveData(IO) {
         emit(Resource.Loading<Boolean>())
         try {

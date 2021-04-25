@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/navigation"
-    app:startDestination="@id/homeScreenFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment"
+>
 
     <fragment
-            android:id="@+id/homeScreenFragment"
-            android:name="fi.oamk.cottagerepublic.ui.home.HomeFragment"
-            tools:layout="@layout/fragment_home_screen"
+        android:id="@+id/homeFragment"
+        android:name="fi.oamk.cottagerepublic.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_home_screen"
     >
         <action
-                android:id="@+id/action_homeScreenFragment_to_searchFragment"
-                app:destination="@id/searchFragment"
-                app:enterAnim="@anim/slide_in_right"
-                app:popEnterAnim="@android:anim/slide_in_left"
-                app:popExitAnim="@android:anim/slide_out_right"
-                app:exitAnim="@anim/slide_out_left"/>
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 
     <fragment
@@ -40,8 +41,9 @@
     >
         <action android:id="@+id/action_searchFragment_to_cottageDetailFragment"
                 app:destination="@id/cottageDetailFragment"
-                app:exitAnim="@anim/slide_out_top" app:enterAnim="@anim/slide_in_bottom"
-                app:popEnterAnim="@anim/slide_in_top" app:popExitAnim="@anim/slide_out_bottom"/>
+                app:enterAnim="@anim/slide_in_bottom" app:exitAnim="@anim/slide_out_top"
+                app:popEnterAnim="@anim/slide_in_top" app:popExitAnim="@anim/slide_out_bottom"
+        />
         <argument android:name="destination" app:argType="fi.oamk.cottagerepublic.data.Destination" app:nullable="true"
                   android:defaultValue="@null"/>
         <argument android:name="cottage" app:argType="fi.oamk.cottagerepublic.data.Cottage" app:nullable="true"
@@ -76,14 +78,14 @@
         <action android:id="@+id/action_bookingDetailFragment_to_paymentFragment"
                 app:destination="@id/paymentFragment" app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@android:anim/slide_in_left"
-                app:popExitAnim="@android:anim/slide_out_right" app:popUpTo="@id/homeScreenFragment"
+                app:popExitAnim="@android:anim/slide_out_right" app:popUpTo="@id/homeFragment"
         />
     </fragment>
 
     <fragment
-            android:id="@+id/mapFragment"
-            android:name="fi.oamk.cottagerepublic.ui.map.CottageMapFragment"
-            tools:layout="@layout/fragment_map"
+        android:id="@+id/mapFragment"
+        android:name="fi.oamk.cottagerepublic.ui.map.CottageMapFragment"
+        tools:layout="@layout/fragment_map_screen"
     >
         <argument android:name="selectedCottageCoordinate"
                   app:argType="fi.oamk.cottagerepublic.data.Cottage" />
@@ -161,7 +163,7 @@
         android:id="@+id/createCottageMapFragment"
         android:name="fi.oamk.cottagerepublic.ui.map.CreateCottageMapFragment"
         android:label="CreateCottageMapFragment"
-        tools:layout="@layout/fragment_map"
+        tools:layout="@layout/fragment_map_screen"
     />
     <fragment android:id="@+id/paymentFragment"
               android:name="fi.oamk.cottagerepublic.ui.payment.PaymentFragment"
@@ -170,6 +172,12 @@
     >
         <argument android:name="total" app:argType="integer"/>
     </fragment>
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="fi.oamk.cottagerepublic.ui.image.ImageFragment"
+        android:label="ImageFragment"
+        tools:layout="@layout/fragment_image_screen"
+    />
 
     <fragment
         android:id="@+id/accountFAQFragment"

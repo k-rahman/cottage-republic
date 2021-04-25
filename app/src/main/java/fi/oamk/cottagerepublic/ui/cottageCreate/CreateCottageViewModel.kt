@@ -3,6 +3,7 @@ package fi.oamk.cottagerepublic.ui.cottageCreate
 import android.app.Application
 import android.location.Address
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,10 +14,13 @@ import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
+import kotlin.math.absoluteValue
 
-class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
+class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
+
 
     private val userDataSource = UserRepository(Firebase.database.getReference("users"))
+
     //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(
@@ -36,7 +40,6 @@ class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
         )
     )
 
-    val editQuery = MutableLiveData<String>()
 
     val numberOfGuests = MutableLiveData("")
     val newCottageTitle = MutableLiveData<String>()
@@ -48,6 +51,43 @@ class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
     var newCottageAddress = MutableLiveData<String>()
     var newCottageImages = arrayListOf<Uri>()
     var newCottageImageNames = arrayListOf<String>()
+    var newCottageAmenities = mutableListOf<String>()
+
+    // Variables set to init editable values
+    var sauna = false
+    var water = false
+    var hottub = false
+    var power = false
+    var pets = false
+    var smoking = false
+
+
+    init {
+        // Init cottage with editable values
+        if (cottage != null) {
+            newCottageTitle.value = cottage.cottageLabel
+            newCottageLocation.value = cottage.location["city"]
+            newCottageCountry.value = cottage.location["country"]
+            newCottageDescription.value = cottage.description
+            cottageCoordinates = cottage.coordinates
+            newCottagePrice.value = cottage.price.toString()
+            numberOfGuests.value = cottage.guests
+            for (amenity in cottage.amenities) {
+                if (amenity == "sauna")
+                    sauna = true
+                if (amenity == "water")
+                    water = true
+                if (amenity == "hottub")
+                    hottub = true
+                if (amenity == "power")
+                    power = true
+                if (amenity == "pets")
+                    pets = true
+                if (amenity == "smoking")
+                    smoking = true
+            }
+        }
+    }
 
     //variable for fragment, in case of missing fields
     var fillInBoxes = MutableLiveData<List<String>>()
@@ -66,24 +106,11 @@ class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
     val navigateToMyCottage: LiveData<Cottage?>
         get() = _navigateToMyCottage
 
-    private val _navigateToEditCottage = MutableLiveData<Cottage?>()
-    val navigateToEditCottage: LiveData<Cottage?>
-        get() = _navigateToEditCottage
-
-
-    init {
-        if (cottage != null)
-            _navigateToEditCottage.value = cottage
-    }
-
-
-    val newCottageAmenities = mutableListOf<String>()
-
 
     //create cottage function, sends cottage object to db through cottagerepo
     fun createCottage() {
         val newCottage = Cottage()
-        newCottage.guests = numberOfGuests.value!!.toInt()
+        newCottage.guests = numberOfGuests.value!!
         newCottage.rating = ((0..5).random()).toFloat()
         newCottage.cottageLabel = newCottageTitle.value.toString()
         newCottage.description = newCottageDescription.value.toString()
@@ -106,15 +133,10 @@ class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
             fillInBoxes.value = checkFields()
     }
 
-//    fun createEditCottage(cottageArgs) {
-//        val editCottage = Cottage()
-//        editCottage.guests = cottageArgs
-//    }
 
     //check if user has filled in all the required fields
     private fun checkFields(): MutableList<String> {
         var checkTheseFields = mutableListOf<String>()
-
 
         if (!checkTitle())
             checkTheseFields.add("Title")
@@ -133,9 +155,6 @@ class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
     }
 
     private fun checkTitle(): Boolean {
-        if (cottage != null) {
-            newCottageTitle.value = cottage.cottageLabel
-        }
         return !newCottageTitle.value.isNullOrBlank()
     }
 
@@ -235,19 +254,10 @@ class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
         newCottageAddress.value = newAddress
     }
 
-
-
     fun onMyCottageNavigated() {
         _navigateToMyCottage.value = null
     }
 
-    fun checkForPassedArgs(): Boolean {
-        if (cottage != null) {
-            editQuery.value = cottage.cottageLabel
-            return true
-        }
-        return false
-    }
 
 }
 

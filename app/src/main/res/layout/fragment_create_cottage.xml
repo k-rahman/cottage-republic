@@ -260,6 +260,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="gone"
+                    cottageImage0="@{CreateViewModel.cottage}"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -273,6 +274,7 @@
                     app:layout_constraintStart_toEndOf="@+id/mainImage"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="gone"
+                    cottageImage1="@{CreateViewModel.cottage}"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -288,6 +290,7 @@
                     app:layout_constraintStart_toEndOf="@+id/extraImage1"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="gone"
+                    cottageImage2="@{CreateViewModel.cottage}"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -301,6 +304,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/mainImage"
                     tools:visibility="gone"
+                    cottageImage3="@{CreateViewModel.cottage}"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -316,6 +320,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/extraImage3"
                     tools:visibility="gone"
+                    cottageImage4="@{CreateViewModel.cottage}"
                     />
 
 
@@ -486,6 +491,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/checkBoxOneString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.saunaCheck(checked)}"
+                android:checked="@{CreateViewModel.sauna}"
                 />
 
             <CheckBox
@@ -497,6 +503,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/checkBoxTwoString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.petsCheck(checked)}"
+                android:checked="@{CreateViewModel.pets}"
                 />
 
             <CheckBox
@@ -508,6 +515,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/checkBoxThreeString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.smokingCheck(checked)}"
+                android:checked="@{CreateViewModel.smoking}"
                 />
 
             <CheckBox
@@ -519,6 +527,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/checkBoxFourString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.waterCheck(checked)}"
+                android:checked="@{CreateViewModel.water}"
                 />
 
             <CheckBox
@@ -530,6 +539,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/checkBoxFiveString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.powerCheck(checked)}"
+                android:checked="@{CreateViewModel.power}"
                 />
 
             <CheckBox
@@ -541,6 +551,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/checkBoxSixString"
                 android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.hotTubCheck(checked)}"
+                android:checked="@{CreateViewModel.hottub}"
                 />
 
             <View

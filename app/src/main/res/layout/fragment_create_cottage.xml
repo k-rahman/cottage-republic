@@ -1,612 +1,600 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="CreateViewModel"
             type="fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    android:focusable="auto"
-    android:textAlignment="center">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:focusable="auto"
+        android:textAlignment="center">
 
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:contentInsetStartWithNavigation="0dp"
-                android:background="@color/colorPrimary"
-        >
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
                 android:text="@string/cottage_create_title"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginEnd="32dp"
-                tools:text="Screen Title"
-            />
+                tools:text="Screen Title" />
         </com.google.android.material.appbar.MaterialToolbar>
 
-    <androidx.core.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
 
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:fillViewport="true"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="128dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/title_title_location"
-                android:textColor="@color/colorBlack"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editCottageTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="16dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/editCottageTitleString"
-                android:inputType="textPersonName"
-                android:text="@={CreateViewModel.newCottageTitle}" />
-
-            <EditText
-                android:id="@+id/editCottageLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/editCottageCityString"
-                android:inputType="textPersonName"
-                android:text="@={CreateViewModel.newCottageLocation}"
-
-                />
-
-            <EditText
-                android:id="@+id/editCottageCountry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/editCottageCountryString"
-                android:inputType="textPersonName"
-                android:text="@={CreateViewModel.newCottageCountry}" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/title_price"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/colorBlack"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            android:layout_marginTop="68dp"
+            android:fillViewport="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:orientation="horizontal">
+                android:layout_marginBottom="128dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/title_title_location"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editCottagePrice"
-                    android:layout_width="135dp"
+                    android:id="@+id/editCottageTitle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="16dp"
                     android:autofillHints=""
                     android:ems="10"
-                    android:hint="@string/editCottagePriceString"
-                    android:inputType="numberSigned"
-                    app:CottagePrice="@={CreateViewModel.newCottagePrice}"
+                    android:hint="@string/editCottageTitleString"
+                    android:inputType="textPersonName"
+                    android:text="@={CreateViewModel.newCottageTitle}" />
+
+                <EditText
+                    android:id="@+id/editCottageLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/editCottageCityString"
+                    android:inputType="textPersonName"
+                    android:text="@={CreateViewModel.newCottageLocation}"
+
                     />
 
-<!--                 android:text="@={CreateViewModel.newCottagePrice}" -->
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/editCottageCountry"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="50dp"
-                    android:layout_weight="1"
-                    android:text="@string/stringPriceAppend" />
-            </LinearLayout>
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/editCottageCountryString"
+                    android:inputType="textPersonName"
+                    android:text="@={CreateViewModel.newCottageCountry}" />
 
-            <View
-                android:id="@+id/divider1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/textGuestAmountString"
-                android:textColor="@color/colorBlack"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinnerGuestAmount"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/colorWhite"
-                app:entries="@{CreateViewModel.amountOfGuests}"
-                app:numberOfGuests="@={CreateViewModel.numberOfGuests}"
-                />
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                />
-
-
-
-            <TextView
-                android:id="@+id/imagesTest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/title_images"
-                android:textColor="@color/colorBlack"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-<!--            <ImageSwitcher-->
-<!--                android:id="@+id/imageSwitcher"-->
-<!--                android:layout_width="200dp"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                />-->
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/imagesView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/mainImage"
-                    android:layout_width="175dp"
-                    android:layout_height="175dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="3dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="gone" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/extraImage1"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toEndOf="@+id/mainImage"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="gone" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/extraImage2"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/title_price"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editCottagePrice"
+                        android:layout_width="135dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_weight="1"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="@string/editCottagePriceString"
+                        android:inputType="numberSigned"
+                        app:CottagePrice="@={CreateViewModel.newCottagePrice}" />
+
+                    <!--                 android:text="@={CreateViewModel.newCottagePrice}" -->
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="50dp"
+                        android:layout_weight="1"
+                        android:text="@string/stringPriceAppend" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/extraImage1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="gone" />
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/extraImage3"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/mainImage"
-                    tools:visibility="gone" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/extraImage4"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/extraImage3"
-                    tools:visibility="gone" />
+                    android:text="@string/textGuestAmountString"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerGuestAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/colorWhite"
+                    app:entries="@{CreateViewModel.amountOfGuests}"
+                    app:numberOfGuests="@={CreateViewModel.numberOfGuests}" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            android:orientation="horizontal"
-            >
+                <TextView
+                    android:id="@+id/imagesTest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/title_images"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:id="@+id/previousButton"-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:text="Previous"-->
-<!--                />-->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/pickImageButton"
-                android:background="@drawable/shape_continue_border"
-                android:layout_width="match_parent"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_height="50dp"
-                android:textColor="@color/colorWhite"
-                android:text="Pick Image(s)*" />
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:id="@+id/nextButton"-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:text="Next"-->
-<!--                />-->
-        </LinearLayout>
+                <!--            <ImageSwitcher-->
+                <!--                android:id="@+id/imageSwitcher"-->
+                <!--                android:layout_width="200dp"-->
+                <!--                android:layout_height="200dp"-->
+                <!--                android:layout_marginTop="8dp"-->
+                <!--                android:layout_marginBottom="8dp"-->
+                <!--                />-->
 
-            <View
-                android:id="@+id/divider6"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/imagesView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/mainImage"
+                        android:layout_width="175dp"
+                        android:layout_height="175dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="3dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="gone" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/extraImage1"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toEndOf="@+id/mainImage"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="gone" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/extraImage2"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/extraImage1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="gone" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/extraImage3"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/mainImage"
+                        tools:visibility="gone" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/extraImage4"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/extraImage3"
+                        tools:visibility="gone" />
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/editCottageDescriptionString"
-                android:textColor="@color/colorBlack"
-                android:layout_marginStart="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <EditText
-                android:id="@+id/editCottageDescription"
-                android:layout_width="match_parent"
-                android:layout_height="128dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/description_box_border"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/editCottageDescription"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                android:maxLines="12"
-                android:padding="5dp"
-                android:text="@={CreateViewModel.newCottageDescription}" />
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/colorBlack"
-                android:text="@string/textPreciseLocationString"
-                android:layout_marginStart="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-<!--            <FrameLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="308dp"-->
-<!--                android:layout_marginLeft="8dp"-->
-<!--                android:layout_marginRight="8dp"-->
-<!--                android:background="#679854"-->
-<!--                android:clickable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:focusableInTouchMode="true"-->
-<!--                android:forceHasOverlappingRendering="true">-->
-
-<!--            </FrameLayout>-->
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cottage_map_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cottage_map_header"
-                android:elevation="50dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="5dp"
-                android:layout_marginTop="16dp"
-                >
-                <com.mapbox.mapboxsdk.maps.MapView
-                    android:id="@+id/cottage_map"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cottage_map_header"
-                    android:background="@drawable/shape_searchbar_borders"
-                    >
-                    <View
-                        android:id="@+id/cottage_ma_clickable"
-                        android:layout_height="match_parent"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:orientation="horizontal">
+
+                    <!--        <androidx.appcompat.widget.AppCompatButton-->
+                    <!--                android:id="@+id/previousButton"-->
+                    <!--                android:layout_width="100dp"-->
+                    <!--                android:layout_height="50dp"-->
+                    <!--                android:text="Previous"-->
+                    <!--                />-->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/pickImageButton"
                         android:layout_width="match_parent"
-                        android:onClick="@{() -> CreateViewModel.onMapClicked()}"
-                        />
-                </com.mapbox.mapboxsdk.maps.MapView>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_height="50dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:background="@drawable/shape_continue_border"
+                        android:text="Pick Image(s)*"
+                        android:textColor="@color/colorWhite" />
+                    <!--            <androidx.appcompat.widget.AppCompatButton-->
+                    <!--                android:id="@+id/nextButton"-->
+                    <!--                android:layout_width="100dp"-->
+                    <!--                android:layout_height="50dp"-->
+                    <!--                android:text="Next"-->
+                    <!--                />-->
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/addessBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:textSize="16sp" />
-
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                />
-
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/textAminities"
-                android:textColor="@color/colorBlack"
-                android:layout_marginStart="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider" />
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <CheckBox
-                    android:id="@+id/checkBox4"
-                    android:layout_width="125dp"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.saunaCheck(checked)}"
-                    android:text="@string/checkBoxOneString"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox6" />
+                    android:layout_marginStart="8dp"
+                    android:text="@string/editCottageDescriptionString"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-                <CheckBox
-                    android:id="@+id/checkBox5"
-                    android:layout_width="125dp"
+                <EditText
+                    android:id="@+id/editCottageDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/description_box_border"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/editCottageDescription"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:maxLines="12"
+                    android:padding="5dp"
+                    android:text="@={CreateViewModel.newCottageDescription}" />
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/textPreciseLocationString"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!--            <FrameLayout-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="308dp"-->
+                <!--                android:layout_marginLeft="8dp"-->
+                <!--                android:layout_marginRight="8dp"-->
+                <!--                android:background="#679854"-->
+                <!--                android:clickable="true"-->
+                <!--                android:focusable="true"-->
+                <!--                android:focusableInTouchMode="true"-->
+                <!--                android:forceHasOverlappingRendering="true">-->
+
+                <!--            </FrameLayout>-->
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cottage_map_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.petsCheck(checked)}"
-                    android:text="@string/checkBoxTwoString"
+                    android:elevation="50dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox10" />
-
-                <CheckBox
-                    android:id="@+id/checkBox6"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.smokingCheck(checked)}"
-                    android:text="@string/checkBoxThreeString"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/cottage_map_header">
 
-                <CheckBox
-                    android:id="@+id/checkBox7"
-                    android:layout_width="125dp"
+                    <com.mapbox.mapboxsdk.maps.MapView
+                        android:id="@+id/cottage_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_searchbar_borders"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cottage_map_header">
+
+                        <View
+                            android:id="@+id/cottage_ma_clickable"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:onClick="@{() -> CreateViewModel.onMapClicked()}" />
+                    </com.mapbox.mapboxsdk.maps.MapView>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/addessBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.waterCheck(checked)}"
-                    android:text="@string/checkBoxFourString"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox5" />
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider" />
 
-                <CheckBox
-                    android:id="@+id/checkBox8"
-                    android:layout_width="125dp"
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/textAminities"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/checkBox4"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.saunaCheck(checked)}"
+                        android:text="@string/checkBoxOneString"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox6" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox5"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.petsCheck(checked)}"
+                        android:text="@string/checkBoxTwoString"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox10" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox6"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.smokingCheck(checked)}"
+                        android:text="@string/checkBoxThreeString"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox7"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.waterCheck(checked)}"
+                        android:text="@string/checkBoxFourString"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox5" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox8"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.powerCheck(checked)}"
+                        android:text="@string/checkBoxFiveString"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox10"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.hotTubCheck(checked)}"
+                        android:text="@string/checkBoxSixString"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.fireplaceCheck(checked)}"
+                        android:text="@string/checkBoxTenString"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox8" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox2"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.kitchenCheck(checked)}"
+                        android:text="@string/checkBoxSevenString"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox3"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.grillCheck(checked)}"
+                        android:text="@string/checkBoxEigthString"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox7" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox9"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.boatCheck(checked)}"
+                        android:text="@string/checkBoxNineString"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginTop="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.powerCheck(checked)}"
-                    android:text="@string/checkBoxFiveString"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider" />
 
-                <CheckBox
-                    android:id="@+id/checkBox10"
-                    android:layout_width="125dp"
+
+                <TextView
+                    android:id="@+id/errorTextView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.hotTubCheck(checked)}"
-                    android:text="@string/checkBoxSixString"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColor="@color/colorAccent" />
 
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.fireplaceCheck(checked)}"
-                    android:text="@string/checkBoxTenString"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox8" />
-
-                <CheckBox
-                    android:id="@+id/checkBox2"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.kitchenCheck(checked)}"
-                    android:text="@string/checkBoxSevenString"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox" />
-
-                <CheckBox
-                    android:id="@+id/checkBox3"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.grillCheck(checked)}"
-                    android:text="@string/checkBoxEigthString"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox7" />
-
-                <CheckBox
-                    android:id="@+id/checkBox9"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.boatCheck(checked)}"
-                    android:text="@string/checkBoxNineString"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/divider5"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:orientation="horizontal">
 
 
-            <TextView
-                android:id="@+id/errorTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/confirmButtonCreateCottage"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_continue_border"
+                        android:onClick="@{() -> CreateViewModel.createCottage()}"
+                        android:text="@string/confirmButtonString"
+                        android:textColor="@color/colorWhite" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
-                android:orientation="horizontal">
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/confirmButtonCreateCottage"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_continue_border"
-                    android:text="@string/confirmButtonString"
-                    android:textColor="@color/colorWhite"
-                    android:onClick="@{() -> CreateViewModel.createCottage()}"
-                    />
             </LinearLayout>
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

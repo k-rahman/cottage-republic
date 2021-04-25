@@ -129,7 +129,7 @@ class CottageRepository(
                     price = values["price"].toString().toInt()
 
                 if (values["guests"] != null)
-                    guests = values["guests"].toString().toInt()
+                    guests = values["guests"].toString()
 
                 if (values["amenities"] != null) {
                     amenities.clear()
@@ -180,7 +180,7 @@ class CottageRepository(
                     price = values["price"].toString().toInt()
 
                 if (values["guests"] != null)
-                    guests = values["guests"].toString().toInt()
+                    guests = values["guests"].toString()
 
                 if (values["amenities"] != null) {
                     amenities.clear()

@@ -142,16 +142,16 @@ class CreateCottageFragment : Fragment() {
 
     private fun pickImagesIntent(imageNumber: Int) {
         val intent = Intent()
+        intent.type = "image/+"
+        //check if user clicked on image or button
         if (imageNumber > 0) {
-            intent.type = "image/+"
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
             intent.action = Intent.ACTION_GET_CONTENT
             imageListPosition = imageNumber
             startActivityForResult(Intent.createChooser(intent, "select image"), PICK_IMAGES_CODE)
         }
         else {
-
-            intent.type = "image/+"
+            imageListPosition = 0
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "select images"), PICK_IMAGES_CODE)

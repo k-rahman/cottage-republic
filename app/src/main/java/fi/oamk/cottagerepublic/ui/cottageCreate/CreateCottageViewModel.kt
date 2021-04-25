@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -13,7 +14,7 @@ import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
 
-class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
+class CreateCottageViewModel(val cottage:  Cottage?) : ViewModel() {
 
     private val userDataSource = UserRepository(Firebase.database.getReference("users"))
     //database reference
@@ -34,18 +35,17 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
             "6+ Guests"
         )
     )
+
+    val editQuery = MutableLiveData<String>()
+
     val numberOfGuests = MutableLiveData("")
-
-
     val newCottageTitle = MutableLiveData<String>()
     val newCottageLocation = MutableLiveData<String>()
     val newCottageCountry = MutableLiveData<String>()
     val newCottageDescription = MutableLiveData<String>()
     var newCottagePrice = MutableLiveData("0")
     var cottageCoordinates = hashMapOf<String, Double>()
-
     var newCottageAddress = MutableLiveData<String>()
-
     var newCottageImages = arrayListOf<Uri>()
     var newCottageImageNames = arrayListOf<String>()
 
@@ -60,6 +60,21 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     private var _navigateToMap = MutableLiveData<Boolean>()
     val navigateToMap: LiveData<Boolean>
         get() = _navigateToMap
+
+    // When this variable value change, it will trigger navigation to MyCottage Form Screen
+    private val _navigateToMyCottage = MutableLiveData<Cottage?>()
+    val navigateToMyCottage: LiveData<Cottage?>
+        get() = _navigateToMyCottage
+
+    private val _navigateToEditCottage = MutableLiveData<Cottage?>()
+    val navigateToEditCottage: LiveData<Cottage?>
+        get() = _navigateToEditCottage
+
+
+    init {
+        if (cottage != null)
+            _navigateToEditCottage.value = cottage
+    }
 
 
     val newCottageAmenities = mutableListOf<String>()
@@ -86,16 +101,20 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         if (checkFields().isEmpty()) {
             val key = cottageDataSource.createNewCottage(newCottage, newCottageImages)
             userDataSource.pushCottageToUser(newCottage.hostId, key)
-            onContinueClicked()
+            onContinueClicked(newCottage)
         } else
             fillInBoxes.value = checkFields()
-
-
     }
+
+//    fun createEditCottage(cottageArgs) {
+//        val editCottage = Cottage()
+//        editCottage.guests = cottageArgs
+//    }
 
     //check if user has filled in all the required fields
     private fun checkFields(): MutableList<String> {
         var checkTheseFields = mutableListOf<String>()
+
 
         if (!checkTitle())
             checkTheseFields.add("Title")
@@ -114,6 +133,9 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     }
 
     private fun checkTitle(): Boolean {
+        if (cottage != null) {
+            newCottageTitle.value = cottage.cottageLabel
+        }
         return !newCottageTitle.value.isNullOrBlank()
     }
 
@@ -201,19 +223,31 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
         _navigateToMap.value = false
     }
 
-    fun onContinueClicked() {
-        _navigateContinue.value = true
+    fun onContinueClicked(cottage: Cottage) {
+        _navigateToMyCottage.value = cottage
     }
 
     fun onContinueNavigated() {
         _navigateContinue.value = false
     }
 
-
     fun setAddress(newAddress: String) {
         newCottageAddress.value = newAddress
     }
 
+
+
+    fun onMyCottageNavigated() {
+        _navigateToMyCottage.value = null
+    }
+
+    fun checkForPassedArgs(): Boolean {
+        if (cottage != null) {
+            editQuery.value = cottage.cottageLabel
+            return true
+        }
+        return false
+    }
 
 }
 

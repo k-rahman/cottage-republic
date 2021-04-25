@@ -22,27 +22,31 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.mapbox.mapboxsdk.Mapbox
 import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.FragmentCreateCottageBinding
+import fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragmentDirections
 import fi.oamk.cottagerepublic.util.MapUtils
 
+@Suppress("UNCHECKED_CAST")
 class CreateCottageFragment : Fragment() {
     private lateinit var binding: FragmentCreateCottageBinding
     private lateinit var viewModel: CreateCottageViewModel
+    private lateinit var viewModelFactory: CreateCottageViewModelFactory
     private var images: ArrayList<Uri> = arrayListOf()
     private var missingString = ""
     private val PICK_IMAGES_CODE = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        initViewModel()
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        // Is only passing args and showing the cottageLabel that has been passed to this screen
-        // Need to prefill all fields to edit cottage already created
-        val args = CreateCottageFragmentArgs.fromBundle(requireArguments())
-        Toast.makeText(context, "Cottage: ${args.cottage?.cottageLabel}", Toast.LENGTH_SHORT).show()
-
-
         //mapbox key
         Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token))
 
@@ -71,13 +75,21 @@ class CreateCottageFragment : Fragment() {
             }
         })
 
-        viewModel.navigateContinue.observe(viewLifecycleOwner, {
-            if (it) {
-                findNavController().navigateUp()
+//        viewModel.navigateContinue.observe(viewLifecycleOwner, {
+//            if (it) {
+//                findNavController().navigateUp()
+//
+//                viewModel.onMapNavigated()
+//            }
+//        })
 
+        // Navigate back to MyCottages with newly created cottage
+        viewModel.navigateToMyCottage.observe(viewLifecycleOwner) { cottage ->
+            cottage?.let {
+                navigateToMyCottage(it)
                 viewModel.onMapNavigated()
             }
-        })
+        }
 
         //display error if not all required fields were filled in
         viewModel.fillInBoxes.observe(viewLifecycleOwner,{
@@ -134,6 +146,14 @@ class CreateCottageFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         binding.toolbar.setupWithNavController(findNavController(), appBarConfiguration)
         binding.toolbar.setNavigationIcon(R.drawable.icon_back_arrow_24)
+    }
+
+    private fun initViewModel() {
+        // ViewModelProvider returns an existing ViewModel if one exists,
+        // or it creates a new one if it does not already exist.
+        val cottage = CreateCottageFragmentArgs.fromBundle(requireArguments()).cottage
+        viewModelFactory = CreateCottageViewModelFactory(cottage)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CreateCottageViewModel::class.java)
     }
 
     //images functions
@@ -241,7 +261,11 @@ class CreateCottageFragment : Fragment() {
             binding.extraImage4.setImageURI(null)
     }
 
-
-
-
+    private fun navigateToMyCottage(cottage: Cottage) {
+        // Pass the new cottage as an argument back to MyCottages Screen
+        findNavController().navigate(
+            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment(cottage)
+        )
+        viewModel.onMyCottageNavigated()
+    }
 }

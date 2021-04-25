@@ -63,9 +63,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Title and Location"
+                android:text="@string/title_title_location"
                 android:textColor="@color/colorBlack"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -112,6 +112,17 @@
                 android:inputType="textPersonName"
                 android:text="@={CreateViewModel.newCottageCountry}" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/title_price"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,7 +168,7 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/textGuestAmountString"
                 android:textColor="@color/colorBlack"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -190,9 +201,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:text="Images"
+                android:text="@string/title_images"
                 android:textColor="@color/colorBlack"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
 <!--            <ImageSwitcher-->
@@ -323,7 +334,7 @@
                 android:text="@string/editCottageDescriptionString"
                 android:textColor="@color/colorBlack"
                 android:layout_marginStart="8dp"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <EditText
@@ -361,7 +372,7 @@
                 android:textColor="@color/colorBlack"
                 android:text="@string/textPreciseLocationString"
                 android:layout_marginStart="8dp"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
 <!--            <FrameLayout-->
@@ -435,7 +446,7 @@
                 android:text="@string/textAminities"
                 android:textColor="@color/colorBlack"
                 android:layout_marginStart="8dp"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
 

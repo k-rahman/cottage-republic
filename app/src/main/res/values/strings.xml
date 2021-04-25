@@ -39,7 +39,13 @@
     <string name="login">Login</string>
 
     <!-- create cottage screen -->
-    <string name="cottage_create_title"> "New Cottage" </string>
+
+    <string name="cottage_create_title"> New Cottage </string>
+    <string name="title_title_location"> Title and Location </string>
+    <string name="title_amenities"> Amenities </string>
+    <string name="title_location"> Precise cottage location </string>
+    <string name="title_images"> Images </string>
+    <string name="title_price"> Cottage Price </string>
     <string name="editCottageTitleString">Cottage Title</string>
     <string name="editCottageCityString">City</string>
     <string name="editCottageCountryString">Country</string>
@@ -50,7 +56,7 @@
     <string name="textPreciseLocationString">Precise cottage location: </string>
     <string name="cancelButtonString">Cancel</string>
     <string name="confirmButtonString">Create Cottage</string>
-    <string name="textAminities">Aminities</string>
+    <string name="textAminities">Amenities</string>
     <string name="checkBoxOneString"> Sauna </string>
     <string name="checkBoxTwoString"> Pets </string>
     <string name="checkBoxThreeString"> Smoking </string>

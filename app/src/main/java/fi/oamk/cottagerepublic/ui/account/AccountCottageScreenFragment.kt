@@ -1,6 +1,7 @@
 package fi.oamk.cottagerepublic.ui.account
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +32,7 @@ class AccountCottageScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val args = AccountCottageScreenFragmentArgs.fromBundle(requireArguments())
+//        val args = AccountCottageScreenFragmentArgs.fromBundle(requireArguments())
 //        Toast.makeText(context, "Cottage: ${args.cottage?.cottageLabel}", Toast.LENGTH_SHORT).show()
 
         // Get a reference to the binding object and inflate the fragment views.
@@ -73,15 +74,13 @@ class AccountCottageScreenFragment : Fragment() {
 
     private fun setMyCottagesAdapters() {
         myCottagesAdapter = MyCottagesAdapter(MyCottageListener {
-            // handle my cottage click
-            // Toast.makeText(context, "${it.cottageLabel}", Toast.LENGTH_SHORT).show()
+            // Handle onMyCottage Click to Edit cottage
             viewModel.onMyCottageClicked(it)
-            // Toast.makeText(context, "clicked here myCottageAdapter", Toast.LENGTH_LONG).show()
         }, DeleteCottageListener { cottageId ->
 //            Toast.makeText(context, cottageId, Toast.LENGTH_SHORT).show()
             // want to invoke the dialog here
             confirmDelete(cottageId)
-            myCottagesAdapter.currentList
+
         })
 
         with(binding) {
@@ -134,11 +133,7 @@ class AccountCottageScreenFragment : Fragment() {
                     // Respond to positive button press
                     // Need to delete the cottage from the database
                     viewModel.deleteCottageFromList(cottageId)
-//                    Toast.makeText(
-//                    context,
-//                    "$it",
-//                    Toast.LENGTH_SHORT
-//                ).show()
+                    myCottagesAdapter.currentList
                 }
                 .show()
         }

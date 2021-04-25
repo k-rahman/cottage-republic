@@ -28,6 +28,7 @@ class CottageDetailFragment : Fragment() {
     private lateinit var binding: FragmentCottageDetailScreenBinding
     private lateinit var viewModelFactory: CottageDetailViewModelFactory
     private lateinit var viewModel: CottageDetailViewModel
+    private lateinit var selectedCottage: Cottage
     private lateinit var cottageImageAdapter: CottageImageAdapter
     private lateinit var amenitiesAdapter: AmenityAdapter
     private lateinit var navigateUp: OnBackPressedCallback
@@ -43,6 +44,9 @@ class CottageDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cottage_detail_screen, container, false)
 
+        // get passed args
+        selectedCottage = CottageDetailFragmentArgs.fromBundle(requireArguments()).selectedCottage
+
         // hide bottom navigation
         requireActivity().findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
 
@@ -53,8 +57,10 @@ class CottageDetailFragment : Fragment() {
         setObservers(savedInstanceState)
         initBackPressCallBacks()
 
-        binding.viewModel = viewModel
+//        binding.cottageImageSlider.setCurrentItem(viewModel.previousImagePosition, true)
+
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         return binding.root
     }
@@ -70,7 +76,7 @@ class CottageDetailFragment : Fragment() {
         // Scoping a ViewModel to the Navigation Graph
         val backStackEntry = findNavController().getBackStackEntry(R.id.cottageDetailFragment)
         viewModelFactory =
-            CottageDetailViewModelFactory(CottageDetailFragmentArgs.fromBundle(requireArguments()).selectedCottage)
+            CottageDetailViewModelFactory(selectedCottage)
         viewModel = ViewModelProvider(backStackEntry, viewModelFactory).get(CottageDetailViewModel::class.java)
     }
 
@@ -88,7 +94,7 @@ class CottageDetailFragment : Fragment() {
 
     private fun initCottageDetailAdapters() {
         cottageImageAdapter = CottageImageAdapter(CottageImageListener {
-//            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.imageFragment)
         })
 
         binding.cottageImageSlider.adapter = cottageImageAdapter
@@ -106,6 +112,12 @@ class CottageDetailFragment : Fragment() {
                 populateAdapters(it)
                 initMap(savedInstanceState, it)
             }
+        })
+
+        viewModel.currentImage.observe(viewLifecycleOwner, {
+            // currentImage value will be set to currentItem, if viewPager2 currentItem is different
+            if (it != binding.cottageImageSlider.currentItem)
+                binding.cottageImageSlider.setCurrentItem(it, false)
         })
 
         viewModel.hostData.observe(viewLifecycleOwner, {

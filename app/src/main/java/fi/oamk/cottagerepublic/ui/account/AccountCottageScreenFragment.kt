@@ -1,6 +1,5 @@
 package fi.oamk.cottagerepublic.ui.account
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -25,12 +23,17 @@ class AccountCottageScreenFragment : Fragment() {
     private lateinit var binding: FragmentAccountCottageScreenBinding
     private lateinit var viewModel: MyCottagesViewModel
     private lateinit var myCottagesAdapter: MyCottagesAdapter
+//    private var deleteConfirmed: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        val args = AccountCottageScreenFragmentArgs.fromBundle(requireArguments())
+//        Toast.makeText(context, "Cottage: ${args.cottage?.cottageLabel}", Toast.LENGTH_SHORT).show()
+
         // Get a reference to the binding object and inflate the fragment views.
         binding = DataBindingUtil.inflate(
             inflater,
@@ -53,7 +56,6 @@ class AccountCottageScreenFragment : Fragment() {
 
         // Open form to upload new cottage
         binding.fabAddCottage.setOnClickListener {
-//            findNavController().navigate(R.id.action_accountCottageScreenFragment_to_CreateCottageFragment)
             findNavController().navigate(
                 AccountCottageScreenFragmentDirections.actionAccountCottageScreenFragmentToCreateCottageFragment(null)
             )
@@ -62,7 +64,6 @@ class AccountCottageScreenFragment : Fragment() {
         return binding.root
     }
 
-    //init toolbar
     private fun initToolbar() {
         // toolbar configuration
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
@@ -73,13 +74,14 @@ class AccountCottageScreenFragment : Fragment() {
     private fun setMyCottagesAdapters() {
         myCottagesAdapter = MyCottagesAdapter(MyCottageListener {
             // handle my cottage click
-//            Toast.makeText(context, "${it.cottageLabel}", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(context, "${it.cottageLabel}", Toast.LENGTH_SHORT).show()
             viewModel.onMyCottageClicked(it)
-//            Toast.makeText(context, "clicked here myCottageAdapter", Toast.LENGTH_LONG).show()
+            // Toast.makeText(context, "clicked here myCottageAdapter", Toast.LENGTH_LONG).show()
         }, DeleteCottageListener { cottageId ->
-            Toast.makeText(context, cottageId, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, cottageId, Toast.LENGTH_SHORT).show()
             // want to invoke the dialog here
-            confirmDelete()
+            confirmDelete(cottageId)
+            myCottagesAdapter.currentList
         })
 
         with(binding) {
@@ -88,14 +90,12 @@ class AccountCottageScreenFragment : Fragment() {
     }
 
     private fun setObservers() {
-
         viewModel.myCottagesList.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
                     binding.progressIndicator.show()
                 }
                 is Resource.Success -> {
-
                     // ListAdapter provides a method called submitList() to tell ListAdapter that a new version of the list is available.
                     var cottageList = it.data as MutableList<Cottage>
                     myCottagesAdapter.submitList(
@@ -112,7 +112,6 @@ class AccountCottageScreenFragment : Fragment() {
                 }
             }
         }
-
         // navigate to the cottage edit form and populate all fields with cottage details
         viewModel.navigateToMyCottage.observe(viewLifecycleOwner, Observer { cottage ->
             // Clicked cottage details are being passed to screen for edit
@@ -122,7 +121,7 @@ class AccountCottageScreenFragment : Fragment() {
         })
     }
 
-    private fun confirmDelete() {
+    private fun confirmDelete(cottageId: String) {
         context?.let {
             MaterialAlertDialogBuilder(it)
                 .setTitle(resources.getString(R.string.title))
@@ -134,15 +133,17 @@ class AccountCottageScreenFragment : Fragment() {
                 .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
                     // Respond to positive button press
                     // Need to delete the cottage from the database
-                    Toast.makeText(
-                    context,
-                    "Deleted Cottage",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    viewModel.deleteCottageFromList(cottageId)
+//                    Toast.makeText(
+//                    context,
+//                    "$it",
+//                    Toast.LENGTH_SHORT
+//                ).show()
                 }
                 .show()
         }
     }
+
 
     private fun navigateToMyCottage(cottage: Cottage) {
         // pass the cottage as an argument to the edit form screen

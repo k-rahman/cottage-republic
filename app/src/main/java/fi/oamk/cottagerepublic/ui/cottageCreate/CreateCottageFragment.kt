@@ -75,8 +75,6 @@ class CreateCottageFragment : Fragment() {
         viewModel.navigateContinue.observe(viewLifecycleOwner, {
             if (it) {
                 findNavController().navigateUp()
-
-                viewModel.onMapNavigated()
             }
         })
 

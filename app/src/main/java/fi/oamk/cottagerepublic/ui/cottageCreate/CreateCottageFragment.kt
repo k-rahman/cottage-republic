@@ -36,12 +36,6 @@ class CreateCottageFragment : Fragment() {
     private var missingString = ""
     private val PICK_IMAGES_CODE = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        initViewModel()
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,14 +50,15 @@ class CreateCottageFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_cottage, container, false)
 
         //set context for shared viewmodel
-        val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
-
-        viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
+//        val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
+//
+//        viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
 
 
         //navigation
 
         initToolbar()
+        initViewModel()
 
         viewModel.navigateToMap.observe(viewLifecycleOwner, {
             if (it) {
@@ -109,7 +104,7 @@ class CreateCottageFragment : Fragment() {
         )
 
         //create an image arraylist, check if it already exists in viewmodel
-        binding.imagesView.isVisible = false
+//        binding.imagesView.isVisible = false
         images = ArrayList()
         if (viewModel.newCottageImages != emptyList<Uri>())
         {
@@ -153,7 +148,8 @@ class CreateCottageFragment : Fragment() {
         // or it creates a new one if it does not already exist.
         val cottage = CreateCottageFragmentArgs.fromBundle(requireArguments()).cottage
         viewModelFactory = CreateCottageViewModelFactory(cottage)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CreateCottageViewModel::class.java)
+        val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
+        viewModel = ViewModelProvider(backStackEntry, viewModelFactory).get(CreateCottageViewModel::class.java)
     }
 
     //images functions

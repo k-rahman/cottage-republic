@@ -4,8 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/navigation"
-        app:startDestination="@id/homeScreenFragment"
->
+    app:startDestination="@id/homeScreenFragment">
 
     <fragment
             android:id="@+id/homeScreenFragment"
@@ -171,5 +170,11 @@
     >
         <argument android:name="total" app:argType="integer"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/accountFAQFragment"
+        android:name="fi.oamk.cottagerepublic.ui.account.AccountFAQFragment"
+        android:label="fragment_account_faq"
+        tools:layout="@layout/fragment_account_faq" />
 
 </navigation>

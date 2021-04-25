@@ -18,6 +18,7 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.databinding.FragmentMapBinding
 import fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageViewModel
+import fi.oamk.cottagerepublic.ui.cottageCreate.CreateCottageViewModelFactory
 import fi.oamk.cottagerepublic.util.MapUtils
 
 
@@ -25,6 +26,7 @@ class CreateCottageMapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private lateinit var binding: FragmentMapBinding
     private lateinit var viewModel: CreateCottageViewModel
     private lateinit var mapUtils: MapUtils
+    private lateinit var viewModelFactory: CreateCottageViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,9 @@ class CreateCottageMapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
         //init viewModel and binding
         val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
-        viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
+        viewModelFactory = CreateCottageViewModelFactory(null)
+        viewModel = ViewModelProvider(backStackEntry, viewModelFactory).get(CreateCottageViewModel::class.java)
+
         binding.createViewModel = viewModel
 
         // toolbar configuration

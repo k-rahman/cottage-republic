@@ -159,8 +159,6 @@ class CreateCottageFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
-
         if (requestCode == PICK_IMAGES_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data!!.clipData != null) {
@@ -221,7 +219,7 @@ class CreateCottageFragment : Fragment() {
         val count = this.images.size
 
         binding.imagesView.isVisible = true
-
+        binding.pickImageButton.text = "Re-pick images"
         //set main image
         binding.mainImage.setImageURI(this.images[0])
         binding.mainImage.setOnClickListener {
@@ -235,29 +233,41 @@ class CreateCottageFragment : Fragment() {
             binding.extraImage1.setOnClickListener {
                 pickImagesIntent(2)
             }
-        } else
+        } else {
+            // binding.extraImage1.isVisible = false
             binding.extraImage1.setImageURI(null)
+            binding.extraImage1.setOnLongClickListener(null)
+        }
         if (count >= 3) {
             binding.extraImage2.setImageURI(this.images[2])
             binding.extraImage2.setOnClickListener {
                 pickImagesIntent(3)
             }
-        } else
+        } else {
             binding.extraImage2.setImageURI(null)
+            binding.extraImage2.setOnLongClickListener(null)
+        }
+          //  binding.extraImage2.isVisible = false
         if (count >= 4) {
             binding.extraImage3.setImageURI(this.images[3])
             binding.extraImage3.setOnClickListener {
                 pickImagesIntent(4)
             }
-        } else
+        } else {
             binding.extraImage3.setImageURI(null)
+            binding.extraImage3.setOnLongClickListener(null)
+        }
+          //  binding.extraImage3.isVisible = false
         if (count >= 5) {
             binding.extraImage4.setImageURI(this.images[4])
             binding.extraImage4.setOnClickListener {
                 pickImagesIntent(5)
             }
-        } else
+        } else {
             binding.extraImage4.setImageURI(null)
+            binding.extraImage4.setOnLongClickListener(null)
+        }
+         //   binding.extraImage4.isVisible = false
     }
 
 }

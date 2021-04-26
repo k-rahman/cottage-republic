@@ -226,8 +226,9 @@
                         android:scaleType="centerCrop"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="gone" />
-
+                        tools:visibility="gone"
+                        cottageImage0="@{CreateViewModel.cottage}"
+                    />
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/extraImage1"
                         android:layout_width="70dp"
@@ -238,7 +239,9 @@
                         android:scaleType="centerCrop"
                         app:layout_constraintStart_toEndOf="@+id/mainImage"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="gone" />
+                        tools:visibility="gone"
+                        cottageImage1="@{CreateViewModel.cottage}"
+                    />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/extraImage2"
@@ -252,7 +255,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/extraImage1"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="gone" />
+                        tools:visibility="gone"
+                        cottageImage2="@{CreateViewModel.cottage}"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/extraImage3"
@@ -264,7 +268,8 @@
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/mainImage"
-                        tools:visibility="gone" />
+                        tools:visibility="gone"
+                        cottageImage3="@{CreateViewModel.cottage}"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/extraImage4"
@@ -278,7 +283,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/extraImage3"
-                        tools:visibility="gone" />
+                        tools:visibility="gone"
+                        cottageImage4="@{CreateViewModel.cottage}"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -454,7 +460,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.saunaCheck(checked)}"
                         android:text="@string/checkBoxOneString"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox6" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox6"
+                        android:checked="@{CreateViewModel.sauna}" />
 
                     <CheckBox
                         android:id="@+id/checkBox5"
@@ -465,7 +472,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.petsCheck(checked)}"
                         android:text="@string/checkBoxTwoString"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox10" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox10"
+                        android:checked="@{CreateViewModel.pets}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox6"
@@ -476,7 +484,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.smokingCheck(checked)}"
                         android:text="@string/checkBoxThreeString"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:checked="@{CreateViewModel.smoking}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox7"
@@ -487,7 +496,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.waterCheck(checked)}"
                         android:text="@string/checkBoxFourString"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox5" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox5"
+                        android:checked="@{CreateViewModel.water}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox8"
@@ -498,7 +508,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.powerCheck(checked)}"
                         android:text="@string/checkBoxFiveString"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox4"
+                        android:checked="@{CreateViewModel.power}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox10"
@@ -509,7 +520,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.hotTubCheck(checked)}"
                         android:text="@string/checkBoxSixString"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:checked="@{CreateViewModel.hottub}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox"
@@ -520,7 +532,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.fireplaceCheck(checked)}"
                         android:text="@string/checkBoxTenString"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox8" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox8"
+                        android:checked="@{CreateViewModel.fireplace}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox2"
@@ -531,7 +544,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.kitchenCheck(checked)}"
                         android:text="@string/checkBoxSevenString"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+                        android:checked="@{CreateViewModel.kitchen}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox3"
@@ -542,7 +556,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.grillCheck(checked)}"
                         android:text="@string/checkBoxEigthString"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox7" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox7"
+                        android:checked="@{CreateViewModel.grill}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox9"
@@ -553,7 +568,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.boatCheck(checked)}"
                         android:text="@string/checkBoxNineString"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox3"
+                        android:checked="@{CreateViewModel.boat}"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,12 +1,12 @@
- /*
+/*
 To display your data in a RecyclerView, you need the following parts:
- - RecyclerView: To create an instance of RecyclerView, define a <RecyclerView> element in the layout file.
- - LayoutManager: A RecyclerView uses a LayoutManager to organize the layout of the items in the RecyclerView,
-    such as laying them out in a grid or in a linear list.
- - Layout for each item: Create a layout for one item of data in an XML layout file.
- - Adapter: Create an adapter that prepares the data and how it will be displayed in a ViewHolder. Associate the adapter
-    with the RecyclerView.
- */
+- RecyclerView: To create an instance of RecyclerView, define a <RecyclerView> element in the layout file.
+- LayoutManager: A RecyclerView uses a LayoutManager to organize the layout of the items in the RecyclerView,
+   such as laying them out in a grid or in a linear list.
+- Layout for each item: Create a layout for one item of data in an XML layout file.
+- Adapter: Create an adapter that prepares the data and how it will be displayed in a ViewHolder. Associate the adapter
+   with the RecyclerView.
+*/
 
 package fi.oamk.cottagerepublic.ui.account
 
@@ -19,9 +19,10 @@ import fi.oamk.cottagerepublic.databinding.ListItemMyCottagesBinding
 import fi.oamk.cottagerepublic.util.CottageDiffCallBack
 
 
-
-
-class MyCottagesAdapter(private val clickListener: MyCottageListener, private val clickListenerDeleteCottageListener: DeleteCottageListener) :
+class MyCottagesAdapter(
+    private val clickListener: MyCottageListener,
+    private val clickListenerDeleteCottageListener: DeleteCottageListener,
+) :
     ListAdapter<Cottage, MyCottagesAdapter.ViewHolder>(CottageDiffCallBack()) {
 
 
@@ -39,7 +40,8 @@ class MyCottagesAdapter(private val clickListener: MyCottageListener, private va
 
     // wrapper around the list item (the card view in this case)
     // ViewHolder is a private inner class of MyCottagesAdapter class
-    class ViewHolder private constructor(val binding: ListItemMyCottagesBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: ListItemMyCottagesBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         // binding data in ViewHolder is a better practice
         fun bind(
@@ -70,11 +72,6 @@ class MyCottagesAdapter(private val clickListener: MyCottageListener, private va
         }
     }
 
-
-
-
-
-
 }
 
 // handles click on recycleView item
@@ -82,9 +79,11 @@ class MyCottageListener(val clickListener: (cottage: Cottage) -> Unit) {
     fun onClick(cottage: Cottage) = clickListener(cottage)
 }
 
- class DeleteCottageListener(val clickListener: (cottageId: String) -> Unit) {
-     fun onClick(cottage: Cottage) = clickListener(cottage.cottageId)
- }
+class DeleteCottageListener(val clickListener: (cottageId: String) -> Unit) {
+    fun onClick(cottage: Cottage) = clickListener(cottage.cottageId)
+}
+
+
 
 
 

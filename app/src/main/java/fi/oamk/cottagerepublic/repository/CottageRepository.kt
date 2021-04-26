@@ -41,7 +41,7 @@ class CottageRepository(
 
         var key = databaseReference.push().key
         key = "cottage$key"
-        uploadImages(images, key)
+        uploadImages(images)
         cottage.cottageId = key.toString()
 
         val childUpdates = hashMapOf<String, Any>(
@@ -53,7 +53,10 @@ class CottageRepository(
         return key
     }
 
-    private fun uploadImages(images: ArrayList<Uri>, key: String) {
+
+
+
+    private fun uploadImages(images: ArrayList<Uri>) {
 
         for (image in images) {
             Log.v("imageurl:", image.toString())
@@ -89,6 +92,27 @@ class CottageRepository(
         val cottagesList = createCottageList(dataSnapshot)
 
         return Resource.Success(cottagesList)
+    }
+
+    suspend fun deleteCottageById(cottageId: String) {
+        databaseReference.child(cottageId).removeValue().await()
+    }
+
+    fun updateCottageByCottageId(cottage: Cottage, images: ArrayList<Uri>) {
+        uploadImages(images)
+        val childUpdates = hashMapOf(
+            "${cottage.cottageId}/description" to cottage.description,
+            "${cottage.cottageId}/guests" to cottage.guests,
+            "${cottage.cottageId}/price" to cottage.price,
+            "${cottage.cottageId}/cottageLabel" to cottage.cottageLabel,
+            "${cottage.cottageId}/amenities" to cottage.amenities,
+            "${cottage.cottageId}/coordinates" to cottage.coordinates,
+            "${cottage.cottageId}/images" to cottage.images,
+            "${cottage.cottageId}/location" to cottage.location,
+        )
+        databaseReference.updateChildren(childUpdates)
+
+
     }
 
     suspend fun getPopularCottages(limit: Int): Resource<MutableList<Cottage>> {
@@ -129,7 +153,7 @@ class CottageRepository(
                     price = values["price"].toString().toInt()
 
                 if (values["guests"] != null)
-                    guests = values["guests"].toString().toInt()
+                    guests = values["guests"].toString()
 
                 if (values["amenities"] != null) {
                     amenities.clear()
@@ -180,7 +204,7 @@ class CottageRepository(
                     price = values["price"].toString().toInt()
 
                 if (values["guests"] != null)
-                    guests = values["guests"].toString().toInt()
+                    guests = values["guests"].toString()
 
                 if (values["amenities"] != null) {
                     amenities.clear()

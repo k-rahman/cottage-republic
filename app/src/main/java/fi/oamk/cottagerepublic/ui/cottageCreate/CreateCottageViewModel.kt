@@ -75,6 +75,7 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
             newCottageLocation.value = cottage.location["city"]
             newCottageCountry.value = cottage.location["country"]
             newCottageDescription.value = cottage.description
+            newCottageImageNames = cottage.images as ArrayList<String>
             cottageCoordinates = cottage.coordinates
             newCottagePrice.value = cottage.price.toString()
             numberOfGuests.value = cottage.guests
@@ -149,8 +150,6 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
                 userDataSource.pushCottageToUser(newCottage.hostId, key)
                 onContinueClicked(newCottage)
             }
-
-
         } else
             fillInBoxes.value = checkFields()
     }

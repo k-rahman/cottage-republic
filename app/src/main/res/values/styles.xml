@@ -45,4 +45,15 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <!-- register -->
+    <style name="registerInputStyle" parent="">
+        <item name="hintTextColor">@color/selector_register_input</item>
+        <item name="boxBackgroundColor">@color/colorBackground</item>
+        <item name="boxStrokeColor">@color/selector_register_input</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeErrorColor">@color/colorAccent</item>
+        <item name="errorTextColor">@color/colorAccent</item>
+        <item name="errorIconTint">@color/colorAccent</item>
+    </style>
+
 </resources>

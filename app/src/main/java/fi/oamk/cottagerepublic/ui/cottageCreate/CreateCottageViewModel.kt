@@ -24,7 +24,7 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
     //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(
-            Firebase.database.reference,
+            Firebase.database.getReference("cottages"),
             Firebase.storage.reference
         )
 
@@ -60,6 +60,12 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
     var power = false
     var pets = false
     var smoking = false
+    var fireplace = false
+    var kitchen = false
+    var boat = false
+    var grill = false
+
+
 
 
     init {
@@ -85,6 +91,14 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
                     pets = true
                 if (amenity == "smoking")
                     smoking = true
+                if (amenity == "grill")
+                    grill = true
+                if (amenity == "kitchen")
+                    kitchen = true
+                if (amenity == "boat")
+                    boat = true
+                if (amenity == "fireplace")
+                    fireplace = true
             }
         }
     }
@@ -126,9 +140,17 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         newCottage.images = newCottageImageNames
         //create new cottage
         if (checkFields().isEmpty()) {
-            val key = cottageDataSource.createNewCottage(newCottage, newCottageImages)
-            userDataSource.pushCottageToUser(newCottage.hostId, key)
-            onContinueClicked(newCottage)
+            if (cottage != null) {
+                newCottage.cottageId = cottage.cottageId
+                cottageDataSource.updateCottageByCottageId(newCottage, newCottageImages)
+                onContinueClicked(newCottage)
+            } else {
+                val key = cottageDataSource.createNewCottage(newCottage, newCottageImages)
+                userDataSource.pushCottageToUser(newCottage.hostId, key)
+                onContinueClicked(newCottage)
+            }
+
+
         } else
             fillInBoxes.value = checkFields()
     }

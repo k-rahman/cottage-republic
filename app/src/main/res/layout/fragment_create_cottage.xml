@@ -532,7 +532,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.fireplaceCheck(checked)}"
                         android:text="@string/checkBoxTenString"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox8" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox8"
+                        android:checked="@{CreateViewModel.fireplace}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox2"
@@ -543,7 +544,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.kitchenCheck(checked)}"
                         android:text="@string/checkBoxSevenString"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+                        android:checked="@{CreateViewModel.kitchen}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox3"
@@ -554,7 +556,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.grillCheck(checked)}"
                         android:text="@string/checkBoxEigthString"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox7" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox7"
+                        android:checked="@{CreateViewModel.grill}"/>
 
                     <CheckBox
                         android:id="@+id/checkBox9"
@@ -565,7 +568,8 @@
                         android:onCheckedChanged="@{(switch, checked) -> CreateViewModel.boatCheck(checked)}"
                         android:text="@string/checkBoxNineString"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+                        app:layout_constraintTop_toBottomOf="@+id/checkBox3"
+                        android:checked="@{CreateViewModel.boat}"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -86,8 +86,9 @@ class AccountScreenFragment : Fragment() {
 
         // observe navigate if true will return to homescreen when user logs out of system
         authViewModel.navigate.observe(viewLifecycleOwner) {
+            val nav = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
             if (it) {
-                findNavController().navigate(R.id.homeFragment)
+                findNavController().navigate(R.id.homeFragment, null, nav)
                 authViewModel.onNavigated()
             }
 

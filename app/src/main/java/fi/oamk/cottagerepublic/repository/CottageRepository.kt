@@ -3,7 +3,6 @@ package fi.oamk.cottagerepublic.repository
 import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
@@ -50,7 +49,7 @@ class CottageRepository(
         return key
     }
 
-    private fun uploadImages(images: ArrayList<Uri>, key: String) {
+    private fun uploadImages(images: ArrayList<Uri>) {
 
         for (image in images) {
             Log.v("imageurl:", image.toString())

@@ -132,8 +132,11 @@ class AccountCottageScreenFragment : Fragment() {
                 .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
                     // Respond to positive button press
                     // Need to delete the cottage from the database
-                    viewModel.deleteCottageFromList(cottageId)
-                    myCottagesAdapter.currentList
+                    viewModel.deleteCottageFromList(cottageId).observe(viewLifecycleOwner) {
+                        myCottagesAdapter.submitList(
+                            it.toList().reversed()
+                        )
+                    }
                 }
                 .show()
         }

@@ -69,6 +69,14 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         // if there is a logged in user to save data
     }
 
+    suspend fun deleteCottageIdByHostId(cottageId: String) {
+        databaseReference
+            .child(getCurrentUserId())
+            .child("cottages")
+            .child(cottageId)
+            .removeValue().await()
+    }
+
     suspend fun getHostDataById(hostId: String): Resource<Any> {
         return try {
             val snapshot = databaseReference.child(hostId).get().await()

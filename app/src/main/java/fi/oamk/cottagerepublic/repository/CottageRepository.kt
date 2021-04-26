@@ -3,6 +3,7 @@ package fi.oamk.cottagerepublic.repository
 import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
@@ -49,9 +50,35 @@ class CottageRepository(
         return key
     }
 
-    suspend fun deleteCottageById(cottageId: String) {
-        databaseReference.child(cottageId).removeValue().await()
+    private fun uploadImages(images: ArrayList<Uri>, key: String) {
+
+        for (image in images) {
+            Log.v("imageurl:", image.toString())
+
+            val metadata = storageMetadata {
+                contentType = "image/jpeg"
+            }
+
+            val uploadTask = storageReference.child("${image.lastPathSegment}").putFile(image, metadata)
+            uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
+                val progress = (100.0 * bytesTransferred) / totalByteCount
+                Log.d(TAG, "Upload is $progress% done")
+            }.addOnPausedListener {
+                Log.d(TAG, "Upload is paused")
+            }.addOnFailureListener {
+                // Handle unsuccessful uploads
+                Log.d(TAG, "Upload failed")
+            }.addOnSuccessListener {
+                // Handle successful uploads on complete
+                Log.d(TAG, "Upload Succes!")
+                // ...
+            }
+
+        }
+
+
     }
+
 
     suspend fun getAllCottages(): Resource<MutableList<Cottage>> {
         val cottages = mutableListOf<Cottage>()
@@ -65,6 +92,27 @@ class CottageRepository(
         }
 
         return Resource.Success(cottages)
+    }
+
+    suspend fun deleteCottageById(cottageId: String) {
+        databaseReference.child(cottageId).removeValue().await()
+    }
+
+    fun updateCottageByCottageId(cottage: Cottage, images: ArrayList<Uri>) {
+        uploadImages(images)
+        val childUpdates = hashMapOf(
+            "${cottage.cottageId}/description" to cottage.description,
+            "${cottage.cottageId}/guests" to cottage.guests,
+            "${cottage.cottageId}/price" to cottage.price,
+            "${cottage.cottageId}/cottageLabel" to cottage.cottageLabel,
+            "${cottage.cottageId}/amenities" to cottage.amenities,
+            "${cottage.cottageId}/coordinates" to cottage.coordinates,
+            "${cottage.cottageId}/images" to cottage.images,
+            "${cottage.cottageId}/location" to cottage.location,
+        )
+        databaseReference.updateChildren(childUpdates)
+
+
     }
 
     suspend fun getPopularCottages(limit: Int): Resource<MutableList<Cottage>> {
@@ -120,53 +168,26 @@ class CottageRepository(
             if (values["price"] != null)
                 price = values["price"].toString().toInt()
 
-            if (values["guests"] != null)
-                guests = values["guests"].toString()
+                if (values["guests"] != null)
+                    guests = values["guests"].toString()
 
-            if (values["amenities"] != null) {
-                amenities.clear()
-                for (amenity in values["amenities"] as ArrayList<String>)
-                    amenities.add(amenity)
+                if (values["amenities"] != null) {
+                    amenities.clear()
+                    for (amenity in values["amenities"] as ArrayList<String>)
+                        amenities.add(amenity)
+                }
+
+                if (values["description"] != null)
+                    description = values["description"].toString()
+
+                if (values["coordinates"] != null)
+                    for (coordinate in values["coordinates"] as HashMap<String, Double>)
+                        coordinates[coordinate.key] = coordinate.value
+
+                if (values["images"] != null)
+                    for (image in values["images"] as ArrayList<String>)
+                        images.add(storageReference.child(image).downloadUrl.await().toString())
             }
-
-            if (values["description"] != null)
-                description = values["description"].toString()
-
-            if (values["coordinates"] != null)
-                for (coordinate in values["coordinates"] as HashMap<String, Double>)
-                    coordinates[coordinate.key] = coordinate.value
-
-            if (values["images"] != null)
-                for (image in values["images"] as ArrayList<String>)
-                    images.add(storageReference.child(image).downloadUrl.await().toString())
-        }
-
         return newCottage
-    }
-
-    private fun uploadImages(images: ArrayList<Uri>) {
-        for (image in images) {
-            Log.v("imageurl:", image.toString())
-
-            val metadata = storageMetadata {
-                contentType = "image/jpeg"
-            }
-
-            val uploadTask = storageReference.child("${image.lastPathSegment}").putFile(image, metadata)
-            uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
-                val progress = (100.0 * bytesTransferred) / totalByteCount
-                Log.d(TAG, "Upload is $progress% done")
-            }.addOnPausedListener {
-                Log.d(TAG, "Upload is paused")
-            }.addOnFailureListener {
-                // Handle unsuccessful uploads
-                Log.d(TAG, "Upload failed")
-            }.addOnSuccessListener {
-                // Handle successful uploads on complete
-                Log.d(TAG, "Upload Succes!")
-                // ...
-            }
-
-        }
     }
 }

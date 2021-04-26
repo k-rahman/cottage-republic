@@ -79,9 +79,9 @@ class CreateCottageFragment : Fragment() {
 //        })
 
         // Navigate back to MyCottages with newly created cottage
-        viewModel.navigateToMyCottage.observe(viewLifecycleOwner) { cottage ->
-            cottage?.let {
-                navigateToMyCottage(it)
+        viewModel.navigateToMyCottage.observe(viewLifecycleOwner) {
+            it?.let {
+                navigateToMyCottage()
                 viewModel.onMapNavigated()
             }
         }
@@ -103,11 +103,13 @@ class CreateCottageFragment : Fragment() {
         )
 
         //create an image arraylist, check if it already exists in viewmodel
-//        binding.imagesView.isVisible = false
+        binding.imagesView.isVisible = false
         images = ArrayList()
         if (viewModel.newCottageImages != emptyList<Uri>()) {
             images = viewModel.newCottageImages
             displayImages()
+        } else if (viewModel.newCottageImageNames.isNotEmpty()) {
+            binding.imagesView.isVisible = true
         }
 
         //image upload button
@@ -277,10 +279,10 @@ class CreateCottageFragment : Fragment() {
             binding.extraImage4.setImageURI(null)
     }
 
-    private fun navigateToMyCottage(cottage: Cottage) {
+    private fun navigateToMyCottage() {
         // Pass the new cottage as an argument back to MyCottages Screen
         findNavController().navigate(
-            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment(cottage)
+            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment()
         )
         viewModel.onMyCottageNavigated()
     }

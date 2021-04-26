@@ -4,11 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.ReservationRepository
-import fi.oamk.cottagerepublic.repository.UserRepository
 import java.text.SimpleDateFormat
 
 class BookingDetailViewModel(
@@ -17,8 +18,8 @@ class BookingDetailViewModel(
     private val selectedDates: List<String>
 ) :
     AndroidViewModel(application) {
-    private val reservationDataSource = ReservationRepository(Firebase.database.reference)
-    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
+    private val reservationDataSource = ReservationRepository.getInstance(Firebase.database.reference)
+    private val authDataSource = AuthRepository.getInstance(FirebaseAuth.getInstance())
 
     lateinit var checkIn: String
     lateinit var checkOut: String
@@ -71,7 +72,7 @@ class BookingDetailViewModel(
     }
 
     fun onConfirmClicked() {
-        val userId = userDataSource.getCurrentUserId()
+        val userId = authDataSource.getCurrentUserId()
         reservationDataSource.createReservation(userId, selectedCottage.cottageId, selectedDates)
         _navigateToSuccess.value = true
     }

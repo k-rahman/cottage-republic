@@ -1,21 +1,23 @@
 package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Application
-import android.location.Address
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
 
 class CreateCottageViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
+    private val userDataSource = UserRepository.getInstance(Firebase.database.getReference("users"))
+    private val authDataSource = AuthRepository.getInstance(FirebaseAuth.getInstance())
 
     //database reference
     private val cottageDataSource =
@@ -69,14 +71,14 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
     //create cottage function, sends cottage object to db through cottagerepo
     fun createCottage() {
         val newCottage = Cottage()
-        newCottage.guests = numberOfGuests.value!!.toInt()
+        newCottage.guests = numberOfGuests.value!!
         newCottage.rating = ((0..5).random()).toFloat()
         newCottage.cottageLabel = newCottageTitle.value.toString()
         newCottage.description = newCottageDescription.value.toString()
         newCottage.location["city"] = newCottageLocation.value.toString()
         newCottage.location["country"] = newCottageCountry.value.toString()
         newCottage.amenities = newCottageAmenities
-        newCottage.hostId = userDataSource.getCurrentUserId()
+        newCottage.hostId = authDataSource.getCurrentUserId()
         if (newCottagePrice.value != "")
             newCottage.price = newCottagePrice.value!!.toInt()
         else
@@ -96,7 +98,7 @@ class CreateCottageViewModel(application: Application) : AndroidViewModel(applic
 
     //check if user has filled in all the required fields
     private fun checkFields(): MutableList<String> {
-        var checkTheseFields = mutableListOf<String>()
+        val checkTheseFields = mutableListOf<String>()
 
         if (!checkTitle())
             checkTheseFields.add("Title")

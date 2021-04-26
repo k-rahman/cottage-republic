@@ -3,17 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+>
     <data>
         <variable
             name="userSettingsViewModel"
-            type="fi.oamk.cottagerepublic.ui.account.AccountUserSettingsScreenViewModel" />
+            type="fi.oamk.cottagerepublic.ui.account.AccountUserSettingsScreenViewModel"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorBackground"
+    >
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar_layout"
@@ -26,7 +28,8 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
+                android:layout_height="?attr/actionBarSize"
+            >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -37,7 +40,9 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    tools:text="Screen Title" />
+                    tools:text="Screen Title"
+                    android:textAlignment="center"
+                />
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -50,7 +55,6 @@
             tools:context=".ui.account.AccountUserSettingsScreenFragment"
             tools:layout_editor_absoluteX="411dp">
 
-
             <ImageView
                 android:id="@+id/user_image2"
                 android:layout_width="96dp"
@@ -58,20 +62,20 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_baseline_account_circle_24"
+                android:src="@drawable/ic_logo3_inverse"
                 android:contentDescription="@string/user_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/UserEmailLayout"
+                style="@style/registerInputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:enabled="false"
                 android:hint="@string/email"
-                app:errorEnabled="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_image2">
 
@@ -81,55 +85,54 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:minEms="10"
-                    android:text="@={userSettingsViewModel.email}" />
+                    android:text="@={userSettingsViewModel.email}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/UserFnameLayout"
+                style="@style/registerInputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:hint="@string/first_name"
-                app:errorEnabled="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/UserEmailLayout">
-
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/UserEmailLayout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/UserSettingFname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:minEms="10"
-                    android:text="@={userSettingsViewModel.fname}" />
+                    android:text="@={userSettingsViewModel.fname}"
+                />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/UserLnameLayout"
+                style="@style/registerInputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:hint="@string/last_name"
-                app:errorEnabled="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/UserFnameLayout">
-
+                app:layout_constraintTop_toBottomOf="@+id/UserFnameLayout"
+            >
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/UserSettingLname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:minEms="10"
-                    android:text="@={userSettingsViewModel.lname}" />
-
+                    android:text="@={userSettingsViewModel.lname}"
+                />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/UserPhoneLayout"
+                style="@style/registerInputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:hint="@string/phone_number"
-                app:errorEnabled="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/UserLnameLayout">
 
@@ -139,40 +142,22 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:minEms="10"
-                    android:text="@={userSettingsViewModel.phone}" />
+                    android:text="@={userSettingsViewModel.phone}"
+                />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/Save"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="32dp"
                 android:onClick="@{()-> userSettingsViewModel.onSaveClick()}"
                 android:text="@string/save"
-                app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/UserPhoneLayout" />
-
-            <Button
-                android:id="@+id/Cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="24dp"
-                android:backgroundTint="@color/colorAccent"
-                android:onClick="@{()->userSettingsViewModel.onCancelClick()}"
-                android:text="@string/cancel"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/UserPhoneLayout" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.50364965" />
-
-
+                android:background="@drawable/shape_continue_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/UserPhoneLayout"
+            />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

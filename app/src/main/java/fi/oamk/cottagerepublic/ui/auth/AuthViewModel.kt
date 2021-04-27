@@ -1,9 +1,10 @@
 package fi.oamk.cottagerepublic.ui.auth
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.ktx.database
@@ -12,10 +13,8 @@ import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
@@ -27,7 +26,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     var password = ""
 
     // Retrieve currentUser information
-    var user: MutableLiveData<FirebaseUser> = userRepository.getCurrentUser()
+    var user: MutableLiveData<FirebaseUser> = authRepository.getCurrentUser()
 
     // Using MutableLiveData to observe if user is logged in or not
     var isLoggedIn = MutableLiveData<Resource<Any>>()
@@ -55,7 +54,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             // Coroutine will launch the suspend function and invoke login
             isLoggedIn.value = authRepository.login(username, password)
             // currentuser is now set
-            user = userRepository.getCurrentUser()
+            user = authRepository.getCurrentUser()
         }
     }
 
@@ -63,7 +62,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         // Log current user out from firebase
         authRepository.logOut()
         // reset currentuser
-        user = userRepository.getCurrentUser()
+        user = authRepository.getCurrentUser()
         // navigate to homescreen
         _navigate.value = true
     }
@@ -109,19 +108,4 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             Toast.LENGTH_SHORT
         ).show()
     }
-
-
-//    private val _navigateToHome = MutableLiveData<Boolean>()
-//    val navigateToHome: LiveData<Boolean>
-//        get() = _navigateToHome
-//
-//
-//    private val _navigateToAccount = MutableLiveData<Boolean>()
-//    val navigateToAccount: LiveData<Boolean>
-//        get() = _navigateToAccount
-//
-//    fun onNavigatedToAccount() {
-//        _navigateToAccount.value = false
-//    }
-
 }

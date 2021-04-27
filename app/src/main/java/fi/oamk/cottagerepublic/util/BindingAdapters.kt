@@ -82,7 +82,7 @@ fun TextView.setItemCount(count: Int, position: Int) {
 
 @BindingAdapter("guestsNumber")
 fun TextView.setGuests(item: Cottage) {
-    text = item.guests.toString()
+    text = item.guests.removeSuffix("Guest").removeSuffix("Guests").trim()
 }
 
 @BindingAdapter("amenityText")

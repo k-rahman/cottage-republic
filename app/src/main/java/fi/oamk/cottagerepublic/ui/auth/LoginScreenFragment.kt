@@ -1,11 +1,11 @@
 package fi.oamk.cottagerepublic.ui.auth
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
@@ -24,7 +24,6 @@ class LoginScreenFragment : Fragment() {
     }
 
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -32,10 +31,8 @@ class LoginScreenFragment : Fragment() {
         savedStateHandle = findNavController().previousBackStackEntry!!.savedStateHandle
         savedStateHandle.set(LOGIN_SUCCESSFUL, false)
 
-
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login_screen, container, false)
-
 
         authViewModel.isLoggedIn.observe(viewLifecycleOwner) {
             when (it) {
@@ -59,9 +56,7 @@ class LoginScreenFragment : Fragment() {
 
         authViewModel.navigateToRegister.observe(viewLifecycleOwner) {
             if (it) {
-                findNavController().navigate(
-                    LoginScreenFragmentDirections.actionLoginScreenFragmentToRegisterFragmentEmail()
-                )
+                findNavController().navigate(R.id.registerFragment)
                 authViewModel.onRegisterNavigated()
             }
         }

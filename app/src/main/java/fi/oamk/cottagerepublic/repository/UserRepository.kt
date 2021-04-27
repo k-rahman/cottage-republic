@@ -2,9 +2,6 @@ package fi.oamk.cottagerepublic.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import fi.oamk.cottagerepublic.data.User
@@ -13,7 +10,7 @@ import kotlinx.coroutines.tasks.await
 
 
 class UserRepository(private val databaseReference: DatabaseReference) {
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var userProfile: DataSnapshot
 
     companion object {
         @Volatile
@@ -30,67 +27,51 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
-    private val auth = FirebaseAuth.getInstance()
-    private lateinit var userProfile: DataSnapshot
-    private var userid = auth.currentUser
-
-
-    fun saveEmailOnRegister(email: String) {
-        if (auth.currentUser != null)
-            databaseReference.child(getCurrentUserId()).setValue(email)
-    }
-
     fun getCurrentUserData(
+        userId: String,
         email: MutableLiveData<String>,
         fname: MutableLiveData<String>,
         lname: MutableLiveData<String>,
         phone: MutableLiveData<String>
-    ): Boolean {
-        if (auth.currentUser != null) {
-            databaseReference.child(getCurrentUserId()).get().addOnSuccessListener {
-                if (it.child("email").value != null) email.postValue(it.child("email").value.toString())
-                if (it.child("phone").value != null) phone.postValue(it.child("phone").value.toString())
-                if (it.child("fname").value != null) fname.postValue(it.child("fname").value.toString())
-                if (it.child("lname").value != null) lname.postValue(it.child("lname").value.toString())
-                userProfile = it
-                Log.i("data check", userProfile.toString())
-            }.addOnFailureListener {
-                Log.i("failure", "there is some problem getting the data")
-            }
-            return true
-        } else {
-            return false
+    ) {
+        databaseReference.child(userId).get().addOnSuccessListener {
+            if (it.child("email").value != null)
+                email.postValue(it.child("email").value.toString())
+
+            if (it.child("phone").value != null)
+                phone.postValue(it.child("phone").value.toString())
+
+            if (it.child("fname").value != null)
+                fname.postValue(it.child("fname").value.toString())
+
+            if (it.child("lname").value != null)
+                lname.postValue(it.child("lname").value.toString())
+            userProfile = it
+            Log.i("data check", userProfile.toString())
+
+        }.addOnFailureListener {
+            Log.i("failure", "there is some problem getting the data")
         }
     }
 
-    fun updateUserData(fname: String, lname: String, phone: String): Boolean {
+    fun updateUserData(userId: String, fname: String, lname: String, phone: String) {
         //if not dont have logged in user will return false
-        if (userid != null) {
-            if (fname != userProfile.child("fname").value.toString()) {
-                databaseReference.child(userid!!.uid).child("fname").setValue(fname)
-            }
-            if (lname != userProfile.child("lname").value.toString()) {
-                databaseReference.child(userid!!.uid).child("lname").setValue(lname)
-            }
-            if (phone != userProfile.child("phone").value.toString()) {
-                databaseReference.child(userid!!.uid).child("phone").setValue(phone)
-            }
-            Log.i("data update", "data saved")
-            // if there is a logged in user to save data
-            return true
-        } else {
-            Log.i("data update", "data save failed")
-            return false
+        if (fname != userProfile.child("fname").value.toString()) {
+            databaseReference.child(userId).child("fname").setValue(fname)
         }
+        if (lname != userProfile.child("lname").value.toString()) {
+            databaseReference.child(userId).child("lname").setValue(lname)
+        }
+        if (phone != userProfile.child("phone").value.toString()) {
+            databaseReference.child(userId).child("phone").setValue(phone)
+        }
+        Log.i("data update", "data saved")
+        // if there is a logged in user to save data
     }
 
-    fun getUserData(): DataSnapshot {
-        return userProfile
-    }
-
-    suspend fun deleteCottageIdByHostId(cottageId: String) {
+    suspend fun deleteCottageIdByHostId(userId: String, cottageId: String) {
         databaseReference
-            .child(getCurrentUserId())
+            .child(userId)
             .child("cottages")
             .child(cottageId)
             .removeValue().await()
@@ -106,7 +87,16 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
-    suspend fun getCottagesKeysByHostId(hostId: String): List<String> {
+    suspend fun deleteCottageIdByUserId(cottageId: String, userId: String) {
+        databaseReference
+            .child(userId)
+            .child("cottages")
+            .child(cottageId)
+            .removeValue()
+            .await()
+    }
+
+    suspend fun getCottagesKeysByHostId(hostId: String): MutableList<String> {
         val cottageKeys = mutableListOf<String>()
 
         val snapshot = databaseReference.child(hostId).child("cottages").get().await()
@@ -114,7 +104,6 @@ class UserRepository(private val databaseReference: DatabaseReference) {
             cottageKeys.add(cottageKey.key.toString())
         }
         return cottageKeys
-
     }
 
     private fun initUser(snapshot: DataSnapshot): User {
@@ -154,13 +143,8 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         databaseReference.updateChildren(childUpdates)
     }
 
-    fun getCurrentUserId(): String {
-        return getCurrentUser().value!!.uid
-    }
-
-    // Using MutableLiveData to notify AccountScreenFragment when current user has changed
-    fun getCurrentUser(): MutableLiveData<FirebaseUser> {
-        return MutableLiveData(firebaseAuth.currentUser)
+    fun addUserEmail(userId: String, email: String) {
+        databaseReference.child(userId).child("email").setValue(email)
     }
 }
 

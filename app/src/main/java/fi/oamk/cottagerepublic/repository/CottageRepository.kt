@@ -3,7 +3,6 @@ package fi.oamk.cottagerepublic.repository
 import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
@@ -35,10 +34,7 @@ class CottageRepository(
         }
     }
 
-    fun createNewCottage(cottage: Cottage, images: ArrayList<Uri>)
-            : String {
-
-
+    fun createNewCottage(cottage: Cottage, images: ArrayList<Uri>): String {
         var key = databaseReference.push().key
         key = "cottage$key"
         uploadImages(images)
@@ -52,9 +48,6 @@ class CottageRepository(
 
         return key
     }
-
-
-
 
     private fun uploadImages(images: ArrayList<Uri>) {
 
@@ -87,11 +80,17 @@ class CottageRepository(
 
 
     suspend fun getAllCottages(): Resource<MutableList<Cottage>> {
+        val cottages = mutableListOf<Cottage>()
+
         val dataSnapshot = databaseReference.get().await()
 
-        val cottagesList = createCottageList(dataSnapshot)
+        for (cottage in dataSnapshot.children) {
+            val values = cottage.value as HashMap<*, *>
+            val cottage = createCottageObject(values)
+            cottages.add(cottage)
+        }
 
-        return Resource.Success(cottagesList)
+        return Resource.Success(cottages)
     }
 
     suspend fun deleteCottageById(cottageId: String) {
@@ -116,92 +115,57 @@ class CottageRepository(
     }
 
     suspend fun getPopularCottages(limit: Int): Resource<MutableList<Cottage>> {
+        val cottages = mutableListOf<Cottage>()
+
         val dataSnapshot = databaseReference
             .orderByChild("rating")
             .limitToLast(limit)
             .get().await()
 
-        val cottages = createCottageList(dataSnapshot)
+        for (cottage in dataSnapshot.children) {
+            val values = cottage.value as HashMap<*, *>
+            val cottage = createCottageObject(values)
+            cottages.add(cottage)
+        }
 
         return Resource.Success(cottages)
     }
 
-    suspend fun getAllCottagesByCottagesKeys(cottageKeys: List<String>): Resource<MutableList<Cottage>> {
+    suspend fun getCottageByKey(cottageKeys: List<String>): Resource<MutableList<Cottage>> {
         val userCottages = mutableListOf<Cottage>()
+
         cottageKeys.forEach {
-            val newCottage = Cottage()
             val snapshot = databaseReference.child(it).get().await()
             val values = snapshot.value as HashMap<Any, Any>
-            with(newCottage) {
-                if (values["cottageId"] != null)
-                    cottageId = values["cottageId"].toString()
-
-                if (values["hostId"] != null)
-                    hostId = values["hostId"].toString()
-
-                if (values["cottageLabel"] != null)
-                    cottageLabel = values["cottageLabel"].toString()
-
-                if (values["rating"] != null)
-                    rating = values["rating"].toString().toFloat()
-
-                if (values["location"] != null)
-                    for (spot in values["location"] as HashMap<String, String>)
-                        location[spot.key] = spot.value
-
-                if (values["price"] != null)
-                    price = values["price"].toString().toInt()
-
-                if (values["guests"] != null)
-                    guests = values["guests"].toString()
-
-                if (values["amenities"] != null) {
-                    amenities.clear()
-                    for (amenity in values["amenities"] as ArrayList<String>)
-                        amenities.add(amenity)
-                }
-
-                if (values["description"] != null)
-                    description = values["description"].toString()
-
-                if (values["coordinates"] != null)
-                    for (coordinate in values["coordinates"] as HashMap<String, Double>)
-                        coordinates[coordinate.key] = coordinate.value
-
-                if (values["images"] != null)
-                    for (image in values["images"] as ArrayList<String>)
-                        images.add(storageReference.child(image).downloadUrl.await().toString())
-            }
-            userCottages.add(newCottage)
+            val cottage = createCottageObject(values)
+            userCottages.add(cottage)
         }
+
         return Resource.Success(userCottages)
     }
 
-    private suspend fun createCottageList(dataSnapshot: DataSnapshot): MutableList<Cottage> {
-        val cottages = mutableListOf<Cottage>()
+    private suspend fun createCottageObject(values: HashMap<*, *>): Cottage {
+        val newCottage = Cottage()
 
-        for (cottage in dataSnapshot.children) {
-            val values = cottage.value as HashMap<*, *>
-            val newCottage = Cottage()
-            with(newCottage) {
-                if (values["cottageId"] != null)
-                    cottageId = values["cottageId"].toString()
+        with(newCottage) {
+            if (values["cottageId"] != null)
+                cottageId = values["cottageId"].toString()
 
-                if (values["hostId"] != null)
-                    hostId = values["hostId"].toString()
+            if (values["hostId"] != null)
+                hostId = values["hostId"].toString()
 
-                if (values["cottageLabel"] != null)
-                    cottageLabel = values["cottageLabel"].toString()
+            if (values["cottageLabel"] != null)
+                cottageLabel = values["cottageLabel"].toString()
 
-                if (values["rating"] != null)
-                    rating = values["rating"].toString().toFloat()
+            if (values["rating"] != null)
+                rating = values["rating"].toString().toFloat()
 
-                if (values["location"] != null)
-                    for (spot in values["location"] as HashMap<String, String>)
-                        location[spot.key] = spot.value
+            if (values["location"] != null)
+                for (spot in values["location"] as HashMap<String, String>)
+                    location[spot.key] = spot.value
 
-                if (values["price"] != null)
-                    price = values["price"].toString().toInt()
+            if (values["price"] != null)
+                price = values["price"].toString().toInt()
 
                 if (values["guests"] != null)
                     guests = values["guests"].toString()
@@ -223,8 +187,6 @@ class CottageRepository(
                     for (image in values["images"] as ArrayList<String>)
                         images.add(storageReference.child(image).downloadUrl.await().toString())
             }
-            cottages.add(newCottage)
-        }
-        return cottages
+        return newCottage
     }
 }

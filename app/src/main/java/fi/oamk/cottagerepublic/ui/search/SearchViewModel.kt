@@ -13,7 +13,7 @@ import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers
 
-class SearchViewModel(val cottage: Cottage?, val destination: Destination?) : ViewModel() {
+class SearchViewModel(var cottage: Cottage?, val destination: Destination?) : ViewModel() {
 
     private val dataSource =
         CottageRepository.getInstance(
@@ -52,6 +52,7 @@ class SearchViewModel(val cottage: Cottage?, val destination: Destination?) : Vi
 
     fun onCottageDetailNavigated() {
         _navigateToCottageDetail.value = null
+        cottage = null
         searchQuery.value = ""
     }
 
@@ -71,7 +72,7 @@ class SearchViewModel(val cottage: Cottage?, val destination: Destination?) : Vi
         }
 
         if (cottage != null) {
-            searchQuery.value = "${cottage.location["city"]}, ${cottage.location["country"]}"
+            searchQuery.value = "${cottage!!.location["city"]}, ${cottage!!.location["country"]}"
             return true
         }
 

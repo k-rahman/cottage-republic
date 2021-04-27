@@ -1,13 +1,11 @@
-package fi.oamk.cottagerepublic.ui.account
+package fi.oamk.cottagerepublic.ui.faq
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fi.oamk.cottagerepublic.R
-import fi.oamk.cottagerepublic.R.drawable.ic_baseline_arrow_drop_down_24
 import fi.oamk.cottagerepublic.data.FAQDataModel
 
 class MyQuestionRecyclerViewAdapter(

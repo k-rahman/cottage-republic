@@ -1,30 +1,28 @@
 package fi.oamk.cottagerepublic.ui.cottageCreate
 
-import android.app.Application
-import android.location.Address
 import android.net.Uri
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import fi.oamk.cottagerepublic.data.Cottage
+import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
-import kotlin.math.absoluteValue
 
 class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
 
 
-    private val userDataSource = UserRepository(Firebase.database.getReference("users"))
+    private val userDataSource = UserRepository.getInstance(Firebase.database.getReference("users"))
+    private val authDataSource = AuthRepository.getInstance(FirebaseAuth.getInstance())
 
     //database reference
     private val cottageDataSource =
         CottageRepository.getInstance(
-            Firebase.database.getReference("cottages"),
+            Firebase.database.reference,
             Firebase.storage.reference
         )
 
@@ -132,7 +130,7 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         newCottage.location["city"] = newCottageLocation.value.toString()
         newCottage.location["country"] = newCottageCountry.value.toString()
         newCottage.amenities = newCottageAmenities
-        newCottage.hostId = userDataSource.getCurrentUserId()
+        newCottage.hostId = authDataSource.getCurrentUserId()
         if (newCottagePrice.value != "")
             newCottage.price = newCottagePrice.value!!.toInt()
         else
@@ -157,7 +155,7 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
 
     //check if user has filled in all the required fields
     private fun checkFields(): MutableList<String> {
-        var checkTheseFields = mutableListOf<String>()
+        val checkTheseFields = mutableListOf<String>()
 
         if (!checkTitle())
             checkTheseFields.add("Title")
@@ -314,8 +312,6 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
     fun onMyCottageNavigated() {
         _navigateToMyCottage.value = null
     }
-
-
 }
 
 

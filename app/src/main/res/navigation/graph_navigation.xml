@@ -131,32 +131,14 @@
     >
         <action
                 android:id="@+id/action_loginScreenFragment_to_registerFragmentEmail"
-                app:destination="@id/registerFragmentEmail" />
+                app:destination="@id/registerFragment" />
     </fragment>
 
     <fragment
-            android:id="@+id/registerFragmentPassword"
-            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentPassword"
-            android:label="fragment_register_password"
-            tools:layout="@layout/fragment_register_password" >
-        <action
-                android:id="@+id/action_registerFragmentPassword_to_registerFragmentEnd"
-                app:destination="@id/registerFragmentEnd" />
-    </fragment>
-    <fragment
-            android:id="@+id/registerFragmentEmail"
-            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEmail"
+            android:id="@+id/registerFragment"
+            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragment"
             android:label="fragment_register_email"
-            tools:layout="@layout/fragment_register_email" >
-        <action
-                android:id="@+id/action_registerFragmentEmail_to_registerFragmentPassword"
-                app:destination="@id/registerFragmentPassword" />
-    </fragment>
-    <fragment
-            android:id="@+id/registerFragmentEnd"
-            android:name="fi.oamk.cottagerepublic.ui.auth.RegisterFragmentEnd"
-            android:label="fragment_register_end"
-            tools:layout="@layout/fragment_register_end" />
+            tools:layout="@layout/fragment_register_screen" />
     <fragment
         android:id="@+id/acccountUserSettingsScreenFragment"
         android:name="fi.oamk.cottagerepublic.ui.account.AccountUserSettingsScreenFragment"
@@ -185,7 +167,7 @@
 
     <fragment
         android:id="@+id/accountFAQFragment"
-        android:name="fi.oamk.cottagerepublic.ui.account.AccountFAQFragment"
+        android:name="fi.oamk.cottagerepublic.ui.faq.FaqFragment"
         android:label="fragment_account_faq"
         tools:layout="@layout/fragment_account_faq" />
 

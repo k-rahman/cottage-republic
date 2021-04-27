@@ -67,6 +67,7 @@
     <string name="checkBoxNineString"> Boat </string>
     <string name="checkBoxTenString"> Fireplace </string>
     <string name="checkBoxSixString"> Hot Tub </string>
+    <string name="pick_image_s">Pick image(s)*</string>
 
 
     <string name="editCottageDescription">Enter cottage description..</string>

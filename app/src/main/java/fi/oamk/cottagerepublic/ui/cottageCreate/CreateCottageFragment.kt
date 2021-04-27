@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -49,14 +50,7 @@ class CreateCottageFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_cottage, container, false)
 
-        //set context for shared viewmodel
-//        val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
-//
-//        viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
-
-
         //navigation
-
         initToolbar()
         initViewModel()
 
@@ -70,19 +64,12 @@ class CreateCottageFragment : Fragment() {
             }
         })
 
-//        viewModel.navigateContinue.observe(viewLifecycleOwner, {
-//            if (it) {
-//                findNavController().navigateUp()
-//
-//                viewModel.onMapNavigated()
-//            }
-//        })
 
         // Navigate back to MyCottages with newly created cottage
         viewModel.navigateToMyCottage.observe(viewLifecycleOwner) {
-            it?.let {
+            if(it)
+            {
                 navigateToMyCottage()
-                viewModel.onMapNavigated()
             }
         }
 
@@ -291,9 +278,22 @@ class CreateCottageFragment : Fragment() {
 
     private fun navigateToMyCottage() {
         // Pass the new cottage as an argument back to MyCottages Screen
-        findNavController().navigate(
-            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment()
-        )
+//        findNavController().navigate(
+//            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment()
+//        )
+        findNavController().navigate(R.id.accountCottageScreenFragment,null,getNavOptions())
+     //   findNavController().popBackStack()
         viewModel.onMyCottageNavigated()
     }
+
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_left)
+            .setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(android.R.anim.slide_in_left)
+            .setPopExitAnim(android.R.anim.slide_out_right)
+            .setPopUpTo(R.id.accountCottageScreenFragment,true)
+            .build()
+    }
+
 }

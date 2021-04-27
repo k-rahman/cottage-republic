@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -15,11 +16,11 @@ import fi.oamk.cottagerepublic.databinding.FragmentAccountScreenBinding
 import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
 import fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment
 
-
 class AccountScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentAccountScreenBinding
     private val authViewModel: AuthViewModel by activityViewModels()
+    private lateinit var viewModel: AccountScreenViewModel
 
     // The user data in UserViewModel is exposed via LiveData,
     // so to decide where to navigate, you should observe this data.
@@ -28,7 +29,6 @@ class AccountScreenFragment : Fragment() {
     // user needs to authenticate before seeing their account.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val navController = findNavController()
 
         val currentBackStackEntry = navController.currentBackStackEntry!!
@@ -51,12 +51,21 @@ class AccountScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Get a reference to the binding object and inflate the fragment views.
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_account_screen,
             container,
             false
         )
+
+        viewModel = ViewModelProvider(this).get(AccountScreenViewModel::class.java)
+
+        if (authViewModel.user.value != null)
+        {
+            viewModel.initUser()
+            binding.userEmail.text = "${viewModel.email.value}"
+        }
 
         authViewModel.user.observe(viewLifecycleOwner) {
             if (it == null) {
@@ -65,6 +74,9 @@ class AccountScreenFragment : Fragment() {
                 // they are redirected to the LoginFragment.
                 findNavController().navigate(R.id.loginScreenFragment)
             }
+            else
+                viewModel.initUser()
+            binding.userEmail.text = "${viewModel.email.value}"
         }
         // Open User Settings
         binding.userSettingsLayout.setOnClickListener { view: View ->

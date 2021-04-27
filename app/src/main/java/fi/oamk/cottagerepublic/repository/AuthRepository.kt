@@ -58,7 +58,10 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth) {
     }
 
     fun getCurrentUserId(): String {
-        return getCurrentUser().value!!.uid
+        if(getCurrentUser().value != null) {
+            return getCurrentUser().value!!.uid
+        }
+            return ""
     }
 
     // Using MutableLiveData to notify AccountScreenFragment when current user has changed

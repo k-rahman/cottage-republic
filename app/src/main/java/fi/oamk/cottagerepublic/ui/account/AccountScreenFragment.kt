@@ -12,9 +12,11 @@ import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.data.User
 import fi.oamk.cottagerepublic.databinding.FragmentAccountScreenBinding
 import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
 import fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment
+import fi.oamk.cottagerepublic.util.Resource
 
 class AccountScreenFragment : Fragment() {
 
@@ -61,11 +63,7 @@ class AccountScreenFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(AccountScreenViewModel::class.java)
 
-        if (authViewModel.user.value != null)
-        {
-            viewModel.initUser()
-            binding.userEmail.text = "${viewModel.email.value}"
-        }
+
 
         authViewModel.user.observe(viewLifecycleOwner) {
             if (it == null) {
@@ -74,10 +72,21 @@ class AccountScreenFragment : Fragment() {
                 // they are redirected to the LoginFragment.
                 findNavController().navigate(R.id.loginScreenFragment)
             }
-            else
-                viewModel.initUser()
-            binding.userEmail.text = "${viewModel.email.value}"
         }
+
+        viewModel.user.observe(viewLifecycleOwner){
+            when (it){
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    viewModel.setUserData(it.data as User)
+                }
+                is Resource.Failure -> {
+                    //failure get resource
+                }
+            }
+        }
+
+
         // Open User Settings
         binding.userSettingsLayout.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.acccountUserSettingsScreenFragment)

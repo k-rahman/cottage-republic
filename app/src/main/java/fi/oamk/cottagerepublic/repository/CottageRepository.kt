@@ -98,7 +98,7 @@ class CottageRepository(
     }
 
     fun updateCottageByCottageId(cottage: Cottage, images: ArrayList<Uri>) {
-        uploadImages(images)
+//        uploadImages(images)
         val childUpdates = hashMapOf(
             "${cottage.cottageId}/description" to cottage.description,
             "${cottage.cottageId}/guests" to cottage.guests,
@@ -106,10 +106,19 @@ class CottageRepository(
             "${cottage.cottageId}/cottageLabel" to cottage.cottageLabel,
             "${cottage.cottageId}/amenities" to cottage.amenities,
             "${cottage.cottageId}/coordinates" to cottage.coordinates,
-            "${cottage.cottageId}/images" to cottage.images,
+//           "${cottage.cottageId}/images" to cottage.images,
             "${cottage.cottageId}/location" to cottage.location,
         )
         databaseReference.updateChildren(childUpdates)
+
+        if(images.size != 0)
+        {
+            uploadImages(images)
+            val imageUpdates = hashMapOf(
+                "${cottage.cottageId}/images" to cottage.images)
+            databaseReference.updateChildren(imageUpdates as Map<String, Any>)
+        }
+
 
 
     }

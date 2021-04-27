@@ -134,7 +134,7 @@
                         android:id="@+id/editCottagePrice"
                         android:layout_width="135dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
+                        android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:autofillHints=""
                         android:ems="10"
@@ -195,19 +195,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/title_images"
                     android:textColor="@color/colorBlack"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!--            <ImageSwitcher-->
-                <!--                android:id="@+id/imageSwitcher"-->
-                <!--                android:layout_width="200dp"-->
-                <!--                android:layout_height="200dp"-->
-                <!--                android:layout_marginTop="8dp"-->
-                <!--                android:layout_marginBottom="8dp"-->
-                <!--                />-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/imagesView"
@@ -296,12 +289,6 @@
                     android:layout_marginBottom="32dp"
                     android:orientation="horizontal">
 
-                    <!--        <androidx.appcompat.widget.AppCompatButton-->
-                    <!--                android:id="@+id/previousButton"-->
-                    <!--                android:layout_width="100dp"-->
-                    <!--                android:layout_height="50dp"-->
-                    <!--                android:text="Previous"-->
-                    <!--                />-->
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/pickImageButton"
                         android:layout_width="match_parent"
@@ -311,12 +298,6 @@
                         android:background="@drawable/shape_continue_border"
                         android:text="@string/pick_image_s"
                         android:textColor="@color/colorWhite" />
-                    <!--            <androidx.appcompat.widget.AppCompatButton-->
-                    <!--                android:id="@+id/nextButton"-->
-                    <!--                android:layout_width="100dp"-->
-                    <!--                android:layout_height="50dp"-->
-                    <!--                android:text="Next"-->
-                    <!--                />-->
                 </LinearLayout>
 
                 <View
@@ -374,18 +355,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!--            <FrameLayout-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="308dp"-->
-                <!--                android:layout_marginLeft="8dp"-->
-                <!--                android:layout_marginRight="8dp"-->
-                <!--                android:background="#679854"-->
-                <!--                android:clickable="true"-->
-                <!--                android:focusable="true"-->
-                <!--                android:focusableInTouchMode="true"-->
-                <!--                android:forceHasOverlappingRendering="true">-->
-
-                <!--            </FrameLayout>-->
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cottage_map_wrapper"

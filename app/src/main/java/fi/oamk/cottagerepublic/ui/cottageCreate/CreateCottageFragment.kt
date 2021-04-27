@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -49,14 +50,7 @@ class CreateCottageFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_cottage, container, false)
 
-        //set context for shared viewmodel
-//        val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
-//
-//        viewModel = ViewModelProvider(backStackEntry).get(CreateCottageViewModel::class.java)
-
-
         //navigation
-
         initToolbar()
         initViewModel()
 
@@ -70,19 +64,12 @@ class CreateCottageFragment : Fragment() {
             }
         })
 
-//        viewModel.navigateContinue.observe(viewLifecycleOwner, {
-//            if (it) {
-//                findNavController().navigateUp()
-//
-//                viewModel.onMapNavigated()
-//            }
-//        })
 
         // Navigate back to MyCottages with newly created cottage
         viewModel.navigateToMyCottage.observe(viewLifecycleOwner) {
-            it?.let {
+            if(it)
+            {
                 navigateToMyCottage()
-                viewModel.onMapNavigated()
             }
         }
 
@@ -178,8 +165,6 @@ class CreateCottageFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
-
         if (requestCode == PICK_IMAGES_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data!!.clipData != null) {
@@ -240,7 +225,7 @@ class CreateCottageFragment : Fragment() {
         val count = this.images.size
 
         binding.imagesView.isVisible = true
-
+        binding.pickImageButton.text = "Re-pick images"
         //set main image
         binding.mainImage.setImageURI(this.images[0])
         binding.mainImage.setOnClickListener {
@@ -254,36 +239,61 @@ class CreateCottageFragment : Fragment() {
             binding.extraImage1.setOnClickListener {
                 pickImagesIntent(2)
             }
-        } else
+        } else {
+            // binding.extraImage1.isVisible = false
             binding.extraImage1.setImageURI(null)
+            binding.extraImage1.setOnLongClickListener(null)
+        }
         if (count >= 3) {
             binding.extraImage2.setImageURI(this.images[2])
             binding.extraImage2.setOnClickListener {
                 pickImagesIntent(3)
             }
-        } else
+        } else {
             binding.extraImage2.setImageURI(null)
+            binding.extraImage2.setOnLongClickListener(null)
+        }
+          //  binding.extraImage2.isVisible = false
         if (count >= 4) {
             binding.extraImage3.setImageURI(this.images[3])
             binding.extraImage3.setOnClickListener {
                 pickImagesIntent(4)
             }
-        } else
+        } else {
             binding.extraImage3.setImageURI(null)
+            binding.extraImage3.setOnLongClickListener(null)
+        }
+          //  binding.extraImage3.isVisible = false
         if (count >= 5) {
             binding.extraImage4.setImageURI(this.images[4])
             binding.extraImage4.setOnClickListener {
                 pickImagesIntent(5)
             }
-        } else
+        } else {
             binding.extraImage4.setImageURI(null)
+            binding.extraImage4.setOnLongClickListener(null)
+        }
+         //   binding.extraImage4.isVisible = false
     }
 
     private fun navigateToMyCottage() {
         // Pass the new cottage as an argument back to MyCottages Screen
-        findNavController().navigate(
-            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment()
-        )
+//        findNavController().navigate(
+//            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment()
+//        )
+        findNavController().navigate(R.id.accountCottageScreenFragment,null,getNavOptions())
+     //   findNavController().popBackStack()
         viewModel.onMyCottageNavigated()
     }
+
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in_left)
+            .setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(android.R.anim.slide_in_left)
+            .setPopExitAnim(android.R.anim.slide_out_right)
+            .setPopUpTo(R.id.accountCottageScreenFragment,true)
+            .build()
+    }
+
 }

@@ -7,19 +7,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.data.User
 import fi.oamk.cottagerepublic.databinding.FragmentAccountScreenBinding
 import fi.oamk.cottagerepublic.ui.auth.AuthViewModel
 import fi.oamk.cottagerepublic.ui.auth.LoginScreenFragment
-
+import fi.oamk.cottagerepublic.util.Resource
 
 class AccountScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentAccountScreenBinding
     private val authViewModel: AuthViewModel by activityViewModels()
+    private lateinit var viewModel: AccountScreenViewModel
 
     // The user data in UserViewModel is exposed via LiveData,
     // so to decide where to navigate, you should observe this data.
@@ -28,7 +31,6 @@ class AccountScreenFragment : Fragment() {
     // user needs to authenticate before seeing their account.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val navController = findNavController()
 
         val currentBackStackEntry = navController.currentBackStackEntry!!
@@ -51,12 +53,17 @@ class AccountScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Get a reference to the binding object and inflate the fragment views.
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_account_screen,
             container,
             false
         )
+
+        viewModel = ViewModelProvider(this).get(AccountScreenViewModel::class.java)
+
+
 
         authViewModel.user.observe(viewLifecycleOwner) {
             if (it == null) {
@@ -66,6 +73,20 @@ class AccountScreenFragment : Fragment() {
                 findNavController().navigate(R.id.loginScreenFragment)
             }
         }
+
+        viewModel.user.observe(viewLifecycleOwner){
+            when (it){
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    viewModel.setUserData(it.data as User)
+                }
+                is Resource.Failure -> {
+                    //failure get resource
+                }
+            }
+        }
+
+
         // Open User Settings
         binding.userSettingsLayout.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.acccountUserSettingsScreenFragment)

@@ -244,3 +244,8 @@ fun setCottageImageFour(view: ImageView, item: Cottage?) {
     if (item != null && item.images.size > 4)
         Picasso.get().load(item.images[4]).into(view)
 }
+
+//@BindingAdapter("firstName","lastName")
+//fun TextView.setFirstLastName(firstName: String?, lastName: String?) {
+//    text = "$firstName $lastName"
+//}

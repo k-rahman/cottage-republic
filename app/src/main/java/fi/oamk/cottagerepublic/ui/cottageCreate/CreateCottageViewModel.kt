@@ -115,8 +115,8 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         get() = _navigateToMap
 
     // When this variable value change, it will trigger navigation to MyCottage Form Screen
-    private val _navigateToMyCottage = MutableLiveData<Cottage?>()
-    val navigateToMyCottage: LiveData<Cottage?>
+    private val _navigateToMyCottage = MutableLiveData<Boolean>()
+    val navigateToMyCottage: LiveData<Boolean>
         get() = _navigateToMyCottage
 
 
@@ -142,11 +142,11 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
             if (cottage != null) {
                 newCottage.cottageId = cottage.cottageId
                 cottageDataSource.updateCottageByCottageId(newCottage, newCottageImages)
-                onContinueClicked(newCottage)
+                onContinueClicked()
             } else {
                 val key = cottageDataSource.createNewCottage(newCottage, newCottageImages)
                 userDataSource.pushCottageToUser(newCottage.hostId, key)
-                onContinueClicked(newCottage)
+                onContinueClicked()
             }
         } else
             fillInBoxes.value = checkFields()
@@ -297,8 +297,8 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         _navigateToMap.value = false
     }
 
-    fun onContinueClicked(cottage: Cottage) {
-        _navigateToMyCottage.value = cottage
+    fun onContinueClicked() {
+        _navigateToMyCottage.value = true
     }
 
     fun onContinueNavigated() {
@@ -310,7 +310,7 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
     }
 
     fun onMyCottageNavigated() {
-        _navigateToMyCottage.value = null
+        _navigateToMyCottage.value = false
     }
 }
 

@@ -151,4 +151,6 @@
     <string name="payment_complete">Payment complete</string>
     <string name="enjoy_your_trip">Enjoy your trip</string>
     <string name="join_the_republic">Join the republic</string>
+    <string name="pick_image_s">Pick Image(s)*</string>
+    <string name="frequently_asked_questions">Frequently Asked Questions</string>
 </resources>

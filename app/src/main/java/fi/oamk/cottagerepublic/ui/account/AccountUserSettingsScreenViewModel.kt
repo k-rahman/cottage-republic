@@ -34,12 +34,15 @@ class AccountUserSettingsScreenViewModel(application: Application) : AndroidView
     var loginFragment: Boolean? = null
 
     val userData = liveData(IO) {
+        emit(Resource.Loading())
         val data = userDataSource.getUserData(userId)
         emit(data)
     }
 
     fun onSaveClick() {
-        if (firstName.value.toString().isBlank() || lastName.value.toString().isBlank() || phone.value.toString().isBlank()) {
+        if (firstName.value.toString().isBlank() || lastName.value.toString().isBlank() || phone.value.toString()
+                .isBlank()
+        ) {
             showEmptyFieldsError()
 
         } else {

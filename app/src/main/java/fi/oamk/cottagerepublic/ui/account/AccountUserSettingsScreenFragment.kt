@@ -49,9 +49,12 @@ class AccountUserSettingsScreenFragment : Fragment() {
         viewModel.userData.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
+                    binding.progressIndicator.show()
                 }
                 is Resource.Success -> {
                     viewModel.setUserData(it.data as User)
+
+                    binding.progressIndicator.hide()
                 }
                 is Resource.Failure -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

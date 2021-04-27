@@ -1,7 +1,5 @@
 package fi.oamk.cottagerepublic.repository
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import fi.oamk.cottagerepublic.data.User
@@ -10,7 +8,6 @@ import kotlinx.coroutines.tasks.await
 
 
 class UserRepository(private val databaseReference: DatabaseReference) {
-    private lateinit var userProfile: DataSnapshot
 
     companion object {
         @Volatile
@@ -27,46 +24,29 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         }
     }
 
-    fun getCurrentUserData(
-        userId: String,
-        email: MutableLiveData<String>,
-        fname: MutableLiveData<String>,
-        lname: MutableLiveData<String>,
-        phone: MutableLiveData<String>
-    ) {
-        databaseReference.child(userId).get().addOnSuccessListener {
-            if (it.child("email").value != null)
-                email.postValue(it.child("email").value.toString())
-
-            if (it.child("phone").value != null)
-                phone.postValue(it.child("phone").value.toString())
-
-            if (it.child("fname").value != null)
-                fname.postValue(it.child("fname").value.toString())
-
-            if (it.child("lname").value != null)
-                lname.postValue(it.child("lname").value.toString())
-            userProfile = it
-            Log.i("data check", userProfile.toString())
-
-        }.addOnFailureListener {
-            Log.i("failure", "there is some problem getting the data")
+    suspend fun getUserData(userId: String): Resource<Any> {
+        return try {
+            val result = databaseReference.child(userId).get().await()
+            val user = initUser(result)
+            Resource.Success(user)
+        } catch (e: Exception) {
+            Resource.Failure(e.message!!)
         }
     }
 
-    fun updateUserData(userId: String, fname: String, lname: String, phone: String) {
-        //if not dont have logged in user will return false
-        if (fname != userProfile.child("fname").value.toString()) {
-            databaseReference.child(userId).child("fname").setValue(fname)
+    suspend fun updateUserData(user: User): Resource<Any> {
+        val updatedUser = hashMapOf<String, Any>(
+            "${user.userId}/fname" to user.firstName,
+            "${user.userId}/lname" to user.lastName,
+            "${user.userId}/phone" to user.phone
+        )
+
+        return try {
+            val result = databaseReference.updateChildren(updatedUser).await()
+            Resource.Success(result)
+        } catch (e: Exception) {
+            Resource.Failure(e.message!!)
         }
-        if (lname != userProfile.child("lname").value.toString()) {
-            databaseReference.child(userId).child("lname").setValue(lname)
-        }
-        if (phone != userProfile.child("phone").value.toString()) {
-            databaseReference.child(userId).child("phone").setValue(phone)
-        }
-        Log.i("data update", "data saved")
-        // if there is a logged in user to save data
     }
 
     suspend fun deleteCottageIdByHostId(userId: String, cottageId: String) {

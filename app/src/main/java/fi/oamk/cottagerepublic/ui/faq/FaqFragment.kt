@@ -1,17 +1,17 @@
-package fi.oamk.cottagerepublic.ui.account
+package fi.oamk.cottagerepublic.ui.faq
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import fi.oamk.cottagerepublic.R
 import fi.oamk.cottagerepublic.data.FAQ
 
-class AccountFAQFragment : Fragment() {
+class FaqFragment : Fragment() {
 
     private var columnCount = 1
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -62,7 +62,11 @@ class BookingDetailFragment : Fragment() {
     private fun setObservers() {
         viewModel.navigateToSuccess.observe(viewLifecycleOwner, {
             if (it) {
-                findNavController().navigate(BookingDetailFragmentDirections.actionBookingDetailFragmentToPaymentFragment(viewModel.selectedCottage.price))
+                findNavController().navigate(
+                    BookingDetailFragmentDirections.actionBookingDetailFragmentToPaymentFragment(
+                        viewModel.selectedCottage.price
+                    )
+                )
                 viewModel.onSucessNavigated()
             }
         })
@@ -85,7 +89,7 @@ class BookingDetailFragment : Fragment() {
 
         viewModel.navigateToRegister.observe(viewLifecycleOwner, {
             if (it) {
-                findNavController().navigate(R.id.registerFragmentEmail, null, getNavOptions())
+                findNavController().navigate(R.id.registerFragment, null, getNavOptions())
                 viewModel.onRegisterNavigated()
             }
         })

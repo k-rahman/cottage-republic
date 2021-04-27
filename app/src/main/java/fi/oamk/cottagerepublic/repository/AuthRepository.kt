@@ -2,14 +2,12 @@ package fi.oamk.cottagerepublic.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.tasks.await
 
 
-class  AuthRepository(private val firebaseAuth: FirebaseAuth) {
-//    private val currentUser = MutableLiveData<Resource<Any>>()
-//    private val loggedOutLiveData: MutableLiveData<Boolean> = MutableLiveData()
-
+class AuthRepository(private val firebaseAuth: FirebaseAuth) {
 
     /**
      * Singleton copied over from CottageRepository
@@ -45,14 +43,27 @@ class  AuthRepository(private val firebaseAuth: FirebaseAuth) {
         }
     }
 
+    suspend fun register(email: String, password: String): Resource<Any> {
+        return try {
+            firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            Resource.Success(email)
+        } catch (e: Exception) {
+            Resource.Failure(e.message.toString())
+        }
+    }
+
     // Log current user out from firebase
     fun logOut() {
         firebaseAuth.signOut()
     }
 
+    fun getCurrentUserId(): String {
+        return getCurrentUser().value!!.uid
+    }
 
-
-
-
+    // Using MutableLiveData to notify AccountScreenFragment when current user has changed
+    fun getCurrentUser(): MutableLiveData<FirebaseUser> {
+        return MutableLiveData(firebaseAuth.currentUser)
+    }
 }
 

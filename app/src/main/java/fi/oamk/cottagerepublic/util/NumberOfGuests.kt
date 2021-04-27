@@ -26,6 +26,10 @@ object NumberOfGuests {
     @BindingAdapter("numberOfGuests")
     @JvmStatic
     fun Spinner.setNumberOfGuests(item: String) {
+        if (selectedItem.toString() != item) {
+            val pos = (adapter as ArrayAdapter<String>).getPosition(item)
+            setSelection(pos)
+        }
     }
 
     // the returned value is stored in viewModel.numberOfGuests
@@ -33,9 +37,7 @@ object NumberOfGuests {
     @JvmStatic
     fun Spinner.getNumberOfGuests(): String {
         return selectedItem.toString()
-            .removeSuffix("Guest")
-            .removeSuffix("Guests")
-            .trim()
+
     }
 
     // called when user select an item

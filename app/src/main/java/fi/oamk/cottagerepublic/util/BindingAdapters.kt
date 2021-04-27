@@ -82,7 +82,7 @@ fun TextView.setItemCount(count: Int, position: Int) {
 
 @BindingAdapter("guestsNumber")
 fun TextView.setGuests(item: Cottage) {
-    text = item.guests.toString()
+    text = item.guests.removeSuffix("Guest").removeSuffix("Guests").trim()
 }
 
 @BindingAdapter("amenityText")
@@ -158,8 +158,12 @@ fun TextView.setTotalBeforeTaxes(total: Int) {
 fun TextView.setPrice(Price: String) {
 //    if (Price != text.toString())
 //        text = Price.replaceFirst("^0+".toRegex(), "")
-    if (Price.startsWith("0")) {
-        text = Price.replaceFirst("^0".toRegex(), "")
+    if (text.toString() != Price) {
+        if (Price.startsWith("0")) {
+            text = Price.replaceFirst("^0".toRegex(), "")
+        } else {
+            text = Price
+        }
     }
 }
 
@@ -209,4 +213,34 @@ fun TextView.onPasswordChanged(listener: InverseBindingListener) {
     addTextChangedListener {
         listener.onChange()
     }
+}
+
+@BindingAdapter("cottageImage0")
+fun setCottageImageZero(view: ImageView, item: Cottage?) {
+    if (item != null && item.images.size > 0)
+        Picasso.get().load(item.images[0]).into(view)
+}
+
+@BindingAdapter("cottageImage1")
+fun setCottageImageONe(view: ImageView, item: Cottage?) {
+    if (item != null && item.images.size > 1)
+        Picasso.get().load(item.images[1]).into(view)
+}
+
+@BindingAdapter("cottageImage2")
+fun setCottageImageTwo(view: ImageView, item: Cottage?) {
+    if (item != null && item.images.size > 2)
+        Picasso.get().load(item.images[2]).into(view)
+}
+
+@BindingAdapter("cottageImage3")
+fun setCottageImageThree(view: ImageView, item: Cottage?) {
+    if (item != null && item.images.size > 3)
+        Picasso.get().load(item.images[3]).into(view)
+}
+
+@BindingAdapter("cottageImage4")
+fun setCottageImageFour(view: ImageView, item: Cottage?) {
+    if (item != null && item.images.size > 4)
+        Picasso.get().load(item.images[4]).into(view)
 }

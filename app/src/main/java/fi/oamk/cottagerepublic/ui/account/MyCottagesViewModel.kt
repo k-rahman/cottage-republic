@@ -16,7 +16,7 @@ import fi.oamk.cottagerepublic.repository.UserRepository
 import fi.oamk.cottagerepublic.util.Resource
 import kotlinx.coroutines.Dispatchers.IO
 
-class MyCottagesViewModel: ViewModel() {
+class MyCottagesViewModel : ViewModel() {
 
     // The data source this ViewModel will fetch results from.
     private val cottageDataSource =
@@ -35,7 +35,7 @@ class MyCottagesViewModel: ViewModel() {
     val myCottagesList = liveData(IO) {
         emit(Resource.Loading<Boolean>())
         try {
-            val cottageOwnersCottageKeys = userDataSource.getCottagesKeysByHostId(userId)
+            val cottageOwnersCottageKeys = userDataSource.getCottagesKeysByHostId(userId!!)
             val cottages = cottageDataSource.getCottageByKey(cottageOwnersCottageKeys)
             cottagesList = (cottages as Resource.Success<MutableList<Cottage>>).data
             emit(cottages)
@@ -68,24 +68,13 @@ class MyCottagesViewModel: ViewModel() {
     }
 
     fun deleteCottageFromList(cottageId: String): LiveData<List<Cottage>> {
-//        val userId = userDataSource.getCurrentUserId()
-//        firebaseData
-//            .child("users")
-//            .child(userId)
-//            .child("cottages")
-//            .child(cottageId)
-//            .removeValue()
-//        firebaseData.child("cottages").child(cottageId).removeValue()
         return liveData(IO) {
-            userDataSource.deleteCottageIdByHostId(userId, cottageId)
+            userDataSource.deleteCottageIdByHostId(userId!!, cottageId)
             cottageDataSource.deleteCottageById(cottageId)
             cottagesList.removeIf {
                 it.cottageId == cottageId
             }
             emit(cottagesList)
         }
-
-//        Log.i("MyCottageViewModel", cottageId)
     }
-
 }

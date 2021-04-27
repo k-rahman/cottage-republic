@@ -35,7 +35,7 @@ class AccountUserSettingsScreenViewModel(application: Application) : AndroidView
 
     val userData = liveData(IO) {
         emit(Resource.Loading())
-        val data = userDataSource.getUserData(userId)
+        val data = userDataSource.getUserData(userId!!)
         emit(data)
     }
 

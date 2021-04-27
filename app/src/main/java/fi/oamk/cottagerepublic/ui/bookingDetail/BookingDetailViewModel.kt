@@ -73,7 +73,7 @@ class BookingDetailViewModel(
 
     fun onConfirmClicked() {
         val userId = authDataSource.getCurrentUserId()
-        reservationDataSource.createReservation(userId, selectedCottage.cottageId, selectedDates)
+        reservationDataSource.createReservation(userId!!, selectedCottage.cottageId, selectedDates)
         _navigateToSuccess.value = true
     }
 

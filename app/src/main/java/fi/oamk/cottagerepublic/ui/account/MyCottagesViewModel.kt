@@ -77,7 +77,7 @@ class MyCottagesViewModel: ViewModel() {
 //            .removeValue()
 //        firebaseData.child("cottages").child(cottageId).removeValue()
         return liveData(IO) {
-            userDataSource.deleteCottageIdByHostId(cottageId)
+            userDataSource.deleteCottageIdByHostId(userId, cottageId)
             cottageDataSource.deleteCottageById(cottageId)
             cottagesList.removeIf {
                 it.cottageId == cottageId

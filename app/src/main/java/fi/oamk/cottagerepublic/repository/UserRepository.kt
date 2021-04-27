@@ -69,9 +69,9 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         // if there is a logged in user to save data
     }
 
-    suspend fun deleteCottageIdByHostId(cottageId: String) {
+    suspend fun deleteCottageIdByHostId(userId: String, cottageId: String) {
         databaseReference
-            .child(getCurrentUserId())
+            .child(userId)
             .child("cottages")
             .child(cottageId)
             .removeValue().await()

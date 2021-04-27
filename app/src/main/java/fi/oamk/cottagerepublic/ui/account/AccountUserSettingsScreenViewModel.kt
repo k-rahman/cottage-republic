@@ -5,11 +5,18 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import fi.oamk.cottagerepublic.data.User
 import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
+import fi.oamk.cottagerepublic.util.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class AccountUserSettingsScreenViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,37 +24,46 @@ class AccountUserSettingsScreenViewModel(application: Application) : AndroidView
     private val authDataSource = AuthRepository.getInstance(FirebaseAuth.getInstance())
     private val userId = authDataSource.getCurrentUserId()
 
-    var loading = MutableLiveData<Boolean>()
-    var saveStatus = MutableLiveData<Boolean>()
-
     val email = MutableLiveData("")
-    val fname = MutableLiveData("")
-    val lname = MutableLiveData("")
+    val firstName = MutableLiveData("")
+    val lastName = MutableLiveData("")
     val phone = MutableLiveData("")
+    var user: User? = null
+    var saveStatus = MutableLiveData<Resource<Any>>()
 
     var loginFragment: Boolean? = null
 
-    init {
-        // will return true if get data and false if something goes wrong
-        userDataSource.getCurrentUserData(userId, email, fname, lname, phone)
+    val userData = liveData(IO) {
+        val data = userDataSource.getUserData(userId)
+        emit(data)
     }
 
     fun onSaveClick() {
-        if (fname.value.toString().isBlank() || lname.value.toString().isBlank() || phone.value.toString().isBlank()) {
+        if (firstName.value.toString().isBlank() || lastName.value.toString().isBlank() || phone.value.toString().isBlank()) {
             showEmptyFieldsError()
 
         } else {
-            userDataSource.updateUserData(
-                userId,
-                fname.value.toString(),
-                lname.value.toString(),
-                phone.value.toString()
-            )
-            if (loginFragment != null)
-                _navigateToLogin.value = true
-            else
-                _navigateToProfile.value = true
+            user?.firstName = firstName.value.toString()
+            user?.lastName = lastName.value.toString()
+            user?.phone = phone.value.toString()
+
+            CoroutineScope(Main).launch {
+                saveStatus.value = userDataSource.updateUserData(user!!)
+
+                if (loginFragment != null)
+                    _navigateToLogin.value = true
+                else
+                    _navigateToProfile.value = true
+            }
         }
+    }
+
+    fun setUserData(user: User) {
+        email.value = user.email
+        firstName.value = user.firstName
+        lastName.value = user.lastName
+        phone.value = user.phone
+        this.user = user
     }
 
     private fun showEmptyFieldsError() {
@@ -63,7 +79,7 @@ class AccountUserSettingsScreenViewModel(application: Application) : AndroidView
         get() = _navigateToProfile
 
     fun onLoginNavigated() {
-       _navigateToLogin.value = false
+        _navigateToLogin.value = false
         loginFragment = null
     }
 

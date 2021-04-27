@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,7 +13,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import fi.oamk.cottagerepublic.R
+import fi.oamk.cottagerepublic.data.User
 import fi.oamk.cottagerepublic.databinding.FragmentAccountSettingsScreenBinding
+import fi.oamk.cottagerepublic.util.Resource
 
 
 class AccountUserSettingsScreenFragment : Fragment() {
@@ -36,22 +39,6 @@ class AccountUserSettingsScreenFragment : Fragment() {
         disableBackButton()
         setConditionalNavigation()
 
-        viewModel.loading.observe(viewLifecycleOwner, { loading ->
-            loading?.let {
-                if (it) {
-                    createSnackbar("Date fetch failed")
-                }
-            }
-        })
-
-        viewModel.saveStatus.observe(viewLifecycleOwner, { saveStatus ->
-            saveStatus?.let {
-                viewModel.saveStatus.value = null
-                if (it) {
-                    createSnackbar("Data saved")
-                }
-            }
-        })
 
         binding.userSettingsViewModel = viewModel
         binding.lifecycleOwner = this
@@ -59,6 +46,32 @@ class AccountUserSettingsScreenFragment : Fragment() {
     }
 
     private fun setObservers() {
+        viewModel.userData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                }
+                is Resource.Success -> {
+                    viewModel.setUserData(it.data as User)
+                }
+                is Resource.Failure -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        viewModel.saveStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                }
+                is Resource.Success -> {
+                    createSnackbar("User information was saved successfully")
+                }
+                is Resource.Failure -> {
+                    createSnackbar("Failed to save user information")
+                }
+            }
+        }
+
         viewModel.navigateToLogin.observe(viewLifecycleOwner) {
             if (it) {
                 findNavController().popBackStack(R.id.registerFragment, true)
@@ -72,12 +85,12 @@ class AccountUserSettingsScreenFragment : Fragment() {
             }
         }
 
-        viewModel.navigateToProfile.observe(viewLifecycleOwner, {
+        viewModel.navigateToProfile.observe(viewLifecycleOwner) {
             if (it) {
                 findNavController().popBackStack(R.id.accountScreenFragment, false)
                 viewModel.onProfileNavigated()
             }
-        })
+        }
     }
 
     private fun setConditionalNavigation() {

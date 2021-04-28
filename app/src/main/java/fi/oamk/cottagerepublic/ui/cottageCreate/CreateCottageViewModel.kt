@@ -12,9 +12,11 @@ import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.repository.AuthRepository
 import fi.oamk.cottagerepublic.repository.CottageRepository
 import fi.oamk.cottagerepublic.repository.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
-
 
     private val userDataSource = UserRepository.getInstance(Firebase.database.getReference("users"))
     private val authDataSource = AuthRepository.getInstance(FirebaseAuth.getInstance())
@@ -25,19 +27,6 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
             Firebase.database.reference,
             Firebase.storage.reference
         )
-
-    //all the values that get pushed to new cottage
-    val amountOfGuests = MutableLiveData(
-        listOf(
-            "1 Guest",
-            "2 Guests",
-            "3 Guests",
-            "4 Guests",
-            "5 Guests",
-            "6+ Guests"
-        )
-    )
-
 
     val numberOfGuests = MutableLiveData("")
     val newCottageTitle = MutableLiveData<String>()
@@ -62,8 +51,6 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
     var kitchen = false
     var boat = false
     var grill = false
-
-
 
 
     init {
@@ -102,8 +89,24 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         }
     }
 
+    //all the values that get pushed to new cottage
+    val amountOfGuests = MutableLiveData(
+        listOf(
+            "1 Guest",
+            "2 Guests",
+            "3 Guests",
+            "4 Guests",
+            "5 Guests",
+            "6+ Guests"
+        )
+    )
+
     //variable for fragment, in case of missing fields
     var fillInBoxes = MutableLiveData<List<String>>()
+
+    private var _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean>
+        get() = _loading
 
     //navigation variables
     private var _navigateContinue = MutableLiveData<Boolean>()
@@ -119,9 +122,17 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
     val navigateToMyCottage: LiveData<Boolean>
         get() = _navigateToMyCottage
 
+    fun onCreateCottageClicked() {
+        if (checkFields().isNotEmpty())
+            fillInBoxes.value = checkFields()
+        else {
+            showLoading()
+            createCottage()
+        }
+    }
 
     //create cottage function, sends cottage object to db through cottagerepo
-    fun createCottage() {
+    private fun createCottage() {
         val newCottage = Cottage()
         newCottage.guests = numberOfGuests.value!!
         newCottage.rating = ((0..5).random()).toFloat()
@@ -136,22 +147,49 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         else
             newCottage.price = 0
         newCottage.coordinates = cottageCoordinates
-        newCottage.images = newCottageImageNames
-        //create new cottage
-        if (checkFields().isEmpty()) {
-            if (cottage != null) {
+
+        if (cottage != null) {
+            // update cottage
+            CoroutineScope(Main).launch {
                 newCottage.cottageId = cottage.cottageId
-                cottageDataSource.updateCottageByCottageId(newCottage, newCottageImages)
-                onContinueClicked()
-            } else {
-                val key = cottageDataSource.createNewCottage(newCottage, newCottageImages)
-                userDataSource.pushCottageToUser(newCottage.hostId, key)
-                onContinueClicked()
+                newCottage.images = editImages(newCottageImages, cottage.images)
+                cottageDataSource.updateCottageByCottageId(newCottage)
+                hideLoading()
+                navigateToMyCottages()
             }
-        } else
-            fillInBoxes.value = checkFields()
+        } else {
+            //create new cottage
+            CoroutineScope(Main).launch {
+                newCottage.images = addImages(newCottageImages)
+                val key = cottageDataSource.createNewCottage(newCottage)
+                userDataSource.pushCottageToUser(newCottage.hostId, key)
+                hideLoading()
+                navigateToMyCottages()
+            }
+        }
     }
 
+    private suspend fun addImages(newCottageImages: ArrayList<Uri>): ArrayList<String> {
+        cottageDataSource.uploadImages(newCottageImages)
+        return cottageDataSource.getImagesUrl(newCottageImages)
+    }
+
+    private suspend fun editImages(
+        newCottageImages: ArrayList<Uri>,
+        oldImagesUrl: MutableList<String>
+    ): MutableList<String> {
+        val newImagesUrl = addImages(newCottageImages)
+
+        return if (oldImagesUrl.size > newImagesUrl.size) {
+            //replace images
+            for (i in 0 until newImagesUrl.size) {
+                oldImagesUrl.removeAt(i)
+                oldImagesUrl.add(i, newImagesUrl[i])
+            }
+            oldImagesUrl
+        } else
+            newImagesUrl
+    }
 
     //check if user has filled in all the required fields
     private fun checkFields(): MutableList<String> {
@@ -195,9 +233,20 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
     }
 
     private fun checkImages(): Boolean {
-        return !newCottageImageNames.isNullOrEmpty()
+        return !newCottageImages.isNullOrEmpty()
     }
 
+    private fun navigateToMyCottages() {
+        _navigateToMyCottage.value = true
+    }
+
+    private fun showLoading() {
+        _loading.value = true
+    }
+
+    private fun hideLoading() {
+        _loading.value = false
+    }
 
     fun saunaCheck(checked: Boolean) {
 
@@ -289,6 +338,10 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
 
     }
 
+    fun onMyCottagesNavigated() {
+        _navigateToMyCottage.value = false
+    }
+
     fun onMapClicked() {
         _navigateToMap.value = true
     }
@@ -297,21 +350,7 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         _navigateToMap.value = false
     }
 
-    fun onContinueClicked() {
-        _navigateToMyCottage.value = true
-    }
-
-    fun onContinueNavigated() {
-        _navigateContinue.value = false
-    }
-
     fun setAddress(newAddress: String) {
         newCottageAddress.value = newAddress
     }
-
-    fun onMyCottageNavigated() {
-        _navigateToMyCottage.value = false
-    }
 }
-
-

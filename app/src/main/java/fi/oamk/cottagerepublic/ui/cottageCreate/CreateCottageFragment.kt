@@ -1,7 +1,6 @@
 package fi.oamk.cottagerepublic.ui.cottageCreate
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,13 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.net.toUri
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -23,9 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.mapbox.mapboxsdk.Mapbox
 import fi.oamk.cottagerepublic.R
-import fi.oamk.cottagerepublic.data.Cottage
 import fi.oamk.cottagerepublic.databinding.FragmentCreateCottageBinding
-import fi.oamk.cottagerepublic.ui.account.AccountCottageScreenFragmentDirections
 import fi.oamk.cottagerepublic.util.MapUtils
 
 @Suppress("UNCHECKED_CAST")
@@ -33,6 +27,7 @@ class CreateCottageFragment : Fragment() {
     private lateinit var binding: FragmentCreateCottageBinding
     private lateinit var viewModel: CreateCottageViewModel
     private lateinit var viewModelFactory: CreateCottageViewModelFactory
+    private lateinit var disableBackClick: OnBackPressedCallback
     private var images: ArrayList<Uri> = arrayListOf()
     private var missingString = ""
     private val PICK_IMAGES_CODE = 0
@@ -54,40 +49,13 @@ class CreateCottageFragment : Fragment() {
         initToolbar()
         initViewModel()
 
-        viewModel.navigateToMap.observe(viewLifecycleOwner, {
-            if (it) {
-                findNavController().navigate(
-                    CreateCottageFragmentDirections.actionCreateCottageFragmentToCreateCottageMapFragment(
-                    )
-                )
-                viewModel.onMapNavigated()
-            }
-        })
+        //binding for viewmodel
+        binding.createViewModel = viewModel
+        binding.lifecycleOwner = this
 
-
-        // Navigate back to MyCottages with newly created cottage
-        viewModel.navigateToMyCottage.observe(viewLifecycleOwner) {
-            if(it)
-            {
-                navigateToMyCottage()
-            }
-        }
-
-        //display error if not all required fields were filled in
-        viewModel.fillInBoxes.observe(viewLifecycleOwner, {
-            missingString = "The following are required:"
-            for (missingField in it) {
-                missingString = "$missingString $missingField*"
-            }
-            binding.errorTextView.text = missingString
-        }
-        )
-
-        //display address
-        viewModel.newCottageAddress.observe(viewLifecycleOwner, {
-            binding.addessBox.text = it
-        }
-        )
+        initMap(savedInstanceState)
+        disableBackButton()
+        setObservers()
 
         //create an image arraylist, check if it already exists in viewmodel
         binding.imagesView.isVisible = false
@@ -97,30 +65,13 @@ class CreateCottageFragment : Fragment() {
             displayImages()
         } else if (viewModel.newCottageImageNames.isNotEmpty()) {
             binding.imagesView.isVisible = true
+            binding.confirmButtonCreateCottage.text = "Edit Cottage"
         }
 
         //image upload button
         binding.pickImageButton.setOnClickListener {
             pickImagesIntent(0)
         }
-
-        //binding for viewmodel
-        binding.createViewModel = viewModel
-        binding.lifecycleOwner = this
-
-        val mapUtils = MapUtils(savedInstanceState, requireContext(), binding.cottageMap)
-
-        mapUtils.mapboxMap.observe(viewLifecycleOwner, {
-            if (viewModel.cottageCoordinates.isNullOrEmpty())
-                mapUtils.initCameraPosition(hashMapOf("lat" to 65.142455, "long" to 27.078449))
-            else {
-                mapUtils.updateMapStyle(viewModel.cottageCoordinates)
-                viewModel.setAddress(
-                    mapUtils.getPointAddress(viewModel.cottageCoordinates).getAddressLine(0)
-                        .toString()
-                )
-            }
-        })
 
         return binding.root
     }
@@ -136,14 +87,72 @@ class CreateCottageFragment : Fragment() {
     private fun initViewModel() {
         // ViewModelProvider returns an existing ViewModel if one exists,
         // or it creates a new one if it does not already exist.
-        val cottage = CreateCottageFragmentArgs.fromBundle(requireArguments()).cottage
-        viewModelFactory = CreateCottageViewModelFactory(cottage)
+        val cottageArg = CreateCottageFragmentArgs.fromBundle(requireArguments()).cottage
+        viewModelFactory = CreateCottageViewModelFactory(cottageArg)
         val backStackEntry = findNavController().getBackStackEntry(R.id.CreateCottageFragment)
         viewModel = ViewModelProvider(backStackEntry, viewModelFactory).get(CreateCottageViewModel::class.java)
     }
 
-    //images functions
+    private fun setObservers() {
+        viewModel.loading.observe(viewLifecycleOwner) { loading ->
+            if (loading) {
+                binding.toolbar.setNavigationOnClickListener {
+                    it.isEnabled = false
+                }
+                disableBackClick.isEnabled = true
+                binding.loadingLayout.root.visibility = View.VISIBLE
+            }
+        }
 
+        //display error if not all required fields were filled in
+        viewModel.fillInBoxes.observe(viewLifecycleOwner) {
+            missingString = "The following are required:"
+            for (missingField in it) {
+                missingString = "$missingString $missingField*"
+            }
+            binding.errorTextView.text = missingString
+        }
+
+        viewModel.navigateToMap.observe(viewLifecycleOwner, {
+            if (it) {
+                findNavController().navigate(
+                    CreateCottageFragmentDirections.actionCreateCottageFragmentToCreateCottageMapFragment(
+                    )
+                )
+                viewModel.onMapNavigated()
+            }
+        })
+
+        // Navigate back to MyCottages with newly created cottage
+        viewModel.navigateToMyCottage.observe(viewLifecycleOwner) {
+            if (it) {
+                navigateToMyCottage()
+            }
+        }
+
+        //display address
+        viewModel.newCottageAddress.observe(viewLifecycleOwner) {
+            binding.addessBox.text = it
+        }
+
+    }
+
+    private fun initMap(savedInstanceState: Bundle?) {
+        val mapUtils = MapUtils(savedInstanceState, requireContext(), binding.cottageMap)
+        mapUtils.mapboxMap.observe(viewLifecycleOwner, {
+            if (viewModel.cottageCoordinates.isNullOrEmpty())
+                mapUtils.initCameraPosition(hashMapOf("lat" to 65.142455, "long" to 27.078449))
+            else {
+                mapUtils.updateMapStyle(viewModel.cottageCoordinates)
+                viewModel.setAddress(
+                    mapUtils.getPointAddress(viewModel.cottageCoordinates).getAddressLine(0)
+                        .toString()
+                )
+            }
+        })
+    }
+
+    //images functions
     private fun pickImagesIntent(imageNumber: Int) {
         val intent = Intent()
         intent.type = "image/+"
@@ -161,7 +170,6 @@ class CreateCottageFragment : Fragment() {
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -172,7 +180,7 @@ class CreateCottageFragment : Fragment() {
                     if (count > 1) {
                         //picked multiple images
                         //clear the arrays if previous images were picked
-                        viewModel.newCottageImageNames.clear()
+//                        viewModel.newCottageImageNames.clear()
                         this.images.clear()
                         //get number of picker images
 
@@ -184,7 +192,7 @@ class CreateCottageFragment : Fragment() {
                             //add image to list
                             this.images.add(imageUri)
                             //Log.v("imageuri ",imageUri.toString() )
-                            viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
+//                            viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
                             Log.v("multiple ", "images have been picked")
                         }
 
@@ -200,16 +208,16 @@ class CreateCottageFragment : Fragment() {
                             imageListPosition--
                             this.images[imageListPosition] = imageUri
                             Log.v("imageuri ", imageUri.toString())
-                            viewModel.newCottageImageNames[imageListPosition] =
-                                imageUri.lastPathSegment.toString()
+//                            viewModel.newCottageImageNames[imageListPosition] =
+//                                imageUri.lastPathSegment.toString()
                             displayImages()
                         } else {
                             //clear the arrays if previous images were picked
-                            viewModel.newCottageImageNames.clear()
+//                            viewModel.newCottageImageNames.clear()
                             this.images.clear()
                             this.images.add(imageUri)
                             Log.v("imageuri ", imageUri.toString())
-                            viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
+//                            viewModel.newCottageImageNames.add(imageUri.lastPathSegment.toString())
                             displayImages()
                         }
                     }
@@ -253,7 +261,7 @@ class CreateCottageFragment : Fragment() {
             binding.extraImage2.setImageURI(null)
             binding.extraImage2.setOnLongClickListener(null)
         }
-          //  binding.extraImage2.isVisible = false
+        //  binding.extraImage2.isVisible = false
         if (count >= 4) {
             binding.extraImage3.setImageURI(this.images[3])
             binding.extraImage3.setOnClickListener {
@@ -263,7 +271,7 @@ class CreateCottageFragment : Fragment() {
             binding.extraImage3.setImageURI(null)
             binding.extraImage3.setOnLongClickListener(null)
         }
-          //  binding.extraImage3.isVisible = false
+        //  binding.extraImage3.isVisible = false
         if (count >= 5) {
             binding.extraImage4.setImageURI(this.images[4])
             binding.extraImage4.setOnClickListener {
@@ -273,17 +281,12 @@ class CreateCottageFragment : Fragment() {
             binding.extraImage4.setImageURI(null)
             binding.extraImage4.setOnLongClickListener(null)
         }
-         //   binding.extraImage4.isVisible = false
+        //   binding.extraImage4.isVisible = false
     }
 
     private fun navigateToMyCottage() {
-        // Pass the new cottage as an argument back to MyCottages Screen
-//        findNavController().navigate(
-//            CreateCottageFragmentDirections.actionCreateCottageFragmentToAccountCottageScreenFragment()
-//        )
-        findNavController().navigate(R.id.accountCottageScreenFragment,null,getNavOptions())
-     //   findNavController().popBackStack()
-        viewModel.onMyCottageNavigated()
+        findNavController().navigate(R.id.accountCottageScreenFragment, null, getNavOptions())
+        viewModel.onMyCottagesNavigated()
     }
 
     private fun getNavOptions(): NavOptions {
@@ -292,8 +295,16 @@ class CreateCottageFragment : Fragment() {
             .setExitAnim(R.anim.slide_out_right)
             .setPopEnterAnim(android.R.anim.slide_in_left)
             .setPopExitAnim(android.R.anim.slide_out_right)
-            .setPopUpTo(R.id.accountCottageScreenFragment,true)
+            .setPopUpTo(R.id.accountCottageScreenFragment, true)
             .build()
     }
 
+    private fun disableBackButton() {
+        disableBackClick = object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, disableBackClick)
+    }
 }

@@ -115,12 +115,12 @@ class UserRepository(private val databaseReference: DatabaseReference) {
         return user
     }
 
-    fun pushCottageToUser(userKey: String, cottageKey: String) {
+    suspend fun pushCottageToUser(userKey: String, cottageKey: String) {
         val childUpdates = hashMapOf<String, Any>(
             "${userKey}/cottages/$cottageKey" to true
         )
 
-        databaseReference.updateChildren(childUpdates)
+        databaseReference.updateChildren(childUpdates).await()
     }
 
     fun addUserEmail(userId: String, email: String) {

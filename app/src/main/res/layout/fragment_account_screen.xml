@@ -42,9 +42,10 @@
                 android:id="@+id/user_image"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_marginTop="32dp" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.1" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" app:srcCompat="@drawable/ic_baseline_account_circle_24"/>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_account_circle_24"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/user_name"
@@ -54,25 +55,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
                 android:fontFamily="@font/roboto"
-                android:textColor="@color/colorBlack" android:textSize="22sp"
+                android:gravity="center" android:textColor="@color/colorBlack"
+                android:textSize="20sp" app:layout_constraintBottom_toBottomOf="@+id/user_image"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/user_image" app:layout_constraintTop_toTopOf="@+id/user_image"
+                app:layout_constraintStart_toEndOf="@+id/user_image" app:layout_constraintTop_toTopOf="parent"
                 tools:text="@tools:sample/first_names"/>
             <TextView
                 android:id="@+id/user_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
-                android:layout_marginStart="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="@{viewModel.email}"
                 android:textSize="18sp" app:layout_constraintBottom_toBottomOf="@+id/user_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/user_image"
-                app:layout_constraintTop_toBottomOf="@+id/user_name"
-                tools:text="@tools:sample/last_names"/>
+                app:layout_constraintEnd_toEndOf="@+id/user_name" app:layout_constraintStart_toStartOf="@+id/user_name"
+                app:layout_constraintTop_toBottomOf="@+id/user_name" tools:text="@tools:sample/last_names"/>
 
             <!-- User Settings -->
             <com.google.android.material.card.MaterialCardView
@@ -83,8 +82,7 @@
                 android:background="@color/colorBackground"
                 app:cardBackgroundColor="@color/colorBackground"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_image"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/user_email"
                 app:strokeColor="@color/colorGray" app:strokeWidth="0.5dp">
                 <ImageView
                     android:id="@+id/user_setting_icon"
@@ -125,7 +123,7 @@
                 android:id="@+id/my_cottages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/colorBackground"
                 app:cardBackgroundColor="@color/colorBackground"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +169,7 @@
                 android:id="@+id/my_reservation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/colorBackground"
                 app:cardBackgroundColor="@color/colorBackground"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -213,11 +211,11 @@
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="82dp"
+                android:layout_marginBottom="32dp"
                 android:background="@color/colorBackground"
-                app:cardBackgroundColor="@color/colorLightGray"
-                app:cardUseCompatPadding="false" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/my_reservation"
+                app:cardBackgroundColor="@color/colorLightGray" app:cardUseCompatPadding="false"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:strokeColor="@color/colorGray" app:strokeWidth="0.5dp">
                 <ImageView
                     android:id="@+id/logout_icon"

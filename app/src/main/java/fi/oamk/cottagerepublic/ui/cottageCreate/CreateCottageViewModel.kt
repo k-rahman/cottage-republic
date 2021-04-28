@@ -130,7 +130,7 @@ class CreateCottageViewModel(val cottage: Cottage?) : ViewModel() {
         newCottage.location["city"] = newCottageLocation.value.toString()
         newCottage.location["country"] = newCottageCountry.value.toString()
         newCottage.amenities = newCottageAmenities
-        newCottage.hostId = authDataSource.getCurrentUserId()
+        newCottage.hostId = authDataSource.getCurrentUserId()!!
         if (newCottagePrice.value != "")
             newCottage.price = newCottagePrice.value!!.toInt()
         else

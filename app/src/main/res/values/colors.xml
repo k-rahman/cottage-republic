@@ -10,6 +10,7 @@
     <color name="colorGray">#E0E0E0</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorSemiTransparent">#4D000000</color>
+    <color name="colorLightGray">#F4F1F1</color>
 
 <!--     calendar colors -->
     <color name="calendar_fragment_background">#C0000000</color>

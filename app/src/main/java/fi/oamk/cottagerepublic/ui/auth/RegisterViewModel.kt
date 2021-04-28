@@ -47,7 +47,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun addUserEmailToDb(email: String) {
-        userDataSource.addUserEmail(authDataSource.getCurrentUserId(), email)
+        userDataSource.addUserEmail(authDataSource.getCurrentUserId()!!, email)
     }
 
     fun showEmailErrors() {

@@ -63,7 +63,8 @@ class AccountScreenFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(AccountScreenViewModel::class.java)
 
-
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         authViewModel.user.observe(viewLifecycleOwner) {
             if (it == null) {
@@ -72,11 +73,13 @@ class AccountScreenFragment : Fragment() {
                 // they are redirected to the LoginFragment.
                 findNavController().navigate(R.id.loginScreenFragment)
             }
+            viewModel.getUserData()
         }
 
-        viewModel.user.observe(viewLifecycleOwner){
-            when (it){
-                is Resource.Loading -> {}
+        viewModel.getUserData().observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                }
                 is Resource.Success -> {
                     viewModel.setUserData(it.data as User)
                 }
@@ -86,13 +89,12 @@ class AccountScreenFragment : Fragment() {
             }
         }
 
-
-        // Open User Settings
-        binding.userSettingsLayout.setOnClickListener { view: View ->
+//         Open User Settings
+        binding.userSettings.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.acccountUserSettingsScreenFragment)
         }
         // Open My Cottages
-        binding.cottagesLayout.setOnClickListener { view: View ->
+        binding.myCottages.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_accountScreenFragment_to_accountCottageScreenFragment)
         }
         // Open My Reservations
@@ -100,7 +102,7 @@ class AccountScreenFragment : Fragment() {
 //            view.findNavController().navigate(R.id.reservation_layout)
 //        }
         // Logout of system
-        binding.logoutLayout.setOnClickListener {
+        binding.logout.setOnClickListener {
             // Sign user out of firebase here
             authViewModel.onLogoutClick()
         }
@@ -112,9 +114,7 @@ class AccountScreenFragment : Fragment() {
                 findNavController().navigate(R.id.homeFragment, null, nav)
                 authViewModel.onNavigated()
             }
-
         }
         return binding.root
     }
-
 }

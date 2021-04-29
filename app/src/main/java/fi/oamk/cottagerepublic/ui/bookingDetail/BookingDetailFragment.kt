@@ -64,7 +64,7 @@ class BookingDetailFragment : Fragment() {
             if (it) {
                 findNavController().navigate(
                     BookingDetailFragmentDirections.actionBookingDetailFragmentToPaymentFragment(
-                        viewModel.selectedCottage.price
+                        viewModel.total
                     )
                 )
                 viewModel.onSucessNavigated()
